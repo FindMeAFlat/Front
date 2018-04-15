@@ -5,7 +5,7 @@ import Footer from  './../footer/index';
 
 import './index.css';
 
-class App extends Component {
+class Search extends Component {
   render() {
     return (
       <div className="app">
@@ -17,4 +17,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Search;
