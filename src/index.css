@@ -1,5 +1,9 @@
+html {
+  height: 98%;
+}
+
 body {
-  margin: 0;
-  padding: 0;
+  height: 100%;
+  margin: 3px 5px;
   font-family: sans-serif;
 }
