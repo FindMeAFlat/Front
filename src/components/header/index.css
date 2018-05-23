@@ -1,0 +1,33 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(173, 216, 230);
+}
+
+.header *{
+    font: 20px bold;
+    margin: 5px 20px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.google-logout {
+    background: rgb(209, 72, 54);
+    float: right;
+}
+
+.google-logout:hover{
+    background: rgb(198, 55, 36);
+}
+
+.header-title:hover{
+    background-color: rgb(0, 218, 252);
+}
+
+.header-title {
+    text-decoration: none;
+    font-size: 25px;
+    color: black;
+}

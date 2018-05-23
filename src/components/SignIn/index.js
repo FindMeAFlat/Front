@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import GoogleLogin from 'react-google-login';
 
+import './index.css';
+
 import { signIn } from './../../actions';
 
 class SignIn extends Component{
@@ -17,10 +19,13 @@ class SignIn extends Component{
         return (
             <div className='sign-in'>
                 <GoogleLogin
+                    className='google-login'
                     clientId={this.CLIENT_ID}
-                    buttonText="Login with Google"
+                    buttonText="Sign in with Google"
                     onSuccess={this.handleSuccess}
                     onFailure={(e) => console.log(e)}
+                    isSignedIn={true}
+                    prompt='select_account'
                 />
             </div>
         );

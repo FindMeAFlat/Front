@@ -15,8 +15,8 @@ class Header extends Component{
     renderLogout = () => {
         return this.props.userId 
           ? (
-            <GoogleLogout
-                buttonText="Log out"
+            <GoogleLogout className='google-logout'
+                buttonText='Log out'
                 onLogoutSuccess={this.logOut}
             />
           )
@@ -25,8 +25,8 @@ class Header extends Component{
 
     render(){
         return (
-            <nav class="navbar navbar-dark bg-primary">
-                <Link className='navbar-brand' to='/'>Find me a flat</Link>
+            <nav className='header'>
+                <Link className='header-title' to='/'>Find me a flat</Link>
                 {this.renderLogout()}
             </nav>
         );
