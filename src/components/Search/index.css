@@ -1,0 +1,30 @@
+.search{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px;
+    flex: auto;
+    font-size: 20px;
+    text-align: center;
+}
+
+.search > .submit{
+  margin: 20px;
+}
+
+.search .label{
+    display: block;
+    padding: 5px;
+    margin: 10px;
+}
+
+.search .input{
+    margin: 10px;
+    font-size: 20px;
+}
+
+.search .error{
+    font-size: 15px;
+    color: red;
+    margin: 0;
+}

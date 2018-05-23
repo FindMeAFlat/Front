@@ -8,11 +8,13 @@ import Header from  './../Header';
 import Welcome from './../Welcome';
 import CityChooser from './../CityChooser';
 import SignIn from './../SignIn';
+import Search from './../Search';
 
 class Router extends Component {
     renderSignedIn(){
         return (
             <Switch>
+                <Route path={'/search'} component={Search}/>
                 <Route path={'/'} component={CityChooser}/>
             </Switch>
         );
@@ -33,9 +35,9 @@ class Router extends Component {
                     <Route path={'/'} component={Header}/>
                     <Route exact path={'/'} component={Welcome}/>
                     {
-                        this.props.userId 
-                            ? this.renderSignedIn()
-                            : this.renderNotSignedIn()
+                        this.props.userId === null
+                            ? this.renderNotSignedIn()
+                            : this.renderSignedIn()
                     }
                 </div>
             </BrowserRouter>

@@ -14,7 +14,7 @@ class CityChooser extends Component {
     handleSubmitCity = () => {
         this.props.saveCity(this.state.city);
         this.setState({ city: '' });
-        // this.props.history.push('/search');
+        this.props.history.push('/search');
     };
 
     handleChooseCity = city => (() =>this.setState({ city: city }));
@@ -25,6 +25,7 @@ class CityChooser extends Component {
         return (
             <div className='dark-background'>
                 <div className='chooser-wrapper'>
+                    Choose city
                     {this.state.cities.map(item => (
                             <div 
                                 onClick={this.handleChooseCity(item)} 
