@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import { saveCity } from './../../actions';
-import './index.css';
 
 class CityChooser extends Component {
     state = {
