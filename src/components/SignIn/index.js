@@ -7,7 +7,7 @@ import './index.css';
 import { signIn } from './../../actions';
 
 class SignIn extends Component{
-    CLIENT_ID = '199758126206-940shrcvohvdmf81j09dkihlirapq4vp.apps.googleusercontent.com';
+    CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
     handleSuccess = (response) => {
         const userId = response.profileObj.googleId;
@@ -16,6 +16,7 @@ class SignIn extends Component{
     }
 
     render(){
+        console.log(process.env)
         return (
             <div className='sign-in'>
                 <GoogleLogin
