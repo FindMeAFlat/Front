@@ -5,27 +5,26 @@ import './index.css';
 
 class Input extends Component {
     state = {
-        term: ""
+      term: '',
     };
-    
-    inputHandler = (e) => this.setState({ term: e.target.value });
+
+    inputHandler = e => this.setState({ term: e.target.value });
 
     render() {
-        return (
-            <input 
-                type="text" 
-                className="input" 
-                onChange={this.inputHandler} 
-                value={this.state.term} 
-            />
-        );
+      return (
+        <input
+          type="text"
+          className="input"
+          onChange={this.inputHandler}
+          value={this.state.term}
+        />
+      );
     }
 }
 
 
-
-const mapStateToProps = (state) => ({
-    userId: userId
+const mapStateToProps = state => ({
+  userId: state.userId,
 });
 
 export default connect(mapStateToProps)(Input);
