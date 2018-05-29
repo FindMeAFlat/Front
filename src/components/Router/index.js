@@ -38,10 +38,10 @@ class Router extends Component {
             <Route path="/" component={Header} />
             <Route exact path="/" component={Welcome} />
             {
-                        this.props.userId === null
-                            ? Router.renderNotSignedIn()
-                            : Router.renderSignedIn()
-                    }
+              this.props.userId
+                ? Router.renderSignedIn()
+                : Router.renderNotSignedIn()
+            }
           </div>
         </BrowserRouter>
       );
