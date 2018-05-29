@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { GoogleLogout } from 'react-google-login';
@@ -7,10 +8,10 @@ import './index.css';
 import { logOut } from './../../actions';
 
 class Header extends Component {
-    propTypes = {
-      logOut: React.ReactPropTypes.func,
-      history: React.ReactPropTypes.array,
-      userId: React.ReactPropTypes.number,
+    static propTypes = {
+      logOut: PropTypes.func,
+      history: PropTypes.object,
+      userId: PropTypes.string,
     };
 
     logOut = () => {
@@ -31,7 +32,8 @@ class Header extends Component {
     render() {
       return (
         <nav className="header">
-          <Link className="header-title" href="/" to="/">Find me a flat</Link>
+          <Link className="header-title" href="/" to="/">FindMeAFlat</Link>
+          <img className="notification-icon" src="https://image.flaticon.com/icons/svg/77/77682.svg"/>
           {this.renderLogout()}
         </nav>
       );

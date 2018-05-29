@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -11,8 +12,8 @@ import SignIn from './../SignIn';
 import Search from './../Search';
 
 class Router extends Component {
-    propTypes = {
-      userId: React.ReactPropTypes.number,
+    static propTypes = {
+      userId: PropTypes.string,
     };
 
     static renderSignedIn() {

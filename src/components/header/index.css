@@ -1,33 +1,43 @@
 .header{
     display: flex;
-    justify-content: space-between;
-    background-color: rgb(173, 216, 230);
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .header *{
     font: 20px bold;
-    margin: 5px 20px;
-    padding: 10px 20px;
-    border-radius: 20px;
+    margin: 5px auto;
+    padding: 2px 20px;
+    border-radius: 10px;
     cursor: pointer;
     border: 1px solid transparent;
 }
 
 .google-logout {
-    background: rgb(209, 72, 54);
+    background: #759feb;
     float: right;
+    color: white;
+    align-self: flex-end;
+    margin-left: 0px;
 }
 
-.google-logout:hover{
-    background: rgb(198, 55, 36);
+.google-logout:hover {
+    background: #5a70eb;
 }
 
-.header-title:hover{
-    background-color: rgb(0, 218, 252);
+.notification-icon {
+    margin-right: 0px;
+    width: 25px;
+    align-self: flex-end;
 }
 
 .header-title {
     text-decoration: none;
     font-size: 25px;
-    color: black;
+    color: #759FEB;
+    font-weight: bold;
+}
+
+.header-title:hover{
+    background-color: rgb(0, 218, 252);
 }

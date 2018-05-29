@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import { saveCity } from './../../actions';
 
 class CityChooser extends Component {
-    propTypes = {
-      saveCity: React.ReactPropTypes.func,
-      history: React.ReactPropTypes.array,
+    static propTypes = {
+        saveCity: PropTypes.func,
+        history: PropTypes.object,
     };
 
     state = {
@@ -31,9 +32,10 @@ class CityChooser extends Component {
           <div className="chooser-wrapper">
                     Choose city
             {this.state.cities.map(item => (
-              <div // TODO
+              <div
                 aria-selected={item === city}
                 role="option"
+                key={item}
                 tabIndex={0}
                 onClick={this.handleChooseCity(item)}
                 className={classNames(

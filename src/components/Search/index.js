@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
 import './index.css';
 
 class Search extends Component {
-    propTypes = {
-      history: React.ReactPropTypes.array,
-      handleSubmit: React.ReactPropTypes.func,
+    static propTypes = {
+      history: PropTypes.object,
+      handleSubmit: PropTypes.func,
     };
 
     handleSubmit = () => {
