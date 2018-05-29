@@ -4,20 +4,27 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { GoogleLogout } from 'react-google-login';
 
-import './index.css';
 import { logOut } from './../../actions';
 
 class Header extends Component {
     static propTypes = {
-      logOut: PropTypes.func,
-      history: PropTypes.object,
-      userId: PropTypes.string,
+      logOut: PropTypes.func.isRequired,
+      history: PropTypes.object.isRequired,
+      userId: PropTypes.string.isRequired,
     };
 
     logOut = () => {
       this.props.logOut();
       this.props.history.push('/');
     };
+
+    renderNotifications = () => (this.props.userId
+      ? (
+        <span className="number fa-stack fa-2x has-badge" data-count={10}>
+          <i className="bell fa fa-bell xfa-inverse" data-count="4b" />
+        </span>
+      )
+      : '');
 
     renderLogout = () => (this.props.userId
       ? (
@@ -33,7 +40,7 @@ class Header extends Component {
       return (
         <nav className="header">
           <Link className="header-title" href="/" to="/">FindMeAFlat</Link>
-          <img className="notification-icon" src="https://image.flaticon.com/icons/svg/77/77682.svg"/>
+          {this.renderNotifications()}
           {this.renderLogout()}
         </nav>
       );

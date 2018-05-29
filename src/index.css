@@ -1,3 +1,18 @@
+@font-face {
+  font-family: moon-bold;
+  src: url('fonts/Moon2.0-Bold.otf');
+}
+
+@font-face {
+  font-family: moon-light;
+  src: url('fonts/Moon2.0-Light.otf');
+}
+
+@font-face {
+  font-family: moon-regular;
+  src: url('fonts/Moon2.0-Regular.otf');
+}
+
 html {
   height: 98%;
 }

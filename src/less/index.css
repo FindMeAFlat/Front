@@ -23,3 +23,97 @@
 .selected {
   background-color: rgba(0, 0, 0, 0.5);
 }
+.header {
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 76px;
+}
+.header * {
+  font: 20px bold;
+  font-family: moon-bold;
+  margin: 5px auto;
+  padding: 2px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.header > i {
+  font-family: sans-serif;
+}
+.google-logout {
+  margin-right: 20%;
+  background: #759feb;
+  float: right;
+  color: white;
+  margin-left: 5px;
+}
+.google-logout:hover {
+  background: #5a70eb;
+}
+.notification-icon {
+  margin-right: 0px;
+  width: 25px;
+}
+.header-title {
+  margin-left: 20%;
+  text-decoration: none;
+  font-size: 25px;
+  color: #759FEB;
+  font-weight: bold;
+}
+.number {
+  padding: 0px;
+  margin-right: 0px;
+  display: none !important;
+}
+.number[data-count]:after {
+  margin: 0px;
+  position: absolute;
+  right: 10%;
+  top: 8%;
+  content: attr(data-count);
+  font-size: 40%;
+  padding: .2em;
+  line-height: 1em;
+  color: white;
+  background-color: #939DFE;
+  text-align: center;
+  min-width: 1em;
+}
+.app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: Roboto;
+}
+.sign-in {
+  flex: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.google-login {
+  background: #d14836;
+  font: 35px bold;
+  border-radius: 20px;
+  padding: 30px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.google-login:hover {
+  background: #c63724;
+}
+.welcome {
+  display: flex;
+  justify-content: center;
+}
+.slogan {
+  font-size: 40px;
+  margin: 50px;
+  letter-spacing: 1px;
+  word-spacing: 1px;
+  text-shadow: 1px 1px red;
+}

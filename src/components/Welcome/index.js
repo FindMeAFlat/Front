@@ -1,7 +1,5 @@
 import React from 'react';
 
-import './index.css';
-
 function Welcome() {
   const welcomeSlogan = 'Find me a flat - make "looking for flat" great again!';
   return (

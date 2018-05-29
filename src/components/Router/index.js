@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import './index.css';
-
 import Header from './../Header';
 import Welcome from './../Welcome';
 import CityChooser from './../CityChooser';
@@ -13,7 +11,7 @@ import Search from './../Search';
 
 class Router extends Component {
     static propTypes = {
-      userId: PropTypes.string,
+      userId: PropTypes.string.isRequired,
     };
 
     static renderSignedIn() {

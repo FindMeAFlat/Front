@@ -10,6 +10,8 @@ import Router from './components/Router';
 import './index.css';
 import './less/index.css';
 
+import '../node_modules/font-awesome/css/font-awesome.min.css';
+
 require('dotenv').config();
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));

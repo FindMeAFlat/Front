@@ -7,8 +7,8 @@ import { saveCity } from './../../actions';
 
 class CityChooser extends Component {
     static propTypes = {
-        saveCity: PropTypes.func,
-        history: PropTypes.object,
+      saveCity: PropTypes.func.isRequired,
+      history: PropTypes.object.isRequired,
     };
 
     state = {

@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import GoogleLogin from 'react-google-login';
 
-import './index.css';
-
 import { signIn } from './../../actions';
 
 class SignIn extends Component {
     static propTypes = {
-      signIn: PropTypes.func,
-      history: PropTypes.object,
+      signIn: PropTypes.func.isRequired,
+      history: PropTypes.object.isRequired,
     };
 
     CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
@@ -25,7 +23,7 @@ class SignIn extends Component {
     };
 
     render() {
-        return (
+      return (
         <div className="sign-in">
           <GoogleLogin
             className="google-login"
