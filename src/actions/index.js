@@ -1,8 +1,8 @@
-export const SAVE_CITY = 'SAVE_CITY';
-export function saveCity(city) {
+export const SELECT_CITY = 'SELECT_CITY';
+export function selectCity(city) {
   return (dispatch) => {
     dispatch({
-      type: SAVE_CITY,
+      type: SELECT_CITY,
       city,
     });
   };

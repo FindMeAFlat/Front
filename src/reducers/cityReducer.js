@@ -1,8 +1,8 @@
-import { SAVE_CITY } from './../actions';
+import { SELECT_CITY } from './../actions';
 
 export default function cityReducer(state = { city: '' }, action) {
   switch (action.type) {
-    case SAVE_CITY:
+    case SELECT_CITY:
       return {
         ...state,
         city: action.city,

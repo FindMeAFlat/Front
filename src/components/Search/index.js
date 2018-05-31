@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import StepNavigator from './../StepNavigator';
 
 export default class Search extends Component {
   constructor(props) {
@@ -40,6 +41,8 @@ export default class Search extends Component {
 
       return (
         <div>
+          <StepNavigator stepNumber={2} stepLabel="Choose your job/school address" prevPath="/" />
+
           <PlacesAutocomplete
             value={this.state.address}
             onChange={this.handleChange}
