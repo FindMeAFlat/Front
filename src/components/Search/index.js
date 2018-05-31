@@ -4,52 +4,83 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
 export default class Search extends Component {
   constructor(props) {
     super(props);
-    this.state = { address: '' };
+    this.state = {
+      address: '',
+      city: ' Kraków',
+      latitude: null,
+      longitude: null,
+    };
   }
 
     handleChange = (address) => {
-      this.setState({ address });
+      this.setState({
+        address,
+        latitude: null,
+        longitude: null,
+      });
     }
 
-    handleSelect = (address) => {
-      geocodeByAddress(address)
-        .then(results => getLatLng(results[0]));
+    handleSelect = (selected) => {
+      this.setState({ address: selected });
+      geocodeByAddress(selected)
+        .then(results => getLatLng(results[0]))
+        .then(({ lat, lng }) => {
+          this.setState({
+            latitude: lat,
+            longitude: lng,
+          });
+        });
     }
+
 
     render() {
+      const {
+        address,
+      } = this.state;
+
       return (
-        <PlacesAutocomplete
-          value={this.state.address}
-          onChange={this.handleChange}
-          onSelect={this.handleSelect}
-        >
-          {({ getInputProps, suggestions, getSuggestionItemProps }) => (
-            <div className="container">
-              <input
-                {...getInputProps({
-                                placeholder: 'Search Places ...',
-                                className: 'location-search-input',
-                            })}
-              />
-              <div className="autocomplete-dropdown-container">
-                {suggestions.map((suggestion) => {
-                                const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
-                                // inline style for demonstration purpose
-                                const style = suggestion.active
-                                    ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                                return (
-                                  <div
-                                    {...getSuggestionItemProps(suggestion, { className, style })}
-                                  >
-                                    <span>{suggestion.description}</span>
-                                  </div>
-                                );
-                            })}
+        <div>
+          <PlacesAutocomplete
+            value={this.state.address}
+            onChange={this.handleChange}
+            onSelect={this.handleSelect}
+            shouldFetchSuggestions={address.length > 3}
+          >
+            {({ getInputProps, suggestions, getSuggestionItemProps }) => (
+              <div className="search-bar-container">
+                <div className="search-input-container">
+                  <input
+                    {...getInputProps({
+                                        placeholder: 'Search Places ...',
+                                        className: 'location-search-input',
+                                    })}
+                  />
+                </div>
+                {suggestions.length > 0 && (
+                <div className="autocomplete-container">
+                  {suggestions.map((suggestion) => {
+                                        const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
+                                        const parts = suggestion.description.split(',');
+                                        if (parts.includes(this.state.city)) {
+                                            return (
+                                              <div
+                                    {...getSuggestionItemProps(suggestion, { className })}
+                                              >
+                                                <span><b>{parts[0]}</b></span>
+                                                <span>
+                                            ,{suggestion.formattedSuggestion.secondaryText}
+                                                </span>
+
+                                              </div>
+                                            );
+                                        }
+                                    })}
+                </div>
+                            )}
               </div>
-            </div>
-                )}
-        </PlacesAutocomplete>
+                    )}
+          </PlacesAutocomplete>
+        </div>
       );
     }
 }
