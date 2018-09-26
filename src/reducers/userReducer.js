@@ -1,9 +1,9 @@
-import { SIGN_IN, LOG_OUT } from './../actions';
+import * as types from './../actions/types';
 
 export default function userReducer(state = '', action) {
   switch (action.type) {
-    case SIGN_IN:
-    case LOG_OUT:
+    case types.SIGN_IN:
+    case types.LOG_OUT:
       return action.payload;
     default:
       return state;

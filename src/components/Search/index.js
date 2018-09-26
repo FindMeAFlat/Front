@@ -1,89 +1,88 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import StepNavigator from './../StepNavigator';
 
-export default class Search extends Component {
+export class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
       address: '',
-      city: ' Kraków',
       latitude: null,
       longitude: null,
     };
   }
 
-    handleChange = (address) => {
-      this.setState({
-        address,
-        latitude: null,
-        longitude: null,
-      });
-    }
+  handleChange = (address) => {
+    this.setState({
+      address,
+    });
+  };
 
-    handleSelect = (selected) => {
-      this.setState({ address: selected });
-      geocodeByAddress(selected)
-        .then(results => getLatLng(results[0]))
-        .then(({ lat, lng }) => {
-          this.setState({
-            latitude: lat,
-            longitude: lng,
-          });
+  handleSelect = (selected) => {
+    geocodeByAddress(selected)
+      .then(results => getLatLng(results[0]))
+      .then(({ lat, lng }) => {
+        this.setState({
+          address: selected,
+          latitude: lat,
+          longitude: lng,
         });
-    }
+      });
+  };
 
-
-    render() {
-      const {
-        address,
-      } = this.state;
-
-      return (
-        <div>
-          <StepNavigator stepNumber={2} stepLabel="Choose your job/school address" prevPath="/" />
-
-          <PlacesAutocomplete
-            value={this.state.address}
-            onChange={this.handleChange}
-            onSelect={this.handleSelect}
-            shouldFetchSuggestions={address.length > 3}
-          >
-            {({ getInputProps, suggestions, getSuggestionItemProps }) => (
-              <div className="search-bar-container">
-                <div className="search-input-container">
-                  <input
-                    {...getInputProps({
-                                        placeholder: 'Search Places ...',
-                                        className: 'location-search-input',
-                                    })}
-                  />
+  drawInputField = ({getInputProps, suggestions, getSuggestionItemProps}) => (
+    <div className="search-bar-container">
+      <div className="search-input-container">
+        <input
+          {...getInputProps({
+            placeholder: 'Search Places ...',
+            className: 'location-search-input',
+          })}
+        />
+      </div>
+      {suggestions.length > 0 && (
+        <div className="autocomplete-container">
+          {suggestions.map((suggestion) => {
+            const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
+            const parts = suggestion.description.split(',').map(part => part.trim());
+            if (parts.includes(this.props.city.name)) {
+              return (
+                <div
+                  {...getSuggestionItemProps(suggestion, { className })}
+                >
+                  <span><b>{parts[0]}</b></span>
+                  <span>
+                    ,{suggestion.formattedSuggestion.secondaryText}
+                  </span>
                 </div>
-                {suggestions.length > 0 && (
-                <div className="autocomplete-container">
-                  {suggestions.map((suggestion) => {
-                                        const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
-                                        const parts = suggestion.description.split(',');
-                                        if (parts.includes(this.state.city)) {
-                                            return (
-                                              <div
-                                    {...getSuggestionItemProps(suggestion, { className })}
-                                              >
-                                                <span><b>{parts[0]}</b></span>
-                                                <span>
-                                            ,{suggestion.formattedSuggestion.secondaryText}
-                                                </span>
-
-                                              </div>
-                                            );
-                                        }
-                                    })}
-                </div>
-                            )}
-              </div>
-                    )}
-          </PlacesAutocomplete>
+              );
+            }
+          })}
         </div>
-      );
-    }
+      )}
+    </div>
+  );
+
+  render() {
+    const { address } = this.state;
+    return (
+      <div>
+        <StepNavigator stepNumber={2} stepLabel="Choose your job/school address" prevPath="/" />
+        <PlacesAutocomplete
+          value={address}
+          onChange={this.handleChange}
+          onSelect={this.handleSelect}
+        >
+          {this.drawInputField}
+        </PlacesAutocomplete>
+      </div>
+    );
+  }
 }
+
+const mapStateToProps = state => ({
+  city: state.city,
+});
+
+export default connect(mapStateToProps, null)(Search);

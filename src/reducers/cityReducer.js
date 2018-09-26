@@ -1,11 +1,11 @@
-import { SELECT_CITY } from './../actions';
+import * as types from './../actions/types';
 
-export default function cityReducer(state = { city: '' }, action) {
+export default function cityReducer(state = { name: '' }, action) {
   switch (action.type) {
-    case SELECT_CITY:
+    case types.SELECT_CITY:
       return {
         ...state,
-        city: action.city,
+        name: action.city,
       };
     default:
       return state;

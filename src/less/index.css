@@ -20,9 +20,10 @@
 }
 .city-arm {
   height: 12vw;
+  max-height: 112px;
 }
 .city-name {
-  font-family: moon-regular;
+  font-family: moon-regular, Arial, sans-serif;
   font-size: 2vw;
 }
 .selected {
@@ -33,7 +34,7 @@
   opacity: 1;
 }
 .not-selected {
-  opacity: 0.9;
+  opacity: 0.7;
 }
 .city-submit {
   padding: 5px 20px;
@@ -64,6 +65,7 @@
   float: right;
   color: white;
   margin-left: 5px;
+  font-family: moon-regular, Arial, sans-serif;
 }
 .google-logout:hover {
   background: #5a70eb;
@@ -78,6 +80,7 @@
   font-size: 25px;
   color: #759FEB;
   font-weight: bold;
+  text-shadow: 1px 2px 1.2px black;
 }
 .number {
   padding: 0px;
@@ -194,9 +197,44 @@
 .step-label {
   font-family: moon-regular;
 }
+.images-container {
+  display: inline-flex;
+}
+@keyframes left-header {
+  0% {
+    left: -800px;
+  }
+  100% {
+    left: 0;
+  }
+}
+@keyframes right-header {
+  0% {
+    left: 1000px;
+  }
+  100% {
+    left: 450px;
+  }
+}
 .welcome {
-  display: flex;
+  position: relative;
   justify-content: center;
+  background: url(".\\assets\\header-left.png") no-repeat right;
+  background-size: cover;
+  width: 65%;
+  height: 29vh;
+  animation-name: left-header;
+  animation-duration: 2s;
+}
+.header-right {
+  background: url(".\\assets\\header-right.png") no-repeat left;
+  background-size: cover;
+  position: absolute;
+  height: 29vh;
+  width: 65%;
+  left: 450px;
+  animation-name: right-header;
+  animation-duration: 2s;
 }
 .slogan {
   font-size: 40px;
