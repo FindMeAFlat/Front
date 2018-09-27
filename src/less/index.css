@@ -243,3 +243,40 @@
   word-spacing: 1px;
   text-shadow: 1px 1px red;
 }
+.collapsible-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.collapsible-list > .collapsible {
+  width: 50%;
+  border: solid 2px #759feb;
+  margin: 1px;
+  font-family: moon-regular, Arial, sans-serif;
+  font-size: 1.5em;
+}
+.collapsible-list > .collapsible > .expand {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
+.collapsible-list > .collapsible > .expanded {
+  border-top: dashed 2px #759feb;
+  display: flex;
+  justify-content: space-between;
+}
+.distance-picker {
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.distance-picker > :nth-child(1) {
+  width: 75%;
+}
+.distance-picker > :nth-child(2) {
+  width: 20%;
+}

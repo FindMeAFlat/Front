@@ -1,0 +1,73 @@
+.collapsible-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  > .collapsible {
+    // justify-content: center;
+
+
+    width: 50%;
+    border: solid 2px rgb(117, 159, 235);
+    margin: 1px;
+
+    font-family: moon-regular, Arial, sans-serif;
+    font-size: 1.5em;
+    
+    > .expand {
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px;
+
+
+      // width: 100%;
+      // height: 2em;
+  
+  
+  
+      // font-family: moon-regular, Arial, sans-serif;
+      // font-size: 1.5em;
+      
+    }
+    
+    > .expanded {
+
+
+      // border: solid 3px rgb(117, 159, 235);
+      border-top: dashed 2px rgb(117, 159, 235);;
+      display: flex;
+      // flex-direction: row;
+      // display: flex;
+      justify-content: space-between;
+      // align-items: center;
+    }
+
+    .icon {
+      // align-self: flex-end;
+    }
+  }
+  
+    
+
+}
+
+.distance-picker {
+  > :nth-child(1) {
+    width: 75%;
+  }
+
+  > :nth-child(2) {
+    width: 20%;
+  }
+
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  // flex-direction: row;
+  // display: flex;
+  justify-content: space-between;
+}

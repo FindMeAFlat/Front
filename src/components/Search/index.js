@@ -31,7 +31,7 @@ export class Search extends Component {
       });
   };
 
-  drawInputField = ({getInputProps, suggestions, getSuggestionItemProps}) => (
+  drawInputField = ({ getInputProps, suggestions, getSuggestionItemProps }) => (
     <div className="search-bar-container">
       <div className="search-input-container">
         <input
@@ -68,7 +68,7 @@ export class Search extends Component {
     const { address } = this.state;
     return (
       <div>
-        <StepNavigator stepNumber={2} stepLabel="Choose your job/school address" prevPath="/" />
+        <StepNavigator stepNumber={2} stepLabel="Choose your job/school address" prevPath="/" nextPath="criteria" />
         <PlacesAutocomplete
           value={address}
           onChange={this.handleChange}
