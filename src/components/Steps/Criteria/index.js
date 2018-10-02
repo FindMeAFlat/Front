@@ -5,7 +5,7 @@ import { CreatableSelect } from './../../Select';
 import CollapsibleList from './collapsible';
 import StepNavigator from './../../StepNavigator';
 import Custom from './custom';
-import Distance from './Predefined/Distance';
+import Distance from './distance';
 
 export class Criteria extends Component {
     constructor(props) {
@@ -13,13 +13,13 @@ export class Criteria extends Component {
 
         this.criteriaTypes = ['distance', 'custom'];
         this.state = {
-            criteriaData: [],
+            criteriaData: props.criteria,
         };
     }
 
-    onDistancePickerChange = (params, criteriaValue) => {
+    onDistancePickerChange = (data, criteriaValue) => {
         const { criteriaData } = this.state;
-        criteriaData[criteriaValue].value = params;
+        criteriaData[criteriaValue].value = data;
         this.setState({ criteriaData });
     }
 
@@ -37,22 +37,27 @@ export class Criteria extends Component {
 
     createLabel = type => type.split('_').map(s => `${s.charAt(0).toUpperCase()}${s.substring(1)}`).join(' ');
 
+    saveCriteria = () => {
+
+    }
+
     render() {
         const selectedCriteria = this.state.criteriaData.map((criteria, i) => {
             switch (criteria.type) {
-            case 'distance': return { id: i, title: 'Distance', content: <Distance /> };
-            case 'custom': return { id: i, title: 'Custom', content: <Custom /> };
-            default: return <div>cos poszlo nie tak</div>;
+                case 'distance': return { id: i, title: 'Distance', content: <Distance /> };
+                case 'custom': return { id: i, title: 'Custom', content: <Custom /> };
+                default: return <div>cos poszlo nie tak</div>;
             }
         });
 
         return (
             <div className="criteria">
-                <StepNavigator stepNumber={3} stepLabel="Choose additional criterias" prevPath="search" />
+                <StepNavigator stepNumber={3} stepLabel="Choose additional criterias" prevPath="search" prevHandler={this.saveCriteria} nextHandler={this.saveCriteria} />
                 <CreatableSelect
                     placeholder="Select from criteria types..."
                     className="select-criteria"
                     isSearchable
+                    value={null}
                     options={this.criteriaTypes.map(type => ({ value: type, label: this.createLabel(type) }))}
                     onChange={this.handleCriteriaSelect}
                 />
@@ -63,6 +68,7 @@ export class Criteria extends Component {
 }
 
 const mapStateToProps = state => ({
+    criteria: state.criteria,
 });
 
 export default connect(mapStateToProps, null)(Criteria);

@@ -4,20 +4,20 @@ import { FaPlusCircle, FaMinusCircle, FaTrash } from 'react-icons/fa';
 function Collapsible(props) {
     const getExpandIcon = () => {
         return props.expanded
-            ? <FaMinusCircle className="icon" color="rgb(117, 159, 235)" size="1.5em" />
-            : <FaPlusCircle className="icon" color="rgb(117, 159, 235)" size="1.5em" />;
+            ? <FaMinusCircle className="icon" color="rgb(117, 159, 235)" size="1em" />
+            : <FaPlusCircle className="icon" color="rgb(117, 159, 235)" size="1em" />;
     };
 
     return (
         <div className="collapsible">
             <div className="expand" onClick={props.onExpand}>
                 <span>{props.title}</span>
-                <span>{getExpandIcon()} <FaTrash onClick={props.handleRemove} className="icon" color="rgb(232, 34, 34)" size="1.5em" /></span>
+                <span>{getExpandIcon()} <FaTrash onClick={props.handleRemove} className="icon" color="rgb(232, 34, 34)" size="1em" /></span>
             </div>
             {props.expanded &&
-        <div className="expanded">
-            {props.content}
-        </div>
+                <div className="expanded">
+                    {props.content}
+                </div>
             }
         </div>
     );

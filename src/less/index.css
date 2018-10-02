@@ -247,83 +247,108 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100% - 80px);
+  font-family: moon-regular, Arial, sans-serif;
 }
-.criteria .select-criteria {
-  width: 40%;
-  margin: 30px;
+@media (max-width: 600px) {
+  .criteria .select-criteria {
+    width: 90%;
+  }
+  .criteria .collapsible-list {
+    width: 90%;
+  }
+  .criteria .distance-picker {
+    flex-direction: column;
+  }
+  .criteria .form > :first-child {
+    flex-direction: column;
+    align-items: center;
+  }
+  .criteria .form > :first-child > .name {
+    margin-bottom: 5px;
+  }
+}
+@media (min-width: 600px) {
+  .criteria .select-criteria {
+    width: 540px;
+  }
+  .criteria .collapsible-list {
+    width: 540px;
+  }
 }
 .criteria .collapsible-list {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
-  height: calc(100% - 175px);
-  overflow-y: auto;
+  margin-bottom: 5%;
 }
 .criteria .collapsible-list > .collapsible {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: calc(100% - 4px);
-  border: solid 2px #759feb;
-  margin: 2px;
-  font-family: moon-regular, Arial, sans-serif;
-  font-size: 1.5em;
+  width: 100%;
+  margin-top: 5px;
+  border: solid 1px #759feb;
 }
 .criteria .collapsible-list > .collapsible > div {
-  width: 95%;
+  width: 96%;
 }
-.criteria .collapsible-list > .collapsible > .expand {
+.criteria .expand {
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 2em;
 }
-.criteria .collapsible-list > .collapsible > .expanded {
-  border-top: dashed 2px #759feb;
+.criteria .expanded {
+  border-top: dashed 1px #759feb;
 }
-.criteria .collapsible-list > .collapsible > .expanded .custom {
-  display: flex;
-  flex-direction: column;
-}
-.criteria .collapsible-list > .collapsible > .expanded .custom > form {
-  width: 60%;
-  padding: 5px 3%;
-  display: flex;
-  flex-direction: column;
-}
-.criteria .collapsible-list > .collapsible > .expanded .custom > form > * {
-  margin-bottom: 10px;
-}
-.criteria .collapsible-list > .collapsible > .expanded .custom > form > .input {
-  width: 90%;
-  height: 20px;
-}
-.criteria .collapsible-list > .collapsible > .expanded .custom > form > .error {
-  color: #e82222;
-  font-size: 14px;
-}
-.criteria .collapsible-list > .collapsible > .expanded .distance {
+.criteria .distance {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.criteria .collapsible-list > .collapsible > .expanded .distance > div {
+.criteria .distance > div {
   width: 90%;
   margin: 10px;
 }
-.criteria .collapsible-list > .collapsible > .expanded .distance-picker {
-  padding: 15px;
+.criteria .distance .distance-picker {
   display: flex;
   align-items: center;
+}
+.criteria .distance .distance-picker > :nth-child(1) {
+  margin: 0 20px 10px 0;
+}
+.criteria .distance .distance-picker > :nth-child(2) {
+  margin: 10px 0;
+  min-width: 80px;
+}
+.criteria .custom {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.criteria .custom > .form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.criteria .custom > .form > :first-child {
+  width: 100%;
+  display: flex;
   justify-content: space-between;
 }
-.criteria .collapsible-list > .collapsible > .expanded .distance-picker > :nth-child(1) {
-  width: 75%;
+.criteria .custom > .form > :first-child > .name {
+  widows: 50%;
 }
-.criteria .collapsible-list > .collapsible > .expanded .distance-picker > :nth-child(2) {
-  width: 20%;
+.criteria .custom > .form > :first-child > .input {
+  width: 50%;
+  height: 20px;
+}
+.criteria .custom > .form > .error {
+  color: #e82222;
+  font-size: 14px;
+}
+.criteria .custom > .form > * {
+  margin: 5px 0;
 }

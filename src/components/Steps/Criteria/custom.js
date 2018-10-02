@@ -41,12 +41,14 @@ class NewCustomCriteria extends React.Component {
     }
 
     createForm = (name, field, InputComponent, validate) => (
-        <Form className="form">
+        <Form>
             {formApi => (
-                <form onSubmit={formApi.submitForm}>
-                    <label className="name">{name}</label>
-                    <InputComponent className="input" field={field} validate={validate ? validate: () => ({})} />
-                    {formApi.getFormState().errors && <label className="error">{formApi.getFormState().errors[field]}</label> }
+                <form className="form" onSubmit={formApi.submitForm}>
+                    <div>
+                        <label className="name">{name}</label>
+                        <InputComponent className="input" field={field} validate={validate ? validate : () => ({})} />
+                    </div>
+                    {formApi.getFormState().errors && <label className="error">{formApi.getFormState().errors[field]}</label>}
                 </form>
             )}
         </Form>
@@ -55,11 +57,11 @@ class NewCustomCriteria extends React.Component {
     render() {
         return (
             <div className="custom">
-                {this.createForm('URL', 'urlTemplate', Text, this.validateUrl)}
-                {this.createForm('Property access (prop1.prop2.prop3)', 'propertyAccess', Text, this.validatePropertyAccess)}
-                {this.createForm('Max rating value (1-*)', 'maxRatingValue', Text, this.validateMaxRatingValue)}
-                {this.createForm('Importance (1-100)', 'importance', Text, this.validateImportance)}
-                {this.createForm('Ascending (bigger - better)', 'ascending', Checkbox)}
+                {this.createForm('Url', 'urlTemplate', Text, this.validateUrl)}
+                {this.createForm('Property access', 'propertyAccess', Text, this.validatePropertyAccess)}
+                {this.createForm('Max rating value', 'maxRatingValue', Text, this.validateMaxRatingValue)}
+                {this.createForm('Importance', 'importance', Text, this.validateImportance)}
+                {this.createForm('Ascending', 'ascending', Checkbox)}
             </div>
         );
     }

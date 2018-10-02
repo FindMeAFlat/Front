@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select } from './../../../../Select';
+import { Select } from './../../Select';
 
 import 'react-input-range/lib/css/index.css';
 import PropTypes from 'prop-types';
@@ -43,12 +43,9 @@ class Distance extends React.Component {
                 />
                 {this.state.selectedPlaceType && <DistancePicker value={this.state.data} onChange={this.handleDistancePickerChange} />}
             </div>
-
         );
     }
 }
-
-
 
 function DistancePicker(props) {
     const distanceUnits = [
@@ -66,10 +63,7 @@ function DistancePicker(props) {
     const { value, onChange } = props;
     const unit = value ? value.unit : 'm';
     const distance = value ? value.distance : 0;
-    console.log(props);
-
     const unitOption = distanceUnits.find(u => u.label === unit);
-    console.log('dpicker', value);
 
     return (
         <div className="distance-picker">

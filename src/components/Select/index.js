@@ -13,6 +13,10 @@ const style = {
         color: isFocused ? 'white' : 'black',
         cursor: 'pointer',
     }),
+    menuList: (styles) => ({
+        ...styles,
+        maxHeight: '100px',
+    })
     // multiValue: styles => ({
     //     ...styles,
     //     padding: '3px 5px',
