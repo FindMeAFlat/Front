@@ -102,7 +102,7 @@
   min-width: 1em;
 }
 .app {
-  min-height: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -243,40 +243,87 @@
   word-spacing: 1px;
   text-shadow: 1px 1px red;
 }
-.collapsible-list {
+.criteria {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: calc(100% - 80px);
 }
-.collapsible-list > .collapsible {
-  width: 50%;
+.criteria .select-criteria {
+  width: 40%;
+  margin: 30px;
+}
+.criteria .collapsible-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  height: calc(100% - 175px);
+  overflow-y: auto;
+}
+.criteria .collapsible-list > .collapsible {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% - 4px);
   border: solid 2px #759feb;
-  margin: 1px;
+  margin: 2px;
   font-family: moon-regular, Arial, sans-serif;
   font-size: 1.5em;
 }
-.collapsible-list > .collapsible > .expand {
+.criteria .collapsible-list > .collapsible > div {
+  width: 95%;
+}
+.criteria .collapsible-list > .collapsible > .expand {
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px;
+  height: 2em;
 }
-.collapsible-list > .collapsible > .expanded {
+.criteria .collapsible-list > .collapsible > .expanded {
   border-top: dashed 2px #759feb;
-  display: flex;
-  justify-content: space-between;
 }
-.distance-picker {
-  width: 100%;
+.criteria .collapsible-list > .collapsible > .expanded .custom {
+  display: flex;
+  flex-direction: column;
+}
+.criteria .collapsible-list > .collapsible > .expanded .custom > form {
+  width: 60%;
+  padding: 5px 3%;
+  display: flex;
+  flex-direction: column;
+}
+.criteria .collapsible-list > .collapsible > .expanded .custom > form > * {
+  margin-bottom: 10px;
+}
+.criteria .collapsible-list > .collapsible > .expanded .custom > form > .input {
+  width: 90%;
+  height: 20px;
+}
+.criteria .collapsible-list > .collapsible > .expanded .custom > form > .error {
+  color: #e82222;
+  font-size: 14px;
+}
+.criteria .collapsible-list > .collapsible > .expanded .distance {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.criteria .collapsible-list > .collapsible > .expanded .distance > div {
+  width: 90%;
+  margin: 10px;
+}
+.criteria .collapsible-list > .collapsible > .expanded .distance-picker {
   padding: 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.distance-picker > :nth-child(1) {
+.criteria .collapsible-list > .collapsible > .expanded .distance-picker > :nth-child(1) {
   width: 75%;
 }
-.distance-picker > :nth-child(2) {
+.criteria .collapsible-list > .collapsible > .expanded .distance-picker > :nth-child(2) {
   width: 20%;
 }

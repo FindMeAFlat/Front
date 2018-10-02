@@ -1,50 +1,65 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { CreatableSelect } from './../../Select';
+
 import CollapsibleList from './collapsible';
-import DistancePicker from './distancePicker';
-import Select from 'react-select';
-import 'react-input-range/lib/css/index.css';
-
-
 import StepNavigator from './../../StepNavigator';
+import Custom from './custom';
+import Distance from './Predefined/Distance';
 
 export class Criteria extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      criteria: {}
-      // bankDistance: { distance: 0, unit: 'm' },
-      // shoppingCenterDistance: { distance: 0, unit: 'm' },
+    constructor(props) {
+        super(props);
+
+        this.criteriaTypes = ['distance', 'custom'];
+        this.state = {
+            criteriaData: [],
+        };
+    }
+
+    onDistancePickerChange = (params, criteriaValue) => {
+        const { criteriaData } = this.state;
+        criteriaData[criteriaValue].value = params;
+        this.setState({ criteriaData });
+    }
+
+    handleCriteriaSelect = (type) => {
+        const { criteriaData } = this.state;
+        criteriaData.push({ type: type.value });
+        this.setState({ criteriaData });
     };
-  }
 
-  render() {
-    console.log(this.state);
+    handleCriteriaRemove = (index) => {
+        const { criteriaData } = this.state;
+        criteriaData.splice(index, 1);
+        this.setState({ criteriaData });
+    }
 
-    const predefinedCriteria = [{ type: 'distance', value: 'bank', label: 'Bank' }, { type: 'distance', value: 'shoppingCenter', label: 'Shopping center' }, { type: 'distance', value: 'hospital', label: 'Hospital' }];
+    createLabel = type => type.split('_').map(s => `${s.charAt(0).toUpperCase()}${s.substring(1)}`).join(' ');
 
-    const notChosenCriteria = predefinedCriteria.filter(criteria => this.state.criteria[criteria.value] === undefined);
-    const predefinedElements = Object.values(this.state.criteria).map((criteria) => {
-      console.log('criteria', criteria);
-      if (criteria.type === 'distance') return { id: criteria.value, title: criteria.label, content: <DistancePicker value={this.state.criteria[criteria.value]} onChange={(criteria) => { const newState = { criteria: { ...this.state.criteria, } }; newState.criteria[criteria.value] = criteria; this.setState(newState); }} />, }
-    })
+    render() {
+        const selectedCriteria = this.state.criteriaData.map((criteria, i) => {
+            switch (criteria.type) {
+            case 'distance': return { id: i, title: 'Distance', content: <Distance /> };
+            case 'custom': return { id: i, title: 'Custom', content: <Custom /> };
+            default: return <div>cos poszlo nie tak</div>;
+            }
+        });
 
-    console.log(predefinedElements)
-
-    // const distanceElements = [
-    //   { id: 1, title: 'Bank', content: <DistancePicker value={this.state.bankDistance} onChange={(bankDistance) => { this.setState({ bankDistance }); }} />, },
-    //   { id: 2, title: 'Shopping center', content: <DistancePicker value={this.state.shoppingCenterDistance} onChange={(shoppingCenterDistance) => { this.setState({ shoppingCenterDistance }); }} />, },
-    // ]
-
-    return (
-      <div>
-        <StepNavigator stepNumber={3} stepLabel="Choose additional criterias" prevPath="search" />
-        <Select isMulti options={notChosenCriteria} onChange={(cr) => { const newCriteria = this.state.criteria; newCriteria[cr.value] = cr; this.setState({ criteria: newCriteria }) }} />
-
-        <CollapsibleList elements={predefinedElements} />
-      </div>
-    );
-  }
+        return (
+            <div className="criteria">
+                <StepNavigator stepNumber={3} stepLabel="Choose additional criterias" prevPath="search" />
+                <CreatableSelect
+                    placeholder="Select from criteria types..."
+                    className="select-criteria"
+                    isSearchable
+                    options={this.criteriaTypes.map(type => ({ value: type, label: this.createLabel(type) }))}
+                    onChange={this.handleCriteriaSelect}
+                />
+                <CollapsibleList handleRemove={this.handleCriteriaRemove} elements={selectedCriteria} />
+            </div>
+        );
+    }
 }
 
 const mapStateToProps = state => ({

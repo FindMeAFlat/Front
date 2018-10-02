@@ -23,6 +23,8 @@ class SignIn extends Component {
   };
 
   render() {
+    this.handleSuccess({profileObj: { googleId: "lalala" } });
+
     return (
       <div className="sign-in">
         <GoogleLogin

@@ -1,11 +1,14 @@
 {
-    "extends": "airbnb",
+    "extends": ["eslint:recommended", "airbnb"],
     "parser": "babel-eslint",
     "rules": {
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "react/forbid-prop-types": [{ "forbid": [] }],
       "jsx-a11y/label-has-for": [ 0 ],
-      "jsx-a11y/click-events-have-key-events": [ 0 ]
+      "jsx-a11y/click-events-have-key-events": [ 0 ],
+      "react/jsx-indent": [ 0 ],
+      "react/jsx-indent-props": [ 0 ],
+      "indent": ["error", 4]
     },
     "env": {
       "browser": true

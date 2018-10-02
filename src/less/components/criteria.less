@@ -1,0 +1,113 @@
+.criteria {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: calc(100% - 80px);
+
+    .select-criteria {
+        width: 40%;
+        margin: 30px;
+    }
+
+    .collapsible-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 60%;
+        height: calc(100% - 175px);
+        overflow-y: auto;
+
+        > .collapsible {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            width: calc(100% - 4px);
+            border: solid 2px rgb(117, 159, 235);
+            margin: 2px;
+
+            font-family: moon-regular, Arial, sans-serif;
+            font-size: 1.5em;
+
+            > div {
+                width: 95%;
+            }
+
+            > .expand {
+                cursor: pointer;
+
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: 2em;
+
+            }
+
+            > .expanded {
+                border-top: dashed 2px rgb(117, 159, 235);
+
+                .custom {
+                    display: flex;
+                    flex-direction: column;
+
+                    > form {
+                        width: 60%;
+                        padding: 5px 3%;
+                        display: flex;
+                        flex-direction: column;
+
+                        > * {
+                            margin-bottom: 10px;
+                        }
+
+                        > .input {
+                            width: 90%;
+                            height: 20px;
+                        }
+
+                        > .name {
+
+                        }
+
+                        > .error {
+                            color: rgb(232, 34, 34);
+                            font-size: 14px;
+                        }
+                    }
+                }
+
+                .distance {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    > div {
+                        width: 90%;
+                        margin: 10px;
+                    }
+                }
+
+                // .select {
+                //     width: 80%;
+                //     margin: 15px;
+                // }
+
+                .distance-picker {
+                    > :nth-child(1) {
+                        width: 75%;
+                    }
+
+                    > :nth-child(2) {
+                        width: 20%;
+                    }
+
+                    padding: 15px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+            }
+        }
+    }
+}
