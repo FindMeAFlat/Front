@@ -99,7 +99,7 @@ export class Criteria extends Component {
                     value={null}
                     options={criteriaTypes.map(type => ({
                         value: type,
-                        label: this.createLabel(type),
+                        label: Criteria.createLabel(type),
                     }))}
                     onChange={this.handleNewCriteria}
                 />
