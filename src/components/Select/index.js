@@ -1,6 +1,6 @@
 import React from 'react';
-import CreatableSelect from 'react-select/lib/Creatable';
 import Select from 'react-select';
+import CreatableSelect from 'react-select/lib/Creatable';
 
 const style = {
     control: styles => ({
@@ -13,30 +13,10 @@ const style = {
         color: isFocused ? 'white' : 'black',
         cursor: 'pointer',
     }),
-    menuList: (styles) => ({
+    menuList: styles => ({
         ...styles,
         maxHeight: '100px',
-    })
-    // multiValue: styles => ({
-    //     ...styles,
-    //     padding: '3px 5px',
-    //     backgroundColor: 'rgb(117, 159, 235)',
-    //     color: 'white',
-    // }),
-    // multiValueLabel: styles => ({
-    //     ...styles,
-    //     color: 'white',
-    //     marginRight: '20px',
-    //     // ':hover': {
-    //     //     backgroundColor: 'rgb(90, 112, 235)',
-    //     // },
-    // }),
-    // multiValueRemove: styles => ({
-    //     ...styles,
-    //     ':hover': {
-    //         backgroundColor: 'rgb(90, 112, 235)',
-    //     },
-    // }),
+    }),
 };
 
 function CreatableSelectComponent(props) {

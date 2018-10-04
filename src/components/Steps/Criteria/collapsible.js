@@ -1,27 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FaPlusCircle, FaMinusCircle, FaTrash } from 'react-icons/fa';
-
-function Collapsible(props) {
-    const getExpandIcon = () => {
-        return props.expanded
-            ? <FaMinusCircle className="icon" color="rgb(117, 159, 235)" size="1em" />
-            : <FaPlusCircle className="icon" color="rgb(117, 159, 235)" size="1em" />;
-    };
-
-    return (
-        <div className="collapsible">
-            <div className="expand" onClick={props.onExpand}>
-                <span>{props.title}</span>
-                <span>{getExpandIcon()} <FaTrash onClick={props.handleRemove} className="icon" color="rgb(232, 34, 34)" size="1em" /></span>
-            </div>
-            {props.expanded &&
-                <div className="expanded">
-                    {props.content}
-                </div>
-            }
-        </div>
-    );
-}
 
 class CollapsibleList extends React.Component {
     constructor(props) {
@@ -31,14 +10,37 @@ class CollapsibleList extends React.Component {
         };
     }
 
+    getExpandIcon = expanded => (expanded
+        ? <FaMinusCircle className="icon" color="rgb(117, 159, 235)" size="1em" />
+        : <FaPlusCircle className="icon" color="rgb(117, 159, 235)" size="1em" />);
+
     render() {
         return (
             <div className="collapsible-list">
-                {this.props.elements.map((elem, i) =>
-                    <Collapsible title={elem.title} handleRemove={() => this.props.handleRemove(i)} content={elem.content} expanded={i === this.state.expanded} onExpand={() => this.setState({ expanded: this.state.expanded !== i ? i : -1 })} />)}
+                {this.props.elements.map((elem, i) => (
+                    <div className="collapsible">
+                        <div className="expand" onClick={() => this.setState({ expanded: this.state.expanded !== i ? i : -1 })}>
+                            <span>{elem.title}</span>
+                            <span>{this.getExpandIcon(this.state.expanded === i)} <FaTrash onClick={() => this.props.handleRemove(i)} className="icon" color="rgb(232, 34, 34)" size="1em" /></span>
+                        </div>
+                        {this.state.expanded === i && (
+                            <div className="expanded">
+                                {elem.content}
+                            </div>
+                        )}
+                    </div>
+                ))}
             </div>
         );
     }
 }
+
+CollapsibleList.propTypes = {
+    elements: PropTypes.arrayOf({
+        title: PropTypes.string.isRequired,
+        content: PropTypes.any.isRequired,
+    }).isRequired,
+    handleRemove: PropTypes.func.isRequired,
+};
 
 export default CollapsibleList;

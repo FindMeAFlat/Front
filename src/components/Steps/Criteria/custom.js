@@ -1,20 +1,23 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { Form, Text, Checkbox } from 'react-form';
 
-class NewCustomCriteria extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            chosenType: null,
-        };
-    }
+class CustomCriteria extends React.Component {
+    static propTypes = {
+        data: PropTypes.shape({
+            url: PropTypes.string.isRequired,
+            propertyAccess: PropTypes.string.isRequired,
+            maxRatingValue: PropTypes.number.isRequired,
+            importance: PropTypes.number.isRequired,
+            ascending: PropTypes.number.isRequired,
+        }).isRequired,
+        updateCriteriaData: PropTypes.func.isRequired,
+    };
 
     validateUrl = (value) => {
         function checkUrl(url) {
             try { new URL(url); } catch (e) { return false; }
-            return url.indexOf("${lat}") !== -1 && url.indexOf("${lon}") !== -1;
+            return url.indexOf('${lat}') !== -1 && url.indexOf('${lon}') !== -1;
         }
 
         return {
@@ -22,60 +25,62 @@ class NewCustomCriteria extends React.Component {
         };
     };
 
-    validatePropertyAccess = (value) => {
-        return {
-            error: new RegExp(/^\s*\S+\s*$/g).test(value) === false ? "Property access must be strings separated by dot (e.g. 'prop1.prop2.prop3')" : null
-        };
-    }
+    validatePropertyAccess = value => ({ error: new RegExp(/^\s*\S+\s*$/g).test(value) === false ? "Property access must be strings separated by dot (e.g. 'prop1.prop2.prop3')" : null });
 
-    validateMaxRatingValue = (value) => {
-        return {
-            error: !value || isNaN(value) || parseInt(value) < 1 ? 'Importance must be a positive number' : null
-        };
-    }
+    validateMaxRatingValue = value => ({ error: !value || Number.isNaN(value) || Number.parseInt(value, 10) < 1 ? 'Importance must be a positive number' : null });
 
-    validateImportance = (value) => {
-        return {
-            error: !value || isNaN(value) || parseInt(value) < 1 || parseInt(value) > 100 ? 'Importance must be a number from range 1-100' : null
-        };
-    }
-
-    createForm = (name, field, InputComponent, validate) => (
-        <Form>
-            {formApi => (
-                <form className="form" onSubmit={formApi.submitForm}>
-                    <div>
-                        <label className="name">{name}</label>
-                        <InputComponent className="input" field={field} validate={validate ? validate : () => ({})} />
-                    </div>
-                    {formApi.getFormState().errors && <label className="error">{formApi.getFormState().errors[field]}</label>}
-                </form>
-            )}
-        </Form>
-    );
+    validateImportance = value => ({ error: !value || Number.isNaN(value) || Number.parseInt(value, 10) < 1 || Number.parseInt(value, 10) > 100 ? 'Importance must be a number from range 1-100' : null });
 
     render() {
+        const {
+            url, propertyAccess, maxRatingValue, importance, ascending,
+        } = this.props.data;
+
         return (
             <div className="custom">
-                {this.createForm('Url', 'urlTemplate', Text, this.validateUrl)}
-                {this.createForm('Property access', 'propertyAccess', Text, this.validatePropertyAccess)}
-                {this.createForm('Max rating value', 'maxRatingValue', Text, this.validateMaxRatingValue)}
-                {this.createForm('Importance', 'importance', Text, this.validateImportance)}
-                {this.createForm('Ascending', 'ascending', Checkbox)}
+                <Form onChange={formState => this.props.updateCriteriaData(formState.values)}>
+                    {formApi => (
+                        <form className="form" onSubmit={formApi.submitForm}>
+                            <div className="form-line">
+                                <div className="form-input">
+                                    <label className="name">Url</label>
+                                    <Text className="input" field="url" defaultValue={url} validate={this.validateUrl} />
+                                </div>
+                                {formApi.touched.url && formApi.getFormState().errors && <label className="error">{formApi.getFormState().errors.url}</label>}
+                            </div>
+                            <div className="form-line">
+                                <div className="form-input">
+                                    <label className="name">Property access</label>
+                                    <Text className="input" field="propertyAccess" defaultValue={propertyAccess} validate={this.validatePropertyAccess} />
+                                </div>
+                                {formApi.touched.propertyAccess && formApi.getFormState().errors && <label className="error">{formApi.getFormState().errors.propertyAccess}</label>}
+                            </div>
+                            <div className="form-line">
+                                <div className="form-input">
+                                    <label className="name">Max rating value</label>
+                                    <Text className="input" field="maxRatingValue" defaultValue={maxRatingValue} validate={this.validateMaxRatingValue} />
+                                </div>
+                                {formApi.touched.maxRatingValue && formApi.getFormState().errors && <label className="error">{formApi.getFormState().errors.maxRatingValue}</label>}
+                            </div>
+                            <div className="form-line">
+                                <div className="form-input">
+                                    <label className="name">Importance</label>
+                                    <Text className="input" field="importance" defaultValue={importance} validate={this.validateImportance} />
+                                </div>
+                                {formApi.touched.importance && formApi.getFormState().errors && <label className="error">{formApi.getFormState().errors.importance}</label>}
+                            </div>
+                            <div className="form-line">
+                                <div className="form-input">
+                                    <label className="name">Ascending</label>
+                                    <Checkbox className="input" field="ascending" defaultValue={ascending} validate={() => ({})} />
+                                </div>
+                            </div>
+                        </form>
+                    )}
+                </Form>
             </div>
         );
     }
 }
 
-export default NewCustomCriteria;
-
-// const x = {
-//     urlTemplate: string, //has to be js template with x & y properties e.g. "https://someapi.com/${lat}/${lon}"
-//     rating: {
-//       propertyAccess: string, //has to be sequence of nested objects properties separated with dot e.g. "propA.propB.propC"
-//       maxRatingValue: number, //maximum value of rating - needed to map this value to 1-100
-//     },
-//     importance: number, //value to set importance level of this api for user (1-100)
-//     userId?: number, //if no userId, then it's standard api
-//     ascending?: boolean, //defines if bigger is better (default: true)
-// }
+export default CustomCriteria;

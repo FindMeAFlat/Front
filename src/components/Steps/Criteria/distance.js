@@ -1,34 +1,41 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import InputRange from 'react-input-range';
+import 'react-input-range/lib/css/index.css';
+
 import { Select } from './../../Select';
 
-import 'react-input-range/lib/css/index.css';
-import PropTypes from 'prop-types';
-
-import InputRange from 'react-input-range';
-
 class Distance extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            selectedPlaceType: null,
-            data: { distance: 0, unit: 'm' },
-        };
-    }
+    static propTypes = {
+        data: PropTypes.shape({
+            distance: PropTypes.shape({
+                distance: PropTypes.number.isRequired,
+                unit: PropTypes.string.isRequired,
+            }).isRequired,
+            selectedPlaceType: PropTypes.string.isRequired,
+        }).isRequired,
+        updateCriteriaData: PropTypes.func.isRequired,
+    };
 
     createLabel = type => type.split('_').map(s => `${s.charAt(0).toUpperCase()}${s.substring(1)}`).join(' ');
 
     handleChooseType = ({ value }) => {
-        const { selectedPlaceType, data } = this.state;
-        this.setState({ selectedPlaceType: value, data: selectedPlaceType !== value ? { distance: 0, unit: 'm' } : data });
+        const { selectedPlaceType, distance } = this.props.data;
+        this.props.updateCriteriaData({ selectedPlaceType: value, distance: selectedPlaceType !== value ? { distance: 0, unit: 'm' } : distance });
     }
 
     handleDistancePickerChange = (data) => {
-        this.setState({ data });
+        this.props.updateCriteriaData({ distance: data });
     }
 
     render() {
         const placeTypes = ['accounting', 'airport', 'amusement_park', 'aquarium', 'art_gallery', 'atm', 'bakery', 'bank', 'bar', 'beauty_salon', 'bicycle_store', 'book_store', 'bowling_alley', 'bus_station', 'cafe', 'campground', 'car_dealer', 'car_rental', 'car_repair', 'car_wash', 'casino', 'cemetery', 'church', 'city_hall', 'clothing_store', 'convenience_store', 'courthouse', 'dentist', 'department_store', 'doctor', 'electrician', 'electronics_store', 'embassy', 'fire_station', 'florist', 'funeral_home', 'furniture_store', 'gas_station', 'gym', 'hair_care', 'hardware_store', 'hindu_temple', 'home_goods_store', 'hospital', 'insurance_agency', 'jewelry_store', 'laundry', 'lawyer', 'library', 'liquor_store', 'local_government_office', 'locksmith', 'lodging', 'meal_delivery', 'meal_takeaway', 'mosque', 'movie_rental', 'movie_theater', 'moving_company', 'museum', 'night_club', 'painter', 'park', 'parking', 'pet_store', 'pharmacy', 'physiotherapist', 'plumber', 'police', 'post_office', 'real_estate_agency', 'restaurant', 'roofing_contractor', 'rv_park', 'school', 'shoe_store', 'shopping_mall', 'spa', 'stadium', 'storage', 'store', 'subway_station', 'supermarket', 'synagogue', 'taxi_stand', 'train_station', 'transit_station', 'travel_agency', 'veterinary_care', 'zoo'];
+
+        const { selectedPlaceType } = this.props.data;
+        const selectValue = selectedPlaceType ? {
+            value: this.props.data.selectedPlaceType,
+            label: this.createLabel(this.props.data.selectedPlaceType),
+        } : null;
 
         return (
             <div className="distance">
@@ -40,8 +47,12 @@ class Distance extends React.Component {
                         value: type,
                         label: this.createLabel(type),
                     }))}
+                    value={selectValue}
                 />
-                {this.state.selectedPlaceType && <DistancePicker value={this.state.data} onChange={this.handleDistancePickerChange} />}
+                {this.props.data.selectedPlaceType && (<DistancePicker
+                    value={this.props.data.distance}
+                    onChange={this.handleDistancePickerChange}
+                />)}
             </div>
         );
     }

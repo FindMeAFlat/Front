@@ -309,7 +309,7 @@
   align-items: center;
 }
 .criteria .distance > div {
-  width: 90%;
+  width: 98%;
   margin: 10px;
 }
 .criteria .distance .distance-picker {
@@ -318,37 +318,38 @@
 }
 .criteria .distance .distance-picker > :nth-child(1) {
   margin: 0 20px 10px 0;
+  width: calc(100% - 100px);
 }
 .criteria .distance .distance-picker > :nth-child(2) {
   margin: 10px 0;
-  min-width: 80px;
+  width: 100px;
 }
 .criteria .custom {
   display: flex;
   flex-direction: column;
   padding: 10px;
 }
-.criteria .custom > .form {
+.criteria .custom > .form > .form-line {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.criteria .custom > .form > :first-child {
+.criteria .custom > .form > .form-line > :first-child {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
-.criteria .custom > .form > :first-child > .name {
+.criteria .custom > .form > .form-line > :first-child > .name {
   widows: 50%;
 }
-.criteria .custom > .form > :first-child > .input {
+.criteria .custom > .form > .form-line > :first-child > .input {
   width: 50%;
   height: 20px;
 }
-.criteria .custom > .form > .error {
+.criteria .custom > .form > .form-line > .error {
   color: #e82222;
   font-size: 14px;
 }
-.criteria .custom > .form > * {
+.criteria .custom > .form > .form-line > * {
   margin: 5px 0;
 }
