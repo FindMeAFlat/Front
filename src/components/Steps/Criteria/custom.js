@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Text, Checkbox } from 'react-form';
+import Errors from './../../../const/errors';
 
 class CustomCriteria extends React.Component {
     static propTypes = {
@@ -21,15 +22,15 @@ class CustomCriteria extends React.Component {
         }
 
         return {
-            error: !value || !checkUrl(value) ? "Url is not valid or doesn't contain ${lat} and ${lon}" : null,
+            error: !value || !checkUrl(value) ? Errors.criteria.url : null,
         };
     };
 
-    validatePropertyAccess = value => ({ error: new RegExp(/^\s*\S+\s*$/g).test(value) === false ? "Property access must be strings separated by dot (e.g. 'prop1.prop2.prop3')" : null });
+    validatePropertyAccess = value => ({ error: new RegExp(/^\s*\S+\s*$/g).test(value) === false ? Errors.criteria.propertyAccess : null });
 
-    validateMaxRatingValue = value => ({ error: !value || Number.isNaN(value) || Number.parseInt(value, 10) < 1 ? 'Importance must be a positive number' : null });
+    validateMaxRatingValue = value => ({ error: !value || Number.isNaN(value) || Number.parseInt(value, 10) < 1 ? Errors.criteria.maxRatingValue : null });
 
-    validateImportance = value => ({ error: !value || Number.isNaN(value) || Number.parseInt(value, 10) < 1 || Number.parseInt(value, 10) > 100 ? 'Importance must be a number from range 1-100' : null });
+    validateImportance = value => ({ error: !value || Number.isNaN(value) || Number.parseInt(value, 10) < 1 || Number.parseInt(value, 10) > 100 ? Errors.criteria.importance : null });
 
     render() {
         const {

@@ -244,9 +244,9 @@
   text-shadow: 1px 1px red;
 }
 .criteria {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   font-family: moon-regular, Arial, sans-serif;
 }
 @media (max-width: 600px) {
@@ -260,8 +260,8 @@
     flex-direction: column;
   }
   .criteria .form > :first-child {
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
   }
   .criteria .form > :first-child > .name {
     margin-bottom: 5px;
@@ -276,45 +276,46 @@
   }
 }
 .criteria .collapsible-list {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-bottom: 5%;
 }
 .criteria .collapsible-list > .collapsible {
+  align-items: center;
+  border: solid 1px #759feb;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width: 100%;
   margin-top: 5px;
-  border: solid 1px #759feb;
+  width: 100%;
 }
 .criteria .collapsible-list > .collapsible > div {
   width: 96%;
 }
 .criteria .expand {
+  align-items: center;
   cursor: pointer;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   height: 2em;
+  justify-content: space-between;
 }
 .criteria .expanded {
   border-top: dashed 1px #759feb;
 }
 .criteria .distance {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 .criteria .distance > div {
-  width: 98%;
   margin: 10px;
+  width: 98%;
 }
 .criteria .distance .distance-picker {
-  display: flex;
   align-items: center;
+  display: flex;
 }
 .criteria .distance .distance-picker > :nth-child(1) {
   margin: 0 20px 10px 0;
@@ -330,17 +331,17 @@
   padding: 10px;
 }
 .criteria .custom > .form > .form-line {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 .criteria .custom > .form > .form-line > :first-child {
-  width: 100%;
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 .criteria .custom > .form > .form-line > :first-child > .name {
-  widows: 50%;
+  width: 50%;
 }
 .criteria .custom > .form > .form-line > :first-child > .input {
   width: 50%;
@@ -350,6 +351,7 @@
   color: #e82222;
   font-size: 14px;
 }
-.criteria .custom > .form > .form-line > * {
+.criteria .custom > .form > .form-line > div,
+.criteria .custom > .form > .form-line > label {
   margin: 5px 0;
 }

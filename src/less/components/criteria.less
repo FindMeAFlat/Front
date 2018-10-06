@@ -14,8 +14,8 @@
 
         .form {
             > :first-child {
-                flex-direction: column;
                 align-items: center;
+                flex-direction: column;
 
                 > .name {
                     margin-bottom: 5px;
@@ -34,25 +34,26 @@
         }
     }
 
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
     font-family: moon-regular, Arial, sans-serif;
 
     .collapsible-list {
+        align-items: center;
         display: flex;
         flex-direction: column;
-        align-items: center;
         margin-bottom: 5%;
 
         > .collapsible {
+            align-items: center;
+            border: solid 1px rgb(117, 159, 235);
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
             margin-top: 5px;
-            box-sizing: border-box;
-            border: solid 1px rgb(117, 159, 235);
+            width: 100%;
 
             > div {
                 width: 96%;
@@ -61,11 +62,11 @@
     }
 
     .expand {
+        align-items: center;
         cursor: pointer;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
         height: 2em;
+        justify-content: space-between;
     }
 
     .expanded {
@@ -73,18 +74,18 @@
     }
 
     .distance {
+        align-items: center;
         display: flex;
         flex-direction: column;
-        align-items: center;
 
         > div {
-            width: 98%;
             margin: 10px;
+            width: 98%;
         }
 
         .distance-picker {
-            display: flex;
             align-items: center;
+            display: flex;
 
             > :nth-child(1) {
                 margin: 0 20px 10px 0;
@@ -105,17 +106,17 @@
 
         > .form {
             > .form-line {
+                align-items: center;
                 display: flex;
                 flex-direction: column;
-                align-items: center;
 
                 > :first-child {
-                    width: 100%;
                     display: flex;
                     justify-content: space-between;
+                    width: 100%;
 
                     > .name {
-                        widows: 50%;
+                        width: 50%;
                     }
 
                     > .input {
