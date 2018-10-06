@@ -1,0 +1,139 @@
+.criteria {
+    @media (max-width: 600px) {
+        .select-criteria {
+            width: 90%;
+        }
+
+        .collapsible-list {
+            width: 90%;
+        }
+
+        .distance-picker {
+            flex-direction: column;
+        }
+
+        .form {
+            > :first-child {
+                align-items: center;
+                flex-direction: column;
+
+                > .name {
+                    margin-bottom: 5px;
+                }
+            }
+        }
+    }
+
+    @media (min-width: 600px) {
+        .select-criteria {
+            width: 540px;
+        }
+
+        .collapsible-list {
+            width: 540px;
+        }
+    }
+
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    font-family: moon-regular, Arial, sans-serif;
+
+    .collapsible-list {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 5%;
+
+        > .collapsible {
+            align-items: center;
+            border: solid 1px rgb(117, 159, 235);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: 5px;
+            width: 100%;
+
+            > div {
+                width: 96%;
+            }
+        }
+    }
+
+    .expand {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        height: 2em;
+        justify-content: space-between;
+    }
+
+    .expanded {
+        border-top: dashed 1px rgb(117, 159, 235);
+    }
+
+    .distance {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+
+        > div {
+            margin: 10px;
+            width: 98%;
+        }
+
+        .distance-picker {
+            align-items: center;
+            display: flex;
+
+            > :nth-child(1) {
+                margin: 0 20px 10px 0;
+                width: calc(~"100% - 100px");
+            }
+
+            > :nth-child(2) {
+                margin: 10px 0;
+                width: 100px;
+            }
+        }
+    }
+
+    .custom {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        > .form {
+            > .form-line {
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+
+                > :first-child {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+
+                    > .name {
+                        width: 50%;
+                    }
+
+                    > .input {
+                        width: 50%;
+                        height: 20px;
+                    }
+                }
+
+                > .error {
+                    color: rgb(232, 34, 34);
+                    font-size: 14px;
+                }
+
+                > div, > label {
+                    margin: 5px 0;
+                }
+            }
+        }
+    }
+}

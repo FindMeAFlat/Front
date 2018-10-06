@@ -8,44 +8,46 @@ import Welcome from './../Welcome';
 import CityChooser from './../CityChooser';
 import SignIn from './../SignIn';
 import Search from './../Search';
+import Criteria from './../Steps/Criteria';
 
 class Router extends Component {
-    static propTypes = {
-      userId: PropTypes.string.isRequired,
-    };
+  static propTypes = {
+    userId: PropTypes.string.isRequired,
+  };
 
-    static renderSignedIn() {
-      return (
-        <Switch>
-          <Route path="/search" component={Search} />
-          <Route path="/" component={CityChooser} />
-        </Switch>
-      );
-    }
+  static renderSignedIn() {
+    return (
+      <Switch>
+        <Route path="/criteria" component={Criteria} />
+        <Route path="/search" component={Search} />
+        <Route path="/" component={CityChooser} />
+      </Switch>
+    );
+  }
 
-    static renderNotSignedIn() {
-      return (
-        <Switch>
-          <Route path="/" component={SignIn} />
-        </Switch>
-      );
-    }
+  static renderNotSignedIn() {
+    return (
+      <Switch>
+        <Route path="/" component={SignIn} />
+      </Switch>
+    );
+  }
 
-    render() {
-      return (
-        <BrowserRouter>
-          <div className="app">
-            <Route path="/" component={Header} />
-            <Route exact path="/" component={Welcome} />
-            {
-              this.props.userId
-                ? Router.renderSignedIn()
-                : Router.renderNotSignedIn()
-            }
-          </div>
-        </BrowserRouter>
-      );
-    }
+  render() {
+    return (
+      <BrowserRouter>
+        <div className="app">
+          <Route path="/" component={Header} />
+          <Route exact path="/" component={Welcome} />
+          {
+            this.props.userId
+              ? Router.renderSignedIn()
+              : Router.renderNotSignedIn()
+          }
+        </div>
+      </BrowserRouter>
+    );
+  }
 }
 
 

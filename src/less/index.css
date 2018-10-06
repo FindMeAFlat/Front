@@ -102,7 +102,7 @@
   min-width: 1em;
 }
 .app {
-  min-height: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -242,4 +242,116 @@
   letter-spacing: 1px;
   word-spacing: 1px;
   text-shadow: 1px 1px red;
+}
+.criteria {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-family: moon-regular, Arial, sans-serif;
+}
+@media (max-width: 600px) {
+  .criteria .select-criteria {
+    width: 90%;
+  }
+  .criteria .collapsible-list {
+    width: 90%;
+  }
+  .criteria .distance-picker {
+    flex-direction: column;
+  }
+  .criteria .form > :first-child {
+    align-items: center;
+    flex-direction: column;
+  }
+  .criteria .form > :first-child > .name {
+    margin-bottom: 5px;
+  }
+}
+@media (min-width: 600px) {
+  .criteria .select-criteria {
+    width: 540px;
+  }
+  .criteria .collapsible-list {
+    width: 540px;
+  }
+}
+.criteria .collapsible-list {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+.criteria .collapsible-list > .collapsible {
+  align-items: center;
+  border: solid 1px #759feb;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 5px;
+  width: 100%;
+}
+.criteria .collapsible-list > .collapsible > div {
+  width: 96%;
+}
+.criteria .expand {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  height: 2em;
+  justify-content: space-between;
+}
+.criteria .expanded {
+  border-top: dashed 1px #759feb;
+}
+.criteria .distance {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.criteria .distance > div {
+  margin: 10px;
+  width: 98%;
+}
+.criteria .distance .distance-picker {
+  align-items: center;
+  display: flex;
+}
+.criteria .distance .distance-picker > :nth-child(1) {
+  margin: 0 20px 10px 0;
+  width: calc(100% - 100px);
+}
+.criteria .distance .distance-picker > :nth-child(2) {
+  margin: 10px 0;
+  width: 100px;
+}
+.criteria .custom {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.criteria .custom > .form > .form-line {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.criteria .custom > .form > .form-line > :first-child {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.criteria .custom > .form > .form-line > :first-child > .name {
+  width: 50%;
+}
+.criteria .custom > .form > .form-line > :first-child > .input {
+  width: 50%;
+  height: 20px;
+}
+.criteria .custom > .form > .form-line > .error {
+  color: #e82222;
+  font-size: 14px;
+}
+.criteria .custom > .form > .form-line > div,
+.criteria .custom > .form > .form-line > label {
+  margin: 5px 0;
 }
