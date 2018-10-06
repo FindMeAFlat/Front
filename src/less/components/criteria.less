@@ -1,11 +1,39 @@
 .criteria {
+    &:extend(.flex-column, .centered);
+
+    > :not(:first-child) {
+        @media (max-width: 400px) {
+            font-size: @font-size-very-small;
+    
+            .error {
+                font-size: @font-size-tiny;
+            }
+        }
+        
+        @media (min-width: 400px) and (max-width: 700px) {
+            font-size: @font-size-small;
+    
+            .error {
+                font-size: @font-size-very-small;
+            }
+        }
+        
+        @media (min-width: 700px) {
+            font-size: @font-size-regular;
+    
+            .error {
+                font-size: @font-size-small;
+            }
+        }
+    }
+
     @media (max-width: 600px) {
         .select-criteria {
-            width: 90%;
+            width: 100%;
         }
 
         .collapsible-list {
-            width: 90%;
+            width: 100%;
         }
 
         .distance-picker {
@@ -14,7 +42,7 @@
 
         .form {
             > :first-child {
-                align-items: center;
+                &:extend(.centered);
                 flex-direction: column;
 
                 > .name {
@@ -26,32 +54,25 @@
 
     @media (min-width: 600px) {
         .select-criteria {
-            width: 540px;
+            width: 600px;
         }
 
         .collapsible-list {
-            width: 540px;
+            width: 600px;
         }
     }
 
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    font-family: moon-regular, Arial, sans-serif;
+
+    font-family: @font-family-regular;
 
     .collapsible-list {
-        align-items: center;
-        display: flex;
-        flex-direction: column;
+        &:extend(.flex-column, .centered);
         margin-bottom: 5%;
 
         > .collapsible {
-            align-items: center;
+            &:extend(.flex-column, .centered, .justified);
             border: solid 1px rgb(117, 159, 235);
             box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             margin-top: 5px;
             width: 100%;
 
@@ -62,11 +83,8 @@
     }
 
     .expand {
-        align-items: center;
-        cursor: pointer;
-        display: flex;
+        &:extend(.flex-row, .centered, .stretched, .clickable);
         height: 2em;
-        justify-content: space-between;
     }
 
     .expanded {
@@ -74,9 +92,7 @@
     }
 
     .distance {
-        align-items: center;
-        display: flex;
-        flex-direction: column;
+        &:extend(.flex-column, .centered);
 
         > div {
             margin: 10px;
@@ -84,8 +100,7 @@
         }
 
         .distance-picker {
-            align-items: center;
-            display: flex;
+            &:extend(.flex-row, .centered);
 
             > :nth-child(1) {
                 margin: 0 20px 10px 0;
@@ -100,19 +115,17 @@
     }
 
     .custom {
-        display: flex;
-        flex-direction: column;
+        &:extend(.flex-column);
+
         padding: 10px;
 
         > .form {
             > .form-line {
-                align-items: center;
-                display: flex;
-                flex-direction: column;
+                &:extend(.flex-column, .centered);
 
                 > :first-child {
-                    display: flex;
-                    justify-content: space-between;
+                    &:extend(.flex-row, .stretched);
+
                     width: 100%;
 
                     > .name {
@@ -126,8 +139,7 @@
                 }
 
                 > .error {
-                    color: rgb(232, 34, 34);
-                    font-size: 14px;
+                    color: @red;
                 }
 
                 > div, > label {

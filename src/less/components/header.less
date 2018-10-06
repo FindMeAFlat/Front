@@ -1,37 +1,30 @@
-.header{
-  justify-content: flex-end;
-  display: flex;
-  flex-direction: row;
+.header {
+  &:extend(.flex-row, .centered);
+
+  font-family: @font-family-bold;
+
   flex-wrap: wrap;
-  align-items: center;
   min-height: 76px;
 }
 
-.header *{
-  font: 20px bold;
-  font-family: moon-bold;
+.header * {
+  &:extend(.clickable);
   margin: 5px auto;
+
   padding: 2px 20px;
   border-radius: 10px;
-  cursor: pointer;
   border: 1px solid transparent;
 }
 
-.header > i {
-  font-family: sans-serif;
-}
-
 .google-logout {
-  margin-right: 20%;
-  background: #759feb;
+  background-color: @blue;
   float: right;
-  color: white;
-  margin-left: 5px;
-  font-family: moon-regular, Arial, sans-serif;
+  color: @white;
+  font-size: @font-size-big;
 }
 
 .google-logout:hover {
-  background: #5a70eb;
+  background-color: @blue;
 }
 
 .notification-icon {
@@ -40,11 +33,9 @@
 }
 
 .header-title {
-  margin-left: 20%;
+  font-size: @font-size-huge;
   text-decoration: none;
-  font-size: 25px;
-  color: #759FEB;
-  font-weight: bold;
+  color: @blue;
   text-shadow: 1px 2px 1.2px black;
 }
 
@@ -63,8 +54,8 @@
   font-size: 40%;
   padding: .2em;
   line-height: 1em;
-  color: white;
-  background-color: #939DFE;
+  color: @white;
+  background-color: @blue;
   text-align: center;
   min-width: 1em;
 }

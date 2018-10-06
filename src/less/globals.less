@@ -1,0 +1,49 @@
+// high-level styles
+body {
+  height: 95%;
+  padding: 10px 20px;
+  font-family: @font-family-regular;
+}
+
+.app {
+  &:extend(.flex-column, .full-size);
+}
+
+// common classes
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  &:extend(.flex);
+  flex-direction: column;
+}
+
+.flex-row {
+  &:extend(.flex);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.centered {
+  align-items: center;
+}
+
+.justified {
+  justify-content: center;
+}
+
+.stretched {
+  justify-content: space-between;
+}
+
+.full-size {
+  height: 100%;
+  width: 100%;
+}
+
+.text-centered {
+  text-align: center;
+}

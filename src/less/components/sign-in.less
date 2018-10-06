@@ -1,19 +1,18 @@
 .sign-in {
+  &:extend(.flex-row, .centered, .justified);
   flex: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .google-login {
-  background: rgb(209, 72, 54);
-  font: 35px bold;
+  &:extend(.clickable);
+  font-family: @font-family-bold;
+  font-size: @font-size-very-big;
+  background-color: @red;
   border-radius: 20px;
   padding: 30px;
-  cursor: pointer;
   border: 1px solid transparent;
 }
 
 .google-login:hover {
-  background: rgb(198, 55, 36);
+  background-color: @red-hover;
 }

@@ -1,7 +1,6 @@
 .step-navigator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  &:extend(.flex-row, .centered, .justified);
+
   width: 100%;
   margin-top: 30px;
 }
@@ -17,24 +16,21 @@
 .arrow {
   padding: 10px;
   margin: 0 10px;
-  color: #759FEB;
+  color: @blue;
 }
 
 .step-header {
-  display: flex;
-  font-size: 30px;
+  &:extend(.flex-column, .centered, .text-centered);
+
+  font-size: @font-size-very-big;
   padding: 20px 0;
 }
 
-.label {
-  margin: 0 10px;
-}
-
 .step-number {
-  font-family: moon-bold;
+  font-family: @font-family-bold;
 }
 
 .step-label {
-  font-family: moon-regular;
+  font-family: @font-family-regular;
 }
 
