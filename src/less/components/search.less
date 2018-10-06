@@ -1,8 +1,6 @@
 .search-bar-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  &:extend(.flex-column, .centered, .justified);
+
   max-width: 35%;
   margin: 0 auto 0 auto;
 }
@@ -34,11 +32,11 @@
 }
 
 .suggestion-item span, .suggestion-item--active span {
-  font-family: Arial, sans-serif;
-  font-size: 12px;
+  font-family: @font-family-regular;
+  font-size: @font-size-small;
   cursor: default;
 }
 
 .suggestion-item--active {
-  background-color: #efefef;
+  background-color: @white-hover;
 }

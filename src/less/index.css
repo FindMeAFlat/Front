@@ -1,33 +1,124 @@
-.city-chooser {
+@font-face {
+  font-family: moon-bold;
+  src: url('fonts/Moon2.0-Bold.otf');
+}
+@font-face {
+  font-family: moon-light;
+  src: url('fonts/Moon2.0-Light.otf');
+}
+@font-face {
+  font-family: moon-regular;
+  src: url('fonts/Moon2.0-Regular.otf');
+}
+body {
+  height: 95%;
+  padding: 10px 20px;
+  font-family: moon-regular, Arial, sans-serif;
+}
+.flex,
+.flex-column,
+.flex-row,
+.app,
+.city-chooser,
+.cities,
+.city,
+.header,
+.search-bar-container,
+.sign-in,
+.step-navigator,
+.step-header,
+.criteria,
+.criteria .collapsible-list,
+.criteria .collapsible-list > .collapsible,
+.criteria .expand,
+.criteria .distance,
+.criteria .distance .distance-picker,
+.criteria .custom,
+.criteria .custom > .form > .form-line,
+.criteria .custom > .form > .form-line > :first-child {
   display: flex;
-  height: 40%;
+}
+.flex-column,
+.app,
+.city-chooser,
+.city,
+.search-bar-container,
+.step-header,
+.criteria,
+.criteria .collapsible-list,
+.criteria .collapsible-list > .collapsible,
+.criteria .distance,
+.criteria .custom,
+.criteria .custom > .form > .form-line {
   flex-direction: column;
+}
+.clickable,
+.city *,
+.header *,
+.google-login,
+.criteria .expand {
+  cursor: pointer;
+}
+.centered,
+.city-chooser,
+.city,
+.header,
+.search-bar-container,
+.sign-in,
+.step-navigator,
+.step-header,
+.criteria,
+.criteria .collapsible-list,
+.criteria .collapsible-list > .collapsible,
+.criteria .expand,
+.criteria .distance,
+.criteria .distance .distance-picker,
+.criteria .custom > .form > .form-line {
   align-items: center;
 }
+.justified,
+.search-bar-container,
+.sign-in,
+.step-navigator,
+.welcome,
+.criteria .collapsible-list > .collapsible {
+  justify-content: center;
+}
+.stretched,
+.criteria .expand,
+.criteria .custom > .form > .form-line > :first-child {
+  justify-content: space-between;
+}
+.full-size,
+.app {
+  height: 100%;
+  width: 100%;
+}
+.text-centered,
+.step-header {
+  text-align: center;
+}
+.city-chooser {
+  height: 40%;
+}
 .cities {
-  display: flex;
   padding: 20px;
 }
 .city {
   margin: 0 5vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 .city * {
   padding: 5px 0;
-  cursor: pointer;
 }
 .city-arm {
   height: 12vw;
   max-height: 112px;
 }
 .city-name {
-  font-family: moon-regular, Arial, sans-serif;
-  font-size: 2vw;
+  font-size: 1.2em;
 }
 .selected {
-  font-family: moon-bold !important;
+  font-family: moon-bold, Arial, sans-serif !important;
   opacity: 0.9;
 }
 .selected:hover {
@@ -40,46 +131,33 @@
   padding: 5px 20px;
 }
 .header {
-  justify-content: flex-end;
-  display: flex;
-  flex-direction: row;
+  font-family: moon-bold, Arial, sans-serif;
   flex-wrap: wrap;
-  align-items: center;
   min-height: 76px;
 }
 .header * {
-  font: 20px bold;
-  font-family: moon-bold;
   margin: 5px auto;
   padding: 2px 20px;
   border-radius: 10px;
-  cursor: pointer;
   border: 1px solid transparent;
 }
-.header > i {
-  font-family: sans-serif;
-}
 .google-logout {
-  margin-right: 20%;
-  background: #759feb;
+  background-color: #759FEB;
   float: right;
-  color: white;
-  margin-left: 5px;
-  font-family: moon-regular, Arial, sans-serif;
+  color: #ffffff;
+  font-size: 1.1em;
 }
 .google-logout:hover {
-  background: #5a70eb;
+  background-color: #759FEB;
 }
 .notification-icon {
   margin-right: 0px;
   width: 25px;
 }
 .header-title {
-  margin-left: 20%;
+  font-size: 1.3em;
   text-decoration: none;
-  font-size: 25px;
   color: #759FEB;
-  font-weight: bold;
   text-shadow: 1px 2px 1.2px black;
 }
 .number {
@@ -96,21 +174,12 @@
   font-size: 40%;
   padding: .2em;
   line-height: 1em;
-  color: white;
-  background-color: #939DFE;
+  color: #ffffff;
+  background-color: #759FEB;
   text-align: center;
   min-width: 1em;
 }
-.app {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
 .search-bar-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
   max-width: 35%;
   margin: 0 auto 0 auto;
 }
@@ -141,8 +210,8 @@
 }
 .suggestion-item span,
 .suggestion-item--active span {
-  font-family: Arial, sans-serif;
-  font-size: 12px;
+  font-family: moon-regular, Arial, sans-serif;
+  font-size: 0.9em;
   cursor: default;
 }
 .suggestion-item--active {
@@ -150,25 +219,19 @@
 }
 .sign-in {
   flex: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .google-login {
-  background: #d14836;
-  font: 35px bold;
+  font-family: moon-bold, Arial, sans-serif;
+  font-size: 1.2em;
+  background-color: #d14836;
   border-radius: 20px;
   padding: 30px;
-  cursor: pointer;
   border: 1px solid transparent;
 }
 .google-login:hover {
-  background: #c63724;
+  background-color: #c63724;
 }
 .step-navigator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
   margin-top: 30px;
 }
@@ -184,18 +247,14 @@
   color: #759FEB;
 }
 .step-header {
-  display: flex;
-  font-size: 30px;
+  font-size: 1.2em;
   padding: 20px 0;
 }
-.label {
-  margin: 0 10px;
-}
 .step-number {
-  font-family: moon-bold;
+  font-family: moon-bold, Arial, sans-serif;
 }
 .step-label {
-  font-family: moon-regular;
+  font-family: moon-regular, Arial, sans-serif;
 }
 .images-container {
   display: inline-flex;
@@ -218,7 +277,6 @@
 }
 .welcome {
   position: relative;
-  justify-content: center;
   background: url(".\\assets\\header-left.png") no-repeat right;
   background-size: cover;
   width: 65%;
@@ -237,30 +295,50 @@
   animation-duration: 2s;
 }
 .slogan {
-  font-size: 40px;
+  font-size: 1.3em;
   margin: 50px;
   letter-spacing: 1px;
   word-spacing: 1px;
   text-shadow: 1px 1px red;
 }
 .criteria {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
   font-family: moon-regular, Arial, sans-serif;
+}
+@media (max-width: 400px) {
+  .criteria > :not(:first-child) {
+    font-size: 0.8em;
+  }
+  .criteria > :not(:first-child) .error {
+    font-size: 0.7em;
+  }
+}
+@media (min-width: 400px) and (max-width: 700px) {
+  .criteria > :not(:first-child) {
+    font-size: 0.9em;
+  }
+  .criteria > :not(:first-child) .error {
+    font-size: 0.8em;
+  }
+}
+@media (min-width: 700px) {
+  .criteria > :not(:first-child) {
+    font-size: 1em;
+  }
+  .criteria > :not(:first-child) .error {
+    font-size: 0.9em;
+  }
 }
 @media (max-width: 600px) {
   .criteria .select-criteria {
-    width: 90%;
+    width: 100%;
   }
   .criteria .collapsible-list {
-    width: 90%;
+    width: 100%;
   }
   .criteria .distance-picker {
     flex-direction: column;
   }
   .criteria .form > :first-child {
-    align-items: center;
     flex-direction: column;
   }
   .criteria .form > :first-child > .name {
@@ -269,25 +347,18 @@
 }
 @media (min-width: 600px) {
   .criteria .select-criteria {
-    width: 540px;
+    width: 600px;
   }
   .criteria .collapsible-list {
-    width: 540px;
+    width: 600px;
   }
 }
 .criteria .collapsible-list {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
   margin-bottom: 5%;
 }
 .criteria .collapsible-list > .collapsible {
-  align-items: center;
   border: solid 1px #759feb;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   margin-top: 5px;
   width: 100%;
 }
@@ -295,27 +366,14 @@
   width: 96%;
 }
 .criteria .expand {
-  align-items: center;
-  cursor: pointer;
-  display: flex;
   height: 2em;
-  justify-content: space-between;
 }
 .criteria .expanded {
   border-top: dashed 1px #759feb;
 }
-.criteria .distance {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-}
 .criteria .distance > div {
   margin: 10px;
   width: 98%;
-}
-.criteria .distance .distance-picker {
-  align-items: center;
-  display: flex;
 }
 .criteria .distance .distance-picker > :nth-child(1) {
   margin: 0 20px 10px 0;
@@ -326,18 +384,9 @@
   width: 100px;
 }
 .criteria .custom {
-  display: flex;
-  flex-direction: column;
   padding: 10px;
 }
-.criteria .custom > .form > .form-line {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-}
 .criteria .custom > .form > .form-line > :first-child {
-  display: flex;
-  justify-content: space-between;
   width: 100%;
 }
 .criteria .custom > .form > .form-line > :first-child > .name {
@@ -348,8 +397,7 @@
   height: 20px;
 }
 .criteria .custom > .form > .form-line > .error {
-  color: #e82222;
-  font-size: 14px;
+  color: #d14836;
 }
 .criteria .custom > .form > .form-line > div,
 .criteria .custom > .form > .form-line > label {

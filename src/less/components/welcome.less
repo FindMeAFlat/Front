@@ -12,9 +12,9 @@
   100% {left: 450px}
 }
 
-.welcome{
+.welcome {
+  &:extend(.justified);
   position: relative;
-  justify-content: center;
   background: url(".\\assets\\header-left.png") no-repeat right;
   background-size: cover;
   width: 65%;
@@ -35,7 +35,7 @@
 }
 
 .slogan{
-  font-size: 40px;
+  font-size: @font-size-huge;
   margin: 50px;
   letter-spacing: 1px;
   word-spacing: 1px;
