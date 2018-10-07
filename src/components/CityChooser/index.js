@@ -21,7 +21,7 @@ class CityChooser extends Component {
   }
 
   componentDidMount() {
-      axios.get('http://localhost:5000/api/cities')
+      axios.get(`${process.env.REACT_APP_API_URL}/api/cities`)
           .then((response) => {
               console.log(response);
           })

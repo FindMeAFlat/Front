@@ -80,10 +80,12 @@ export class Criteria extends Component {
 
     onClick = () => {
         const { latitude, longitude } = this.props.city.localisation;
-        axios.post('http://localhost:5000/map', {
+        const { criteria } = this.props;
+        axios.post(`${process.env.REACT_APP_API_URL}/getMapCoordinates`, {
             params: {
                 latitude,
                 longitude,
+                criteria,
             },
         })
             .then((response) => {
@@ -126,6 +128,7 @@ export class Criteria extends Component {
                     stepNumber={3}
                     stepLabel="Choose additional criterias"
                     prevPath="search"
+                    nextPath="map"
                     prevHandler={this.saveCriteria}
                     nextHandler={this.saveCriteria}
                 />

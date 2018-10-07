@@ -403,3 +403,24 @@ body {
 .criteria .custom > .form > .form-line > label {
   margin: 5px 0;
 }
+.map {
+  height: 50vh;
+  width: 80vw;
+}
+.map-area {
+  border: 3px solid;
+  border-radius: 50%;
+  height: 60px;
+  opacity: 0.7;
+  position: absolute;
+  width: 60px;
+  left: -30px;
+  top: -30px;
+}
+.map-area-green {
+  background-color: #0AB51F;
+  border-color: #055F05;
+}
+.map-area-green:hover {
+  background-color: #0E8D1E;
+}
