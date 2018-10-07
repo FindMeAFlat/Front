@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import CollapsibleList from './collapsible';
 import Custom from './custom';
@@ -22,21 +23,24 @@ export class Criteria extends Component {
 
     static getDefaultData(type) {
         switch (type) {
-        case 'distance': return {
-            distance: {
-                distance: 0,
-                unit: 'm',
-            },
-            selectedPlaceType: null,
-        };
-        case 'custom': return {
-            url: '',
-            propertyAccess: '',
-            maxRatingValue: null,
-            importance: null,
-            ascending: true,
-        };
-        default: return {};
+        case 'distance':
+            return {
+                distance: {
+                    distance: 0,
+                    unit: 'm',
+                },
+                selectedPlaceType: null,
+            };
+        case 'custom':
+            return {
+                url: '',
+                propertyAccess: '',
+                maxRatingValue: null,
+                importance: null,
+                ascending: true,
+            };
+        default:
+            return {};
         }
     }
 
@@ -74,12 +78,45 @@ export class Criteria extends Component {
         this.props.saveCriteria(this.state.criteriaData);
     };
 
+    onClick = () => {
+        const { latitude, longitude } = this.props.city.localisation;
+        axios.post('http://localhost:5000/map', {
+            params: {
+                latitude,
+                longitude,
+            },
+        })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
     render() {
         const selectedCriteria = this.state.criteriaData.map((criteria, i) => {
             switch (criteria.type) {
-            case 'distance': return { id: i, title: 'Distance', content: <Distance data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
-            case 'custom': return { id: i, title: 'Custom', content: <Custom data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
-            default: return <div>cos poszlo nie tak</div>;
+            case 'distance':
+                return {
+                    id: i,
+                    title: 'Distance',
+                    content: <Distance
+                        data={criteria.data}
+                        updateCriteriaData={data => this.updateCriteria(i, data)}
+                    />,
+                };
+            case 'custom':
+                return {
+                    id: i,
+                    title: 'Custom',
+                    content: <Custom
+                        data={criteria.data}
+                        updateCriteriaData={data => this.updateCriteria(i, data)}
+                    />,
+                };
+            default:
+                return <div>cos poszlo nie tak</div>;
             }
         });
 
@@ -107,6 +144,7 @@ export class Criteria extends Component {
                     handleRemove={this.handleRemoveCriteria}
                     elements={selectedCriteria}
                 />
+                <button onClick={() => this.onClick()}>Show map</button>
             </div>
         );
     }
@@ -114,6 +152,7 @@ export class Criteria extends Component {
 
 const mapStateToProps = state => ({
     criteria: state.criteria,
+    city: state.city,
 });
 
 const mapDispatchToProps = dispatch => ({

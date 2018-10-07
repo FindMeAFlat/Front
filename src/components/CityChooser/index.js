@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
+import axios from 'axios';
 import StepNavigator from './../StepNavigator';
 import { selectCity } from './../../actions/cities';
 
@@ -19,6 +19,16 @@ class CityChooser extends Component {
           selectedCity: CITIES[0],
       };
   }
+
+  componentDidMount() {
+      axios.get('http://localhost:5000/api/cities')
+          .then((response) => {
+              console.log(response);
+          })
+          .catch((error) => {
+              console.error(error);
+          });
+  };
 
   handleSubmitCity = () => {
       this.props.selectCity(this.state.selectedCity);
