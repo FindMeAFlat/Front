@@ -8,7 +8,7 @@ function StepNavigator(props) {
         <div className="step-navigator">
             <ReactTooltip/>
             <Link className={`navigator ${prevPath ? '' : 'not-visible'}`} to={prevPath ? prevPath : ''} onClick={prevHandler} >
-                <i data-tip="Previous step" className="arrow fa fa-2x fa-arrow-left"></i>
+                <i data-tip="Previous step" className="arrow fa fa-2x fa-arrow-left"/>
             </Link>
 
             <div className="step-header">
@@ -17,7 +17,7 @@ function StepNavigator(props) {
             </div>
 
             <Link className={`navigator ${nextPath ? '' : 'not-visible'}`} to={nextPath ? nextPath : ''} onClick={nextHandler}>
-                <i data-tip="Next step" className="arrow fa fa-2x fa-arrow-right"></i>
+                <i data-tip="Next step" className="arrow fa fa-2x fa-arrow-right"/>
             </Link>
         </div>
     );

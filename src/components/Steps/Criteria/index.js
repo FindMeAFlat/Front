@@ -62,17 +62,17 @@ export class Criteria extends Component {
         const { criteriaData } = this.state;
         criteriaData[i].data = { ...criteriaData[i].data, ...data };
         this.setState({ criteriaData });
-    }
+    };
 
     handleRemoveCriteria = (index) => {
         const { criteriaData } = this.state;
         criteriaData.splice(index, 1);
         this.setState({ criteriaData });
-    }
+    };
 
     saveCriteria = () => {
         this.props.saveCriteria(this.state.criteriaData);
-    }
+    };
 
     render() {
         const selectedCriteria = this.state.criteriaData.map((criteria, i) => {
