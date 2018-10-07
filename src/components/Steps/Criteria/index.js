@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import CollapsibleList from './collapsible';
 import Custom from './custom';
 import Distance from './distance';
-import StepNavigator from './../../StepNavigator';
 import { CreatableSelect } from './../../Select';
 import saveCriteria from './../../../actions/criteria';
 
@@ -22,21 +21,21 @@ export class Criteria extends Component {
 
     static getDefaultData(type) {
         switch (type) {
-        case 'distance': return {
-            distance: {
-                distance: 0,
-                unit: 'm',
-            },
-            selectedPlaceType: null,
-        };
-        case 'custom': return {
-            url: '',
-            propertyAccess: '',
-            maxRatingValue: null,
-            importance: null,
-            ascending: true,
-        };
-        default: return {};
+            case 'distance': return {
+                distance: {
+                    distance: 0,
+                    unit: 'm',
+                },
+                selectedPlaceType: null,
+            };
+            case 'custom': return {
+                url: '',
+                propertyAccess: '',
+                maxRatingValue: null,
+                importance: null,
+                ascending: true,
+            };
+            default: return {};
         }
     }
 
@@ -77,21 +76,14 @@ export class Criteria extends Component {
     render() {
         const selectedCriteria = this.state.criteriaData.map((criteria, i) => {
             switch (criteria.type) {
-            case 'distance': return { id: i, title: 'Distance', content: <Distance data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
-            case 'custom': return { id: i, title: 'Custom', content: <Custom data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
-            default: return <div>cos poszlo nie tak</div>;
+                case 'distance': return { id: i, title: 'Distance', content: <Distance data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
+                case 'custom': return { id: i, title: 'Custom', content: <Custom data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
+                default: return <div>cos poszlo nie tak</div>;
             }
         });
 
         return (
             <div className="criteria">
-                <StepNavigator
-                    stepNumber={3}
-                    stepLabel="Choose additional criterias"
-                    prevPath="search"
-                    prevHandler={this.saveCriteria}
-                    nextHandler={this.saveCriteria}
-                />
                 <CreatableSelect
                     placeholder="Select from criteria types..."
                     className="select-criteria"

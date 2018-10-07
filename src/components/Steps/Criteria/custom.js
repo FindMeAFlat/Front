@@ -28,9 +28,20 @@ class CustomCriteria extends React.Component {
 
     validatePropertyAccess = value => ({ error: new RegExp(/^\s*\S+\s*$/g).test(value) === false ? Errors.criteria.propertyAccess : null });
 
-    validateMaxRatingValue = value => ({ error: !value || Number.isNaN(value) || Number.parseInt(value, 10) < 1 ? Errors.criteria.maxRatingValue : null });
+    validateMaxRatingValue = value => ({
+        error:
+            !value || Number.isNaN(value) || Number.parseInt(value, 10) < 1
+                ? Errors.criteria.maxRatingValue
+                : null,
+    });
 
-    validateImportance = value => ({ error: !value || Number.isNaN(value) || Number.parseInt(value, 10) < 1 || Number.parseInt(value, 10) > 100 ? Errors.criteria.importance : null });
+    validateImportance = value => ({
+        error:
+            !value || Number.isNaN(value) || Number.parseInt(value, 10) < 1
+                || Number.parseInt(value, 10) > 100
+                ? Errors.criteria.importance
+                : null,
+    });
 
     render() {
         const {

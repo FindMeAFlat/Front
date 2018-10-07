@@ -12,13 +12,15 @@
 }
 body {
   height: 95%;
-  padding: 10px 20px;
+  padding: 0 20px;
+  margin: 0;
   font-family: moon-regular, Arial, sans-serif;
 }
 .flex,
 .flex-column,
 .flex-row,
 .app,
+.step-container .step,
 .city-chooser,
 .cities,
 .city,
@@ -40,6 +42,7 @@ body {
 }
 .flex-column,
 .app,
+.step-container .step,
 .city-chooser,
 .city,
 .search-bar-container,
@@ -60,6 +63,7 @@ body {
   cursor: pointer;
 }
 .centered,
+.step-container .step,
 .city-chooser,
 .city,
 .header,
@@ -77,6 +81,7 @@ body {
   align-items: center;
 }
 .justified,
+.step-container .step,
 .search-bar-container,
 .sign-in,
 .step-navigator,
@@ -90,13 +95,34 @@ body {
   justify-content: space-between;
 }
 .full-size,
-.app {
+.app,
+.step-container .step,
+.header {
   height: 100%;
   width: 100%;
 }
 .text-centered,
 .step-header {
   text-align: center;
+}
+.step-container {
+  margin-top: 50px;
+  height: calc(100vh - 50px);
+}
+.step-container .step .navigator {
+  opacity: 0.5;
+  cursor: pointer;
+}
+.step-container .step .navigator:hover {
+  opacity: 1;
+}
+.step-container .step .step-content {
+  width: 90%;
+  height: 100%;
+}
+.step-container .step .step-header {
+  font-family: moon-bold, Arial, sans-serif;
+  font-size: 1.4em;
 }
 .city-chooser {
   height: 40%;
@@ -130,10 +156,18 @@ body {
 .city-submit {
   padding: 5px 20px;
 }
+.header-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+  width: 100%;
+  background-color: #ffffff;
+  height: 50px;
+}
 .header {
   font-family: moon-bold, Arial, sans-serif;
   flex-wrap: wrap;
-  min-height: 76px;
 }
 .header * {
   margin: 5px auto;
@@ -159,6 +193,7 @@ body {
   text-decoration: none;
   color: #759FEB;
   text-shadow: 1px 2px 1.2px black;
+  margin-left: 5%;
 }
 .number {
   padding: 0px;
