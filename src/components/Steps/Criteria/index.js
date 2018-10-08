@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 import CollapsibleList from './collapsible';
 import Custom from './custom';
@@ -78,24 +77,6 @@ export class Criteria extends Component {
         this.props.saveCriteria(this.state.criteriaData);
     };
 
-    onClick = () => {
-        const { latitude, longitude } = this.props.city.localisation;
-        const { criteria } = this.props;
-        axios.post(`${process.env.REACT_APP_API_URL}/getMapCoordinates`, {
-            params: {
-                latitude,
-                longitude,
-                criteria,
-            },
-        })
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    };
-
     render() {
         const selectedCriteria = this.state.criteriaData.map((criteria, i) => {
             switch (criteria.type) {
@@ -147,7 +128,6 @@ export class Criteria extends Component {
                     handleRemove={this.handleRemoveCriteria}
                     elements={selectedCriteria}
                 />
-                <button onClick={() => this.onClick()}>Show map</button>
             </div>
         );
     }
