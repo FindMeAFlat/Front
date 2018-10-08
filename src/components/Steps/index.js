@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
 
+import ScrollMouseIcon from './../ScrollMouseIcon';
 import SelectCityStep from './SelectCity';
 import SearchStep from './Search';
 import CriteriaStep from './Criteria';
@@ -60,10 +61,11 @@ class Steps extends React.Component {
                                     className="navigator"
                                     onClick={() => this.scrollTo(prevStep)}
                                 >
-                                    <i
+                                    <ScrollMouseIcon />
+                                    {/* <i
                                         className="arrow fa fa-2x fa-arrow-up"
                                         data-tip={prevStep.name}
-                                    />
+                                    /> */}
                                 </div>
                             )}
                             <div className="step-header">
@@ -80,10 +82,11 @@ class Steps extends React.Component {
                                     className="navigator"
                                     onClick={() => this.scrollTo(nextStep)}
                                 >
-                                    <i
+                                    {/* <i
                                         data-tip={nextStep.name}
                                         className="arrow fa fa-2x fa-arrow-down"
-                                    />
+                                    /> */}
+                                    <ScrollMouseIcon />
                                 </div>
                             )}
                         </div>

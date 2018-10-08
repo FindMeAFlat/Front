@@ -43,38 +43,27 @@ export class Criteria extends Component {
         return type.split('_').map(s => `${s.charAt(0).toUpperCase()}${s.substring(1)}`).join(' ');
     }
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            criteriaData: props.criteria,
-        };
-    }
-
     handleNewCriteria = (type) => {
-        const { criteriaData } = this.state;
-        criteriaData.push({ type: type.value, data: Criteria.getDefaultData(type.value) });
-        this.setState({ criteriaData });
+        const { criteria, saveCriteria } = this.props;
+        criteria.push({ type: type.value, data: Criteria.getDefaultData(type.value) });
+        saveCriteria(criteria);
     };
 
     updateCriteria = (i, data) => {
-        const { criteriaData } = this.state;
-        criteriaData[i].data = { ...criteriaData[i].data, ...data };
-        this.setState({ criteriaData });
+        const { criteria, saveCriteria } = this.props;
+        criteria[i].data = { ...criteria[i].data, ...data };
+        saveCriteria(criteria);
     }
 
     handleRemoveCriteria = (index) => {
-        const { criteriaData } = this.state;
-        criteriaData.splice(index, 1);
-        this.setState({ criteriaData });
-    }
-
-    saveCriteria = () => {
-        this.props.saveCriteria(this.state.criteriaData);
+        const { criteria, saveCriteria } = this.props;
+        criteria.splice(index, 1);
+        saveCriteria(criteria);
     }
 
     render() {
-        const selectedCriteria = this.state.criteriaData.map((criteria, i) => {
+        console.log("criteria", this.props.criteria);
+        const selectedCriteria = this.props.criteria.map((criteria, i) => {
             switch (criteria.type) {
                 case 'distance': return { id: i, title: 'Distance', content: <Distance data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
                 case 'custom': return { id: i, title: 'Custom', content: <Custom data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };

@@ -1,4 +1,4 @@
-.header-container { 
+.header-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -6,11 +6,10 @@
   width: 100%;
   background-color: @white;
   height: 50px;
-  // padding: 10px;
 }
 
 .header {
-  &:extend(.flex-row, .centered, .full-size);
+  &:extend(.flex-row, .centered, .stretched, .full-size);
   font-family: @font-family-bold;
 
   flex-wrap: wrap;
@@ -27,7 +26,6 @@
 
 .google-logout {
   background-color: @blue;
-  float: right;
   color: @white;
   font-size: @font-size-big;
 }
@@ -46,7 +44,6 @@
   text-decoration: none;
   color: @blue;
   text-shadow: 1px 2px 1.2px black;
-  margin-left: 5%;
 }
 
 .number {

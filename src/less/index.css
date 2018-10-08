@@ -90,6 +90,7 @@ body {
   justify-content: center;
 }
 .stretched,
+.header,
 .criteria .expand,
 .criteria .custom > .form > .form-line > :first-child {
   justify-content: space-between;
@@ -105,12 +106,23 @@ body {
 .step-header {
   text-align: center;
 }
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(60px);
+  }
+}
+svg #wheel {
+  animation: scroll ease 2s infinite;
+}
 .step-container {
   margin-top: 50px;
   height: calc(100vh - 50px);
 }
 .step-container .step .navigator {
-  opacity: 0.5;
+  opacity: 0.2;
   cursor: pointer;
 }
 .step-container .step .navigator:hover {
@@ -143,15 +155,14 @@ body {
 .city-name {
   font-size: 1.2em;
 }
-.selected {
-  font-family: moon-bold, Arial, sans-serif !important;
-  opacity: 0.9;
-}
-.selected:hover {
-  opacity: 1;
-}
+.selected,
 .not-selected {
-  opacity: 0.7;
+  font-family: moon-bold, Arial, sans-serif !important;
+  opacity: 0.8;
+}
+.selected:hover,
+.not-selected:hover {
+  opacity: 1;
 }
 .city-submit {
   padding: 5px 20px;
@@ -177,7 +188,6 @@ body {
 }
 .google-logout {
   background-color: #759FEB;
-  float: right;
   color: #ffffff;
   font-size: 1.1em;
 }
@@ -193,7 +203,6 @@ body {
   text-decoration: none;
   color: #759FEB;
   text-shadow: 1px 2px 1.2px black;
-  margin-left: 5%;
 }
 .number {
   padding: 0px;
