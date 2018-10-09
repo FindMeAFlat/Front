@@ -62,7 +62,6 @@ export class Criteria extends Component {
     }
 
     render() {
-        console.log("criteria", this.props.criteria);
         const selectedCriteria = this.props.criteria.map((criteria, i) => {
             switch (criteria.type) {
                 case 'distance': return { id: i, title: 'Distance', content: <Distance data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };

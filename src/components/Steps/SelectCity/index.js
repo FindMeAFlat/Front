@@ -20,11 +20,10 @@ class SelectCity extends Component {
     createLinkForArm = (city, selected) => `${window.location.origin}/arms/${city.toLowerCase()}_${this.props.city === city || selected ? 'c' : 'g'}.png`;
 
     render() {
-        console.log(this.props.city);
         return (
             <div className="city-chooser">
                 <div className="cities">
-                    {CITIES.map(city => {console.log(this.createLinkForArm(city, this.props.city.name === city)); return (
+                    {CITIES.map(city => (
                         <span
                             className="city"
                             onClick={() => this.handleChooseCity(city)}
@@ -43,7 +42,7 @@ class SelectCity extends Component {
                                 // }}
                             />
                             <label className="city-name">{city.toUpperCase()}</label>
-                        </span>)})
+                        </span>))
                     }
                 </div>
             </div>
