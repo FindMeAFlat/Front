@@ -1,10 +1,18 @@
-.header {
-  &:extend(.flex-row, .centered);
+.header-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+  width: 100%;
+  background-color: @white;
+  height: 50px;
+}
 
+.header {
+  &:extend(.flex-row, .centered, .stretched, .full-size);
   font-family: @font-family-bold;
 
   flex-wrap: wrap;
-  min-height: 76px;
 }
 
 .header * {
@@ -18,7 +26,6 @@
 
 .google-logout {
   background-color: @blue;
-  float: right;
   color: @white;
   font-size: @font-size-big;
 }

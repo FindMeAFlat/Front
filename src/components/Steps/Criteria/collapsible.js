@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import { FaPlusCircle, FaMinusCircle, FaTrash } from 'react-icons/fa';
 
 class CollapsibleList extends React.Component {
+    static propTypes = {
+        elements: PropTypes.arrayOf({
+            title: PropTypes.string.isRequired,
+            content: PropTypes.any.isRequired,
+        }).isRequired,
+        handleRemove: PropTypes.func.isRequired,
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -35,13 +43,5 @@ class CollapsibleList extends React.Component {
         );
     }
 }
-
-CollapsibleList.propTypes = {
-    elements: PropTypes.arrayOf({
-        title: PropTypes.string.isRequired,
-        content: PropTypes.any.isRequired,
-    }).isRequired,
-    handleRemove: PropTypes.func.isRequired,
-};
 
 export default CollapsibleList;

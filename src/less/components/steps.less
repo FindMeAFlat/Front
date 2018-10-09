@@ -1,0 +1,27 @@
+.step-container {
+  margin-top: 50px;
+  height: calc(~"100vh - 50px");
+
+  .step {
+    &:extend(.flex-column, .centered, .justified, .full-size);
+
+    .navigator {
+      opacity: 0.2;
+      cursor: pointer;
+    }
+
+    .navigator:hover {
+      opacity: 1;
+    }
+
+    .step-content {
+      width: 90%;
+      height: 100%;
+    }
+
+    .step-header {
+      font-family: @font-family-bold;
+      font-size: @font-size-very-huge;
+    }
+  }
+}
