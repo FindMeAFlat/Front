@@ -1,0 +1,28 @@
+.map {
+  height: 50vh;
+  &-area {
+    border: 3px solid;
+    border-radius: 50%;
+    height: 60px;
+    opacity: 0.7;
+    position: absolute;
+    width: 60px;
+    left: -30px;
+    top: -30px;
+    &-green {
+      background-color: @green;
+      border-color: @green-dark;
+      &:hover {
+        background-color: @green-hover;
+      }
+    }
+    &-bus {
+      background-color: #fff;
+      border: 2px solid #0149B0;
+      border-bottom: 5px solid #0149B0;
+      height: 15px;
+      padding: 0 1px;
+      width: 10px;
+    }
+  }
+}

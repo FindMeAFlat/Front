@@ -94,6 +94,7 @@ export class Criteria extends Component {
 
 const mapStateToProps = state => ({
     criteria: state.criteria,
+    city: state.city,
 });
 
 const mapDispatchToProps = dispatch => ({

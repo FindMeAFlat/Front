@@ -1,13 +1,13 @@
 .step-container {
-  margin-top: 50px;
   height: calc(~"100vh - 50px");
+  margin-top: 50px;
 
   .step {
     &:extend(.flex-column, .centered, .justified, .full-size);
 
     .navigator {
-      opacity: 0.2;
       cursor: pointer;
+      opacity: 0.2;
     }
 
     .navigator:hover {
@@ -15,8 +15,9 @@
     }
 
     .step-content {
-      width: 90%;
       height: 100%;
+      text-align: center;
+      width: 90%;
     }
 
     .step-header {
