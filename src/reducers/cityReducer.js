@@ -7,10 +7,10 @@ export default function cityReducer(state = { name: '' }, action) {
             ...state,
             name: action.city,
         };
-    case types.SAVE_LOCALISATION:
+    case types.SAVE_LOCALIZATION:
         return {
             ...state,
-            localisation: action.localisation,
+            localization: action.localization,
         };
     default:
         return state;

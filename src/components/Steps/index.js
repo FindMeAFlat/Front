@@ -37,7 +37,7 @@ class Steps extends React.Component {
             case 'Choose your job/school address':
                 return this.props.city.name;
             case 'Choose additional criteria':
-                return !!this.props.city.localisation;
+                return !!this.props.city.localization;
             case 'Map':
                 return !!this.props.criteria;
             default:

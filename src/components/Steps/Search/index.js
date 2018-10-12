@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
-import { saveLocalisation } from '../../../actions/cities';
+import { saveLocalization } from '../../../actions/cities';
 
 export class Search extends Component {
     static propTypes = {
@@ -32,7 +32,7 @@ export class Search extends Component {
         geocodeByAddress(selected)
             .then(results => getLatLng(results[0]))
             .then(({ lat, lng }) => {
-                this.props.saveLocalisation({
+                this.props.saveLocalization({
                     latitude: lat,
                     longitude: lng,
                 });
@@ -96,7 +96,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    saveLocalisation: localisation => dispatch(saveLocalisation(localisation)),
+    saveLocalization: localization => dispatch(saveLocalization(localization)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

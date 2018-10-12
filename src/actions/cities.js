@@ -9,11 +9,11 @@ export function selectCity(city) {
     };
 }
 
-export function saveLocalisation(localisation) {
+export function saveLocalization(localization) {
     return (dispatch) => {
         dispatch({
-            type: types.SAVE_LOCALISATION,
-            localisation,
+            type: types.SAVE_LOCALIZATION,
+            localization,
         });
     };
 }

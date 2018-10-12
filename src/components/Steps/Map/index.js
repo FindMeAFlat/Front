@@ -21,7 +21,7 @@ class MapStep extends Component {
     };
 
     componentDidMount() {
-        const { latitude, longitude } = this.props.city.localisation;
+        const { latitude, longitude } = this.props.city.localization;
         const { city } = this.props;
         axios.post(`${process.env.REACT_APP_API_URL}/stations`, {
             target: {
@@ -43,17 +43,18 @@ class MapStep extends Component {
 
     render() {
       const { stations } = this.state;
+      const {latitude, longitude} = this.props.city.localization;
         return (
             <div className='map'>
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_PLACES_KEY }}
-                    defaultCenter={{lat: this.props.city.localisation.latitude,
-                        lng: this.props.city.localisation.longitude}}
+                    defaultCenter={{lat: latitude,
+                        lng: longitude}}
                     defaultZoom={11}
                 >
                     <Area
-                        lat={this.props.city.localisation.latitude}
-                        lng={this.props.city.localisation.longitude}
+                        lat={latitude}
+                        lng={longitude}
                         importance={0}
                     />
                   { stations.length > 0 ? this.prepareStationsIcons() : null}
