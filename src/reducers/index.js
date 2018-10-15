@@ -6,10 +6,10 @@ import cityReducer from './cityReducer';
 import criteriaReducer from './criteriaReducer';
 
 const rootReducer = combineReducers({
-  userId: userReducer,
-  city: cityReducer,
-  form: formReducer,
-  criteria: criteriaReducer,
+    userId: userReducer,
+    city: cityReducer,
+    form: formReducer,
+    criteria: criteriaReducer,
 });
 
 export default rootReducer;

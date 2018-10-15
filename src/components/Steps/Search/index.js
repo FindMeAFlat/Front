@@ -2,31 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
-import { saveLocalization } from '../../../actions/cities';
+import { saveLocalization, saveAddress } from '../../../actions/cities';
 
 export class Search extends Component {
     static propTypes = {
-        city: PropTypes.shape(
-            {
-                name: PropTypes.string.isRequired
-            },
-        ).isRequired,
+        city: PropTypes.shape({
+            name: PropTypes.string.isRequired,
+        }).isRequired,
     };
 
     constructor(props) {
         super(props);
-        this.state = {
-            address: '',
-            lat: null,
-            lng: null,
-        };
     }
-
-    handleChange = (address) => {
-        this.setState({
-            address,
-        });
-    };
 
     handleSelect = (selected) => {
         geocodeByAddress(selected)
@@ -36,9 +23,7 @@ export class Search extends Component {
                     lat,
                     lng,
                 });
-                this.setState({
-                    address: selected,
-                });
+                this.props.saveAddress(selected);
             });
     };
 
@@ -76,12 +61,12 @@ export class Search extends Component {
     );
 
     render() {
-        const { address } = this.state;
+        const { address } = this.props.city;
         return (
             <div>
                 <PlacesAutocomplete
                     value={address}
-                    onChange={this.handleChange}
+                    onChange={address => this.props.saveAddress(address)}
                     onSelect={this.handleSelect}
                 >
                     {this.drawInputField}
@@ -97,6 +82,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     saveLocalization: localization => dispatch(saveLocalization(localization)),
+    saveAddress: address => dispatch(saveAddress(address)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

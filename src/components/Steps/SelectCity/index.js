@@ -12,11 +12,11 @@ class SelectCity extends Component {
         scrollToNext: PropTypes.func.isRequired,
     };
 
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.state = {
             cities: [],
-            selectedCity: ''
+            selectedCity: '',
         };
     }
 
@@ -27,47 +27,47 @@ class SelectCity extends Component {
 
     createLinkForArm = (city, selected) => `${window.location.origin}/arms/${city.toLowerCase()}_${this.props.city === city || selected ? 'c' : 'g'}.png`;
 
-    componentDidMount () {
+    componentDidMount() {
         axios.get(`${process.env.REACT_APP_API_URL}/api/cities`)
             .then((response) => {
                 response = response.data.data;
                 this.setState({
                     cities: response,
-                    selectedCity: response[0]
-                })
+                    selectedCity: response[0],
+                });
             })
             .catch((error) => {
                 console.error(error);
             });
-    };
+    }
 
-    render () {
-        const {cities, selectedCity} = this.state;
+    render() {
+        const { cities, selectedCity } = this.state;
         let arms = null;
         if (cities.length > 0) {
-            arms = <div className="cities">
+            arms = (<div className="cities">
                 {cities.map(city => (
                     <span
                         className="city"
                         onClick={() => this.handleChooseCity(city)}
                         key={city}
                     >
-                    <img
-                        id={city}
-                        className={`city-arm ${selectedCity === city ? 'selected' : 'not-selected'}`}
-                        src={this.createLinkForArm(city, false)}
-                        alt={city}
-                        onMouseOver={(e) => {
-                            e.target.src = this.createLinkForArm(city, true);
-                        }}
-                        onMouseOut={(e) => {
-                            e.target.src = this.createLinkForArm(city, false);
-                        }}
-                    />
-                    <label className="city-name">{city.toUpperCase()}</label>
-                </span>))
+                        <img
+                            id={city}
+                            className={`city-arm ${selectedCity === city ? 'selected' : 'not-selected'}`}
+                            src={this.createLinkForArm(city, false)}
+                            alt={city}
+                            onMouseOver={(e) => {
+                                e.target.src = this.createLinkForArm(city, true);
+                            }}
+                            onMouseOut={(e) => {
+                                e.target.src = this.createLinkForArm(city, false);
+                            }}
+                        />
+                        <label className="city-name">{city.toUpperCase()}</label>
+                    </span>))
                 }
-            </div>;
+                    </div>);
         }
         return (
             <div className="city-chooser">

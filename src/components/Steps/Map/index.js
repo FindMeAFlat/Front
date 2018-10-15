@@ -10,17 +10,16 @@ const RADIUS = 4;
 const DEFAULT_ZOOM = 11;
 
 class MapStep extends Component {
-
     constructor(props) {
-      super(props);
-      this.state = {
-          stations: [],
-      }
+        super(props);
+        this.state = {
+            stations: [],
+        };
     }
 
     prepareStationsIcons = () => {
         const { stations } = this.state;
-        return stations.map((station) => <Station lat={station.coordinates.lon} lng={station.coordinates.lat}/>);
+        return stations.map(station => <Station lat={station.coordinates.lon} lng={station.coordinates.lat} />);
     };
 
     componentDidMount() {
@@ -29,14 +28,14 @@ class MapStep extends Component {
         axios.post(`${process.env.REACT_APP_API_URL}/stations`, {
             target: {
                 lat,
-                lon: lng
+                lon: lng,
             },
             city: city.name,
-            radius: RADIUS
+            radius: RADIUS,
         })
             .then((response) => {
                 this.setState({
-                    stations: response.data
+                    stations: response.data,
                 });
             })
             .catch((error) => {
@@ -45,16 +44,16 @@ class MapStep extends Component {
     }
 
     render() {
-      const { stations } = this.state;
-      const { lat, lng } = this.props.city.localization;
+        const { stations } = this.state;
+        const { lat, lng } = this.props.city.localization;
         return (
-            <div className='map'>
+            <div className="map">
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_PLACES_KEY }}
                     defaultCenter={{
-                            lat,
-                            lng
-                        }}
+                        lat,
+                        lng,
+                    }}
                     defaultZoom={DEFAULT_ZOOM}
                 >
                     <Area
@@ -62,7 +61,7 @@ class MapStep extends Component {
                         lng={lng}
                         importance={0}
                     />
-                  { stations.length && this.prepareStationsIcons()}
+                    { stations.length && this.prepareStationsIcons()}
                 </GoogleMapReact>
             </div>
         );

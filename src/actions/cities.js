@@ -17,3 +17,12 @@ export function saveLocalization(localization) {
         });
     };
 }
+
+export function saveAddress(address) {
+    return (dispatch) => {
+        dispatch({
+            type: types.SAVE_ADDRESS,
+            address,
+        });
+    };
+}
