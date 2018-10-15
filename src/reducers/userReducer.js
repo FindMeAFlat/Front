@@ -1,11 +1,11 @@
 import * as types from './../actions/types';
 
 export default function userReducer(state = '', action) {
-  switch (action.type) {
+    switch (action.type) {
     case types.SIGN_IN:
     case types.LOG_OUT:
-      return action.payload;
+        return action.payload;
     default:
-      return state;
-  }
+        return state;
+    }
 }

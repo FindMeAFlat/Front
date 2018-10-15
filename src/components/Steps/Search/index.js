@@ -2,40 +2,28 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
+import { saveLocalization, saveAddress } from '../../../actions/cities';
 
 export class Search extends Component {
     static propTypes = {
-        city: PropTypes.shape(
-            {
-                name: PropTypes.string.isRequired
-            },
-        ).isRequired,
+        city: PropTypes.shape({
+            name: PropTypes.string.isRequired,
+        }).isRequired,
     };
 
     constructor(props) {
         super(props);
-        this.state = {
-            address: '',
-            latitude: null,
-            longitude: null,
-        };
     }
-
-    handleChange = (address) => {
-        this.setState({
-            address,
-        });
-    };
 
     handleSelect = (selected) => {
         geocodeByAddress(selected)
             .then(results => getLatLng(results[0]))
             .then(({ lat, lng }) => {
-                this.setState({
-                    address: selected,
-                    latitude: lat,
-                    longitude: lng,
+                this.props.saveLocalization({
+                    lat,
+                    lng,
                 });
+                this.props.saveAddress(selected);
             });
     };
 
@@ -73,12 +61,12 @@ export class Search extends Component {
     );
 
     render() {
-        const { address } = this.state;
+        const { address } = this.props.city;
         return (
             <div>
                 <PlacesAutocomplete
                     value={address}
-                    onChange={this.handleChange}
+                    onChange={address => this.props.saveAddress(address)}
                     onSelect={this.handleSelect}
                 >
                     {this.drawInputField}
@@ -92,4 +80,9 @@ const mapStateToProps = state => ({
     city: state.city,
 });
 
-export default connect(mapStateToProps, null)(Search);
+const mapDispatchToProps = dispatch => ({
+    saveLocalization: localization => dispatch(saveLocalization(localization)),
+    saveAddress: address => dispatch(saveAddress(address)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

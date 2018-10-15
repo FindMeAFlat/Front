@@ -118,19 +118,20 @@ svg #wheel {
   animation: scroll ease 2s infinite;
 }
 .step-container {
-  margin-top: 50px;
   height: calc(100vh - 50px);
+  margin-top: 50px;
 }
 .step-container .step .navigator {
-  opacity: 0.2;
   cursor: pointer;
+  opacity: 0.2;
 }
 .step-container .step .navigator:hover {
   opacity: 1;
 }
 .step-container .step .step-content {
-  width: 90%;
   height: 100%;
+  text-align: center;
+  width: 90%;
 }
 .step-container .step .step-header {
   font-family: moon-bold, Arial, sans-serif;
@@ -151,18 +152,14 @@ svg #wheel {
 .city-arm {
   height: 12vw;
   max-height: 112px;
-}
-.city-name {
-  font-size: 1.2em;
-}
-.selected,
-.not-selected {
   font-family: moon-bold, Arial, sans-serif !important;
   opacity: 0.8;
 }
-.selected:hover,
-.not-selected:hover {
+.city-arm:hover {
   opacity: 1;
+}
+.city-name {
+  font-size: 1.2em;
 }
 .city-submit {
   padding: 5px 20px;
@@ -446,4 +443,32 @@ svg #wheel {
 .criteria .custom > .form > .form-line > div,
 .criteria .custom > .form > .form-line > label {
   margin: 5px 0;
+}
+.map {
+  height: 50vh;
+}
+.map-area {
+  border: 3px solid;
+  border-radius: 50%;
+  height: 60px;
+  opacity: 0.7;
+  position: absolute;
+  width: 60px;
+  left: -30px;
+  top: -30px;
+}
+.map-area-green {
+  background-color: #0AB51F;
+  border-color: #055F05;
+}
+.map-area-green:hover {
+  background-color: #0E8D1E;
+}
+.map-area-bus {
+  background-color: #fff;
+  border: 2px solid #0149B0;
+  border-bottom: 5px solid #0149B0;
+  height: 15px;
+  padding: 0 1px;
+  width: 10px;
 }

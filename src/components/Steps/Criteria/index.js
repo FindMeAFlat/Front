@@ -21,21 +21,21 @@ export class Criteria extends Component {
 
     static getDefaultData(type) {
         switch (type) {
-            case 'distance': return {
-                distance: {
-                    distance: 0,
-                    unit: 'm',
-                },
-                selectedPlaceType: null,
-            };
-            case 'custom': return {
-                url: '',
-                propertyAccess: '',
-                maxRatingValue: null,
-                importance: null,
-                ascending: true,
-            };
-            default: return {};
+        case 'distance': return {
+            distance: {
+                distance: 0,
+                unit: 'm',
+            },
+            selectedPlaceType: null,
+        };
+        case 'custom': return {
+            url: '',
+            propertyAccess: '',
+            maxRatingValue: null,
+            importance: null,
+            ascending: true,
+        };
+        default: return {};
         }
     }
 
@@ -64,9 +64,9 @@ export class Criteria extends Component {
     render() {
         const selectedCriteria = this.props.criteria.map((criteria, i) => {
             switch (criteria.type) {
-                case 'distance': return { id: i, title: 'Distance', content: <Distance data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
-                case 'custom': return { id: i, title: 'Custom', content: <Custom data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
-                default: return <div>cos poszlo nie tak</div>;
+            case 'distance': return { id: i, title: 'Distance', content: <Distance data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
+            case 'custom': return { id: i, title: 'Custom', content: <Custom data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
+            default: return <div>cos poszlo nie tak</div>;
             }
         });
 
@@ -94,6 +94,7 @@ export class Criteria extends Component {
 
 const mapStateToProps = state => ({
     criteria: state.criteria,
+    city: state.city,
 });
 
 const mapDispatchToProps = dispatch => ({

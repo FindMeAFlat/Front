@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { selectCity } from './../../../actions/cities';
+import axios from 'axios';
 
-const CITIES = ['Wrocław', 'Warszawa'];
+import { selectCity } from './../../../actions/cities';
 
 class SelectCity extends Component {
     static propTypes = {
@@ -12,39 +12,66 @@ class SelectCity extends Component {
         scrollToNext: PropTypes.func.isRequired,
     };
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            cities: [],
+            selectedCity: '',
+        };
+    }
+
     handleChooseCity = (selectedCity) => {
         this.props.selectCity(selectedCity);
         this.props.scrollToNext();
-    }
+    };
 
     createLinkForArm = (city, selected) => `${window.location.origin}/arms/${city.toLowerCase()}_${this.props.city === city || selected ? 'c' : 'g'}.png`;
 
+    componentDidMount() {
+        axios.get(`${process.env.REACT_APP_API_URL}/api/cities`)
+            .then((response) => {
+                response = response.data.data;
+                this.setState({
+                    cities: response,
+                    selectedCity: response[0],
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
     render() {
+        const { cities, selectedCity } = this.state;
+        let arms = null;
+        if (cities.length > 0) {
+            arms = (<div className="cities">
+                {cities.map(city => (
+                    <span
+                        className="city"
+                        onClick={() => this.handleChooseCity(city)}
+                        key={city}
+                    >
+                        <img
+                            id={city}
+                            className={`city-arm ${selectedCity === city ? 'selected' : 'not-selected'}`}
+                            src={this.createLinkForArm(city, false)}
+                            alt={city}
+                            onMouseOver={(e) => {
+                                e.target.src = this.createLinkForArm(city, true);
+                            }}
+                            onMouseOut={(e) => {
+                                e.target.src = this.createLinkForArm(city, false);
+                            }}
+                        />
+                        <label className="city-name">{city.toUpperCase()}</label>
+                    </span>))
+                }
+                    </div>);
+        }
         return (
             <div className="city-chooser">
-                <div className="cities">
-                    {CITIES.map(city => (
-                        <span
-                            className="city"
-                            onClick={() => this.handleChooseCity(city)}
-                            key={city}
-                        >
-                            <img
-                                id={city}
-                                className={`city-arm ${this.props.city.name === city ? 'selected' : 'not-selected'}`}
-                                src={this.createLinkForArm(city, this.props.city.name === city)}
-                                alt={city}
-                                // onMouseOver={(e) => {
-                                //     e.target.src = this.createLinkForArm(city, true);
-                                // }}
-                                // onMouseOut={(e) => {
-                                //     e.target.src = this.createLinkForArm(city, false);
-                                // }}
-                            />
-                            <label className="city-name">{city.toUpperCase()}</label>
-                        </span>))
-                    }
-                </div>
+                {arms}
             </div>
         );
     }
@@ -52,7 +79,7 @@ class SelectCity extends Component {
 
 const mapStateToProps = state => ({
     city: state.city,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
     selectCity: city => dispatch(selectCity(city)),
