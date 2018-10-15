@@ -25,6 +25,7 @@ export class Criteria extends Component {
             distance: {
                 distance: 0,
                 unit: 'm',
+                importance: 0,
             },
             selectedPlaceType: null,
         };
@@ -51,7 +52,7 @@ export class Criteria extends Component {
 
     updateCriteria = (i, data) => {
         const { criteria, saveCriteria } = this.props;
-        criteria[i].data = { ...criteria[i].data, ...data };
+        criteria[i].data = { ...criteria[i].data, ...data, };
         saveCriteria(criteria);
     }
 

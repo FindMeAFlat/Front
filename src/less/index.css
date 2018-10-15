@@ -36,8 +36,8 @@ body {
 .criteria .distance,
 .criteria .distance .distance-picker,
 .criteria .custom,
-.criteria .custom > .form > .form-line,
-.criteria .custom > .form > .form-line > :first-child {
+.criteria .form > .form-line,
+.criteria .form > .form-line > :first-child {
   display: flex;
 }
 .flex-column,
@@ -52,7 +52,7 @@ body {
 .criteria .collapsible-list > .collapsible,
 .criteria .distance,
 .criteria .custom,
-.criteria .custom > .form > .form-line {
+.criteria .form > .form-line {
   flex-direction: column;
 }
 .clickable,
@@ -77,7 +77,7 @@ body {
 .criteria .expand,
 .criteria .distance,
 .criteria .distance .distance-picker,
-.criteria .custom > .form > .form-line {
+.criteria .form > .form-line {
   align-items: center;
 }
 .justified,
@@ -92,7 +92,7 @@ body {
 .stretched,
 .header,
 .criteria .expand,
-.criteria .custom > .form > .form-line > :first-child {
+.criteria .form > .form-line > :first-child {
   justify-content: space-between;
 }
 .full-size,
@@ -427,21 +427,25 @@ svg #wheel {
 .criteria .custom {
   padding: 10px;
 }
-.criteria .custom > .form > .form-line > :first-child {
+.criteria .form > .form-line > :first-child {
   width: 100%;
 }
-.criteria .custom > .form > .form-line > :first-child > .name {
+.criteria .form > .form-line > :first-child > .name {
   width: 50%;
 }
-.criteria .custom > .form > .form-line > :first-child > .input {
+.criteria .form > .form-line > :first-child > .input {
   width: 50%;
   height: 20px;
+  border: 1.2px ridge lightgray;
 }
-.criteria .custom > .form > .form-line > .error {
+.criteria .form > .form-line > :first-child > .input:focus {
+  border-color: #759FEB !important;
+}
+.criteria .form > .form-line > .error {
   color: #d14836;
 }
-.criteria .custom > .form > .form-line > div,
-.criteria .custom > .form > .form-line > label {
+.criteria .form > .form-line > div,
+.criteria .form > .form-line > label {
   margin: 5px 0;
 }
 .map {

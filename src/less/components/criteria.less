@@ -4,23 +4,23 @@
     > :not(:first-child) {
         @media (max-width: 400px) {
             font-size: @font-size-very-small;
-    
+
             .error {
                 font-size: @font-size-tiny;
             }
         }
-        
+
         @media (min-width: 400px) and (max-width: 700px) {
             font-size: @font-size-small;
-    
+
             .error {
                 font-size: @font-size-very-small;
             }
         }
-        
+
         @media (min-width: 700px) {
             font-size: @font-size-regular;
-    
+
             .error {
                 font-size: @font-size-small;
             }
@@ -118,33 +118,38 @@
         &:extend(.flex-column);
 
         padding: 10px;
+    }
 
-        > .form {
-            > .form-line {
-                &:extend(.flex-column, .centered);
+    .form {
+        > .form-line {
+            &:extend(.flex-column, .centered);
 
-                > :first-child {
-                    &:extend(.flex-row, .stretched);
+            > :first-child {
+                &:extend(.flex-row, .stretched);
 
-                    width: 100%;
+                width: 100%;
 
-                    > .name {
-                        width: 50%;
-                    }
-
-                    > .input {
-                        width: 50%;
-                        height: 20px;
-                    }
+                > .name {
+                    width: 50%;
                 }
 
-                > .error {
-                    color: @red;
+                > .input {
+                    width: 50%;
+                    height: 20px;
+                    border: 1.2px ridge lightgray;
                 }
 
-                > div, > label {
-                    margin: 5px 0;
+                > .input:focus {
+                    border-color: @blue !important;
                 }
+            }
+
+            > .error {
+                color: @red;
+            }
+
+            > div, > label {
+                margin: 5px 0;
             }
         }
     }
