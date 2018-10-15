@@ -24,7 +24,7 @@ class MapStep extends Component {
 
     componentDidMount() {
         const { lat, lng } = this.props.city.localization;
-        const { city } = this.props;
+        const { city, criteria } = this.props;
         axios.post(`${process.env.REACT_APP_API_URL}/stations`, {
             target: {
                 lat,
@@ -32,6 +32,7 @@ class MapStep extends Component {
             },
             city: city.name,
             radius: RADIUS,
+            criteria,
         })
             .then((response) => {
                 this.setState({
