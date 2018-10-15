@@ -5,6 +5,7 @@ import ScrollMouseIcon from './../ScrollMouseIcon';
 import SelectCityStep from './SelectCity';
 import SearchStep from './Search';
 import CriteriaStep from './Criteria';
+import FinalStep from './Final';
 import scrollToComponent from 'react-scroll-to-component';
 
 class Steps extends React.Component {
@@ -14,7 +15,8 @@ class Steps extends React.Component {
             steps: [
                 React.createRef(),
                 React.createRef(),
-                React.createRef()
+                React.createRef(),
+                React.createRef(),
             ],
         };
     }
@@ -41,6 +43,10 @@ class Steps extends React.Component {
             {
                 name: 'Choose additional criteria',
                 component: CriteriaStep
+            },
+            {
+                name: 'Final step',
+                component: FinalStep
             },
         ];
 
