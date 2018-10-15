@@ -94,10 +94,6 @@ class Steps extends React.Component {
                                         onClick={() => this.scrollTo(prevStep)}
                                     >
                                         <ScrollMouseIcon />
-                                        {/* <i
-                                         className="arrow fa fa-2x fa-arrow-up"
-                                         data-tip={prevStep.name}
-                                         /> */}
                                     </div>
                                 )}
                                 <div className="step-header">
@@ -115,10 +111,6 @@ class Steps extends React.Component {
                                         className="navigator"
                                         onClick={() => this.scrollTo(nextStep)}
                                     >
-                                        {/* <i
-                                         data-tip={nextStep.name}
-                                         className="arrow fa fa-2x fa-arrow-down"
-                                         /> */}
                                         <ScrollMouseIcon />
                                     </div>
                                 )}

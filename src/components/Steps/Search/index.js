@@ -17,8 +17,8 @@ export class Search extends Component {
         super(props);
         this.state = {
             address: '',
-            latitude: null,
-            longitude: null,
+            lat: null,
+            lng: null,
         };
     }
 
@@ -33,8 +33,8 @@ export class Search extends Component {
             .then(results => getLatLng(results[0]))
             .then(({ lat, lng }) => {
                 this.props.saveLocalization({
-                    latitude: lat,
-                    longitude: lng,
+                    lat,
+                    lng,
                 });
                 this.setState({
                     address: selected,

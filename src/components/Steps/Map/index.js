@@ -6,6 +6,9 @@ import axios from 'axios';
 import Area from './Area';
 import Station from './Station';
 
+const RADIUS = 4;
+const DEFAULT_ZOOM = 11;
+
 class MapStep extends Component {
 
     constructor(props) {
@@ -21,15 +24,15 @@ class MapStep extends Component {
     };
 
     componentDidMount() {
-        const { latitude, longitude } = this.props.city.localization;
+        const { lat, lng } = this.props.city.localization;
         const { city } = this.props;
         axios.post(`${process.env.REACT_APP_API_URL}/stations`, {
             target: {
-                lat: latitude,
-                lon: longitude
+                lat,
+                lon: lng
             },
             city: city.name,
-            radius: 4
+            radius: RADIUS
         })
             .then((response) => {
                 this.setState({
@@ -43,21 +46,23 @@ class MapStep extends Component {
 
     render() {
       const { stations } = this.state;
-      const {latitude, longitude} = this.props.city.localization;
+      const { lat, lng } = this.props.city.localization;
         return (
             <div className='map'>
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_PLACES_KEY }}
-                    defaultCenter={{lat: latitude,
-                        lng: longitude}}
-                    defaultZoom={11}
+                    defaultCenter={{
+                            lat,
+                            lng
+                        }}
+                    defaultZoom={DEFAULT_ZOOM}
                 >
                     <Area
-                        lat={latitude}
-                        lng={longitude}
+                        lat={lat}
+                        lng={lng}
                         importance={0}
                     />
-                  { stations.length > 0 ? this.prepareStationsIcons() : null}
+                  { stations.length && this.prepareStationsIcons()}
                 </GoogleMapReact>
             </div>
         );
