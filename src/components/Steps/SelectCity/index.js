@@ -10,7 +10,6 @@ class SelectCity extends Component {
         super(props);
         this.state = {
             cities: [],
-            selectedCity: '',
         };
     }
 
@@ -19,7 +18,6 @@ class SelectCity extends Component {
             .then(({ data: { data } }) => {
                 this.setState({
                     cities: data,
-                    selectedCity: data[0],
                 });
             })
             .catch((error) => {
@@ -35,7 +33,7 @@ class SelectCity extends Component {
     };
 
     render() {
-        const { cities, selectedCity } = this.state;
+        const { cities } = this.state;
         let arms = null;
         if (cities.length > 0) {
             arms = (
@@ -48,14 +46,16 @@ class SelectCity extends Component {
                         >
                             <img
                                 id={city}
-                                className={`city-arm ${selectedCity === city ? 'selected' : 'not-selected'}`}
-                                src={this.createLinkForArm(city, false)}
+                                className={`city-arm ${this.props.city.name === city ? 'selected' : 'not-selected'}`}
+                                src={this.createLinkForArm(city, this.props.city.name === city)}
                                 alt={city}
                                 onMouseOver={(e) => {
-                                    e.target.src = this.createLinkForArm(city, true);
+                                    e.target.src =
+                                    this.createLinkForArm(city, true);
                                 }}
                                 onMouseOut={(e) => {
-                                    e.target.src = this.createLinkForArm(city, false);
+                                    e.target.src =
+                                        this.createLinkForArm(city, this.props.city.name === city);
                                 }}
                             />
                             <label className="city-name">{city.toUpperCase()}</label>
