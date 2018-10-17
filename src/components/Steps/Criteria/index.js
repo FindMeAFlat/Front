@@ -11,14 +11,6 @@ import saveCriteria from './../../../actions/criteria';
 const criteriaTypes = ['distance', 'custom'];
 
 export class Criteria extends Component {
-    static propTypes = {
-        criteria: PropTypes.shape({
-            type: PropTypes.string.isRequired,
-            data: PropTypes.object.isRequired,
-        }).isRequired,
-        saveCriteria: PropTypes.func.isRequired,
-    };
-
     static getDefaultData(type) {
         switch (type) {
         case 'distance': return {
@@ -45,21 +37,21 @@ export class Criteria extends Component {
     }
 
     handleNewCriteria = (type) => {
-        const { criteria, saveCriteria } = this.props;
+        const { criteria, saveCriteria: saveCriteriaProp } = this.props;
         criteria.push({ type: type.value, data: Criteria.getDefaultData(type.value) });
-        saveCriteria(criteria);
+        saveCriteriaProp(criteria);
     };
 
     updateCriteria = (i, data) => {
-        const { criteria, saveCriteria } = this.props;
-        criteria[i].data = { ...criteria[i].data, ...data, };
-        saveCriteria(criteria);
+        const { criteria, saveCriteria: saveCriteriaProp } = this.props;
+        criteria[i].data = { ...criteria[i].data, ...data };
+        saveCriteriaProp(criteria);
     }
 
     handleRemoveCriteria = (index) => {
-        const { criteria, saveCriteria } = this.props;
+        const { criteria, saveCriteria: saveCriteriaProp } = this.props;
         criteria.splice(index, 1);
-        saveCriteria(criteria);
+        saveCriteriaProp(criteria);
     }
 
     render() {
@@ -88,10 +80,20 @@ export class Criteria extends Component {
                     handleRemove={this.handleRemoveCriteria}
                     elements={selectedCriteria}
                 />
+                <button onClick={() => this.props.activateNext()}>Generate map</button>
             </div>
         );
     }
 }
+
+Criteria.propTypes = {
+    criteria: PropTypes.arrayOf({
+        type: PropTypes.string.isRequired,
+        data: PropTypes.object.isRequired,
+    }).isRequired,
+    saveCriteria: PropTypes.func.isRequired,
+    activateNext: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
     criteria: state.criteria,

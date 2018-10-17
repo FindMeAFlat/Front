@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import Area from './Area';
 import Station from './Station';
@@ -16,11 +17,6 @@ class MapStep extends Component {
             stations: [],
         };
     }
-
-    prepareStationsIcons = () => {
-        const { stations } = this.state;
-        return stations.map(station => <Station lat={station.coordinates.lon} lng={station.coordinates.lat} />);
-    };
 
     componentDidMount() {
         const { lat, lng } = this.props.city.localization;
@@ -44,6 +40,10 @@ class MapStep extends Component {
             });
     }
 
+    prepareStationsIcons = () => this.state.stations.map(station => (
+        <Station lat={station.coordinates.lon} lng={station.coordinates.lat} />
+    ));
+
     render() {
         const { stations } = this.state;
         const { lat, lng } = this.props.city.localization;
@@ -62,12 +62,26 @@ class MapStep extends Component {
                         lng={lng}
                         importance={0}
                     />
+
                     { stations.length && this.prepareStationsIcons()}
                 </GoogleMapReact>
             </div>
         );
     }
 }
+
+MapStep.propTypes = {
+    criteria: PropTypes.arrayOf({
+        type: PropTypes.string.isRequired,
+        data: PropTypes.object.isRequired,
+    }).isRequired,
+    city: PropTypes.shape({
+        localization: PropTypes.shape({
+            lat: PropTypes.number.isRequired,
+            lng: PropTypes.number.isRequired,
+        }).isRequired,
+    }).isRequired,
+};
 
 const mapStateToProps = state => ({
     criteria: state.criteria,

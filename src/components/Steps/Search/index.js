@@ -5,16 +5,6 @@ import PropTypes from 'prop-types';
 import { saveLocalization, saveAddress } from '../../../actions/cities';
 
 export class Search extends Component {
-    static propTypes = {
-        city: PropTypes.shape({
-            name: PropTypes.string.isRequired,
-        }).isRequired,
-    };
-
-    constructor(props) {
-        super(props);
-    }
-
     handleSelect = (selected) => {
         geocodeByAddress(selected)
             .then(results => getLatLng(results[0]))
@@ -24,6 +14,7 @@ export class Search extends Component {
                     lng,
                 });
                 this.props.saveAddress(selected);
+                this.props.activateNext();
             });
     };
 
@@ -54,6 +45,7 @@ export class Search extends Component {
                                 </div>
                             );
                         }
+                        return null;
                     })}
                 </div>
             )}
@@ -66,7 +58,7 @@ export class Search extends Component {
             <div>
                 <PlacesAutocomplete
                     value={address}
-                    onChange={address => this.props.saveAddress(address)}
+                    onChange={addr => this.props.saveAddress(addr)}
                     onSelect={this.handleSelect}
                 >
                     {this.drawInputField}
@@ -75,6 +67,16 @@ export class Search extends Component {
         );
     }
 }
+
+Search.propTypes = {
+    city: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        address: PropTypes.string.isRequired,
+    }).isRequired,
+    saveLocalization: PropTypes.func.isRequired,
+    saveAddress: PropTypes.func.isRequired,
+    activateNext: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
     city: state.city,
