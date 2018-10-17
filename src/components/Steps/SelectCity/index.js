@@ -6,6 +6,8 @@ import axios from 'axios';
 import { selectCity } from './../../../actions/cities';
 
 class SelectCity extends Component {
+    static validate = ({ city }) => city && city.name;
+
     constructor(props) {
         super(props);
         this.state = {

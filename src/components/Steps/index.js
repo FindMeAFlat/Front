@@ -35,7 +35,9 @@ class Steps extends React.Component {
                 ...step,
                 ref: React.createRef(),
                 active: false,
+                errors: [],
             })),
+            validated: false,
         };
 
         this.activateStep(0);
@@ -46,6 +48,18 @@ class Steps extends React.Component {
         this.scrollTo(this.state.steps[lastActivatedStepIndex]);
     }
 
+    setErrors = (index, errors) => {
+        const { steps } = this.state;
+        steps[index].errors = errors;
+        this.setState({ steps });
+    }
+
+    activateStep = (index) => {
+        const { steps } = this.state;
+        steps[index].active = true;
+        this.setState({ steps });
+    }
+
     scrollTo = ({ ref }) => (ref.current
         ? scrollToComponent(ref.current, {
             offset: -50,
@@ -54,11 +68,16 @@ class Steps extends React.Component {
         })
         : {});
 
-    activateStep(index) {
-        const { steps } = this.state;
-        steps[index].active = true;
-        this.setState({ steps });
-    }
+    validate = () => {
+        this.setState({ validated: true });
+        const firstErrorStep = this.state.steps
+            .filter(step => !step.component.validate(this.props))[0];
+        if (firstErrorStep) {
+            this.scrollTo(firstErrorStep);
+            return false;
+        }
+        return true;
+    };
 
     render() {
         return (
@@ -88,8 +107,9 @@ class Steps extends React.Component {
                                 <div className="step-content">
                                     <StepComponent
                                         activateNext={() => this.activateStep(index + 1)}
-                                        scrollToPrev={() => this.scrollTo(prevStep)}
-                                        scrollToNext={() => this.scrollTo(nextStep)}
+                                        setErrors={errors => this.setErrors(index, errors)}
+                                        validate={this.validate}
+                                        validated={this.state.validated}
                                     />
                                 </div>
                                 {nextStep && nextStep.active && (

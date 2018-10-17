@@ -62,7 +62,6 @@ class MapStep extends Component {
                         lng={lng}
                         importance={0}
                     />
-
                     { stations.length && this.prepareStationsIcons()}
                 </GoogleMapReact>
             </div>
@@ -87,5 +86,7 @@ const mapStateToProps = state => ({
     criteria: state.criteria,
     city: state.city,
 });
+
+MapStep.validate = () => true;
 
 export default connect(mapStateToProps, null)(MapStep);
