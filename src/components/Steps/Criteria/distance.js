@@ -5,8 +5,9 @@ import { Form, Text } from 'react-form';
 
 import 'react-input-range/lib/css/index.css';
 
-import Errors from './../../../const/errors';
 import { Select } from './../../Select';
+import Errors from './../../../const/errors';
+import PlaceTypes from './../../../const/placeTypes';
 
 class Distance extends React.Component {
     static propTypes = {
@@ -16,6 +17,7 @@ class Distance extends React.Component {
                 unit: PropTypes.string.isRequired,
             }).isRequired,
             selectedPlaceType: PropTypes.string.isRequired,
+            importance: PropTypes.number.isRequired,
         }).isRequired,
         updateCriteriaData: PropTypes.func.isRequired,
     };
@@ -24,7 +26,10 @@ class Distance extends React.Component {
 
     handleChooseType = ({ value }) => {
         const { selectedPlaceType, distance } = this.props.data;
-        this.props.updateCriteriaData({ selectedPlaceType: value, distance: selectedPlaceType !== value ? { distance: 0, unit: 'm' } : distance });
+        this.props.updateCriteriaData({
+            selectedPlaceType: value,
+            distance: selectedPlaceType !== value ? { distance: 0, unit: 'm' } : distance,
+        });
     };
 
     handleDistancePickerChange = (data) => {
@@ -44,8 +49,6 @@ class Distance extends React.Component {
     });
 
     render() {
-        const placeTypes = ['accounting', 'airport', 'amusement_park', 'aquarium', 'art_gallery', 'atm', 'bakery', 'bank', 'bar', 'beauty_salon', 'bicycle_store', 'book_store', 'bowling_alley', 'bus_station', 'cafe', 'campground', 'car_dealer', 'car_rental', 'car_repair', 'car_wash', 'casino', 'cemetery', 'church', 'city_hall', 'clothing_store', 'convenience_store', 'courthouse', 'dentist', 'department_store', 'doctor', 'electrician', 'electronics_store', 'embassy', 'fire_station', 'florist', 'funeral_home', 'furniture_store', 'gas_station', 'gym', 'hair_care', 'hardware_store', 'hindu_temple', 'home_goods_store', 'hospital', 'insurance_agency', 'jewelry_store', 'laundry', 'lawyer', 'library', 'liquor_store', 'local_government_office', 'locksmith', 'lodging', 'meal_delivery', 'meal_takeaway', 'mosque', 'movie_rental', 'movie_theater', 'moving_company', 'museum', 'night_club', 'painter', 'park', 'parking', 'pet_store', 'pharmacy', 'physiotherapist', 'plumber', 'police', 'post_office', 'real_estate_agency', 'restaurant', 'roofing_contractor', 'rv_park', 'school', 'shoe_store', 'shopping_mall', 'spa', 'stadium', 'storage', 'store', 'subway_station', 'supermarket', 'synagogue', 'taxi_stand', 'train_station', 'transit_station', 'travel_agency', 'veterinary_care', 'zoo'];
-
         const { distance, selectedPlaceType, importance } = this.props.data;
         const selectValue = selectedPlaceType ? {
             value: selectedPlaceType,
@@ -58,7 +61,7 @@ class Distance extends React.Component {
                     className="select"
                     placeholder="Select type of place..."
                     onChange={this.handleChooseType}
-                    options={placeTypes.map(type => ({
+                    options={PlaceTypes.map(type => ({
                         value: type,
                         label: this.createLabel(type),
                     }))}

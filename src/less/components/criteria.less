@@ -121,7 +121,7 @@
     }
 
     .form {
-        > .form-line {
+        > &-line {
             &:extend(.flex-column, .centered);
 
             > :first-child {
@@ -134,13 +134,13 @@
                 }
 
                 > .input {
+                    &:focus {
+                        border-color: @blue !important;
+                    }
+
                     width: 50%;
                     height: 20px;
                     border: 1.2px ridge lightgray;
-                }
-
-                > .input:focus {
-                    border-color: @blue !important;
                 }
             }
 
