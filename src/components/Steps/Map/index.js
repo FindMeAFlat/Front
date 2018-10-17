@@ -24,14 +24,15 @@ class MapStep extends Component {
 
     componentDidMount() {
         const { lat, lng } = this.props.city.localization;
-        const { city } = this.props;
-        axios.post(`${process.env.REACT_APP_API_URL}/stations`, {
+        const { city, criteria } = this.props;
+        axios.post(`${process.env.REACT_APP_API_URL}/api/stations`, {
             target: {
                 lat,
                 lon: lng,
             },
             city: city.name,
             radius: RADIUS,
+            criteria,
         })
             .then((response) => {
                 this.setState({
