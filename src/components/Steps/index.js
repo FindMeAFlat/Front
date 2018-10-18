@@ -10,6 +10,9 @@ import SearchStep from './Search';
 import CriteriaStep from './Criteria';
 import MapStep from './Map';
 
+const headerOffset = -50;
+const scrollingDuration = 1000;
+
 class Steps extends React.Component {
     constructor(props) {
         super(props);
@@ -44,8 +47,9 @@ class Steps extends React.Component {
     }
 
     componentDidUpdate() {
-        const lastActivatedStepIndex = this.state.steps.filter(step => step.active).length - 1;
-        this.scrollTo(this.state.steps[lastActivatedStepIndex]);
+        const { steps } = this.state;
+        const lastActivatedStepIndex = steps.filter(step => step.active).length - 1;
+        this.scrollTo(steps[lastActivatedStepIndex]);
     }
 
     setErrors = (index, errors) => {
@@ -62,9 +66,9 @@ class Steps extends React.Component {
 
     scrollTo = ({ ref }) => (ref.current
         ? scrollToComponent(ref.current, {
-            offset: -50,
+            offset: headerOffset,
             align: 'top',
-            duration: 1000,
+            duration: scrollingDuration,
         })
         : {});
 
@@ -80,10 +84,11 @@ class Steps extends React.Component {
     };
 
     render() {
+        const { steps, validated } = this.state;
         return (
             <div className="step-container">
                 <ReactTooltip />
-                {this.state.steps.filter(step => step.active)
+                {steps.filter(step => step.active)
                     .map(({ name, component: StepComponent }, index) => {
                         const prevStep = this.state.steps[index - 1];
                         const nextStep = this.state.steps[index + 1];
@@ -109,7 +114,7 @@ class Steps extends React.Component {
                                         activateNext={() => this.activateStep(index + 1)}
                                         setErrors={errors => this.setErrors(index, errors)}
                                         validate={this.validate}
-                                        validated={this.state.validated}
+                                        validated={validated}
                                     />
                                 </div>
                                 {nextStep && nextStep.active && (

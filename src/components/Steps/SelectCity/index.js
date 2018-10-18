@@ -36,6 +36,8 @@ class SelectCity extends Component {
 
     render() {
         const { cities } = this.state;
+        const chosenCityName = this.props.city.name;
+
         let arms = null;
         if (cities.length > 0) {
             arms = (
@@ -48,8 +50,8 @@ class SelectCity extends Component {
                         >
                             <img
                                 id={city}
-                                className={`city-arm ${this.props.city.name === city ? 'selected' : 'not-selected'}`}
-                                src={this.createLinkForArm(city, this.props.city.name === city)}
+                                className={`city-arm ${chosenCityName === city ? 'selected' : 'not-selected'}`}
+                                src={this.createLinkForArm(city, chosenCityName === city)}
                                 alt={city}
                                 onMouseOver={(e) => {
                                     e.target.src =
@@ -57,7 +59,7 @@ class SelectCity extends Component {
                                 }}
                                 onMouseOut={(e) => {
                                     e.target.src =
-                                        this.createLinkForArm(city, this.props.city.name === city);
+                                        this.createLinkForArm(city, chosenCityName === city);
                                 }}
                             />
                             <label className="city-name">{city.toUpperCase()}</label>
