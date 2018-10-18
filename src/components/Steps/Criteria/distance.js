@@ -73,7 +73,9 @@ class Distance extends React.Component {
                             value={distance}
                             onChange={this.handleDistancePickerChange}
                         />
-                        <Form onChange={formState => this.handleImportanceChange(formState.values.importance)}>
+                        <Form onChange={formState =>
+                            this.handleImportanceChange(formState.values.importance)}
+                        >
                             {formApi => (
                                 <form className="form" onSubmit={formApi.submitForm}>
                                     <div className="form-line">

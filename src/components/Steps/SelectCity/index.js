@@ -6,34 +6,20 @@ import axios from 'axios';
 import { selectCity } from './../../../actions/cities';
 
 class SelectCity extends Component {
-    static propTypes = {
-        city: PropTypes.string.isRequired,
-        selectCity: PropTypes.func.isRequired,
-        scrollToNext: PropTypes.func.isRequired,
-    };
+    static validate = ({ city }) => city && city.name;
 
     constructor(props) {
         super(props);
         this.state = {
             cities: [],
-            selectedCity: '',
         };
     }
 
-    handleChooseCity = (selectedCity) => {
-        this.props.selectCity(selectedCity);
-        this.props.scrollToNext();
-    };
-
-    createLinkForArm = (city, selected) => `${window.location.origin}/arms/${city.toLowerCase()}_${this.props.city === city || selected ? 'c' : 'g'}.png`;
-
     componentDidMount() {
         axios.get(`${process.env.REACT_APP_API_URL}/api/cities`)
-            .then((response) => {
-                response = response.data.data;
+            .then(({ data: { data } }) => {
                 this.setState({
-                    cities: response,
-                    selectedCity: response[0],
+                    cities: data,
                 });
             })
             .catch((error) => {
@@ -41,33 +27,46 @@ class SelectCity extends Component {
             });
     }
 
+    createLinkForArm = (city, selected) => `${window.location.origin}/arms/${city.toLowerCase()}_${this.props.city === city || selected ? 'c' : 'g'}.png`;
+
+    handleChooseCity = (selectedCity) => {
+        this.props.selectCity(selectedCity);
+        this.props.activateNext();
+    };
+
     render() {
-        const { cities, selectedCity } = this.state;
+        const { cities } = this.state;
+        const chosenCityName = this.props.city.name;
+
         let arms = null;
         if (cities.length > 0) {
-            arms = (<div className="cities">
-                {cities.map(city => (
-                    <span
-                        className="city"
-                        onClick={() => this.handleChooseCity(city)}
-                        key={city}
-                    >
-                        <img
-                            id={city}
-                            className={`city-arm ${selectedCity === city ? 'selected' : 'not-selected'}`}
-                            src={this.createLinkForArm(city, false)}
-                            alt={city}
-                            onMouseOver={(e) => {
-                                e.target.src = this.createLinkForArm(city, true);
-                            }}
-                            onMouseOut={(e) => {
-                                e.target.src = this.createLinkForArm(city, false);
-                            }}
-                        />
-                        <label className="city-name">{city.toUpperCase()}</label>
-                    </span>))
-                }
-                    </div>);
+            arms = (
+                <div className="cities">
+                    {cities.map(city => (
+                        <span
+                            className="city"
+                            onClick={() => this.handleChooseCity(city)}
+                            key={city}
+                        >
+                            <img
+                                id={city}
+                                className={`city-arm ${chosenCityName === city ? 'selected' : 'not-selected'}`}
+                                src={this.createLinkForArm(city, chosenCityName === city)}
+                                alt={city}
+                                onMouseOver={(e) => {
+                                    e.target.src =
+                                    this.createLinkForArm(city, true);
+                                }}
+                                onMouseOut={(e) => {
+                                    e.target.src =
+                                        this.createLinkForArm(city, chosenCityName === city);
+                                }}
+                            />
+                            <label className="city-name">{city.toUpperCase()}</label>
+                        </span>))
+                    }
+                </div>
+            );
         }
         return (
             <div className="city-chooser">
@@ -76,6 +75,12 @@ class SelectCity extends Component {
         );
     }
 }
+
+SelectCity.propTypes = {
+    city: PropTypes.string.isRequired,
+    selectCity: PropTypes.func.isRequired,
+    activateNext: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
     city: state.city,

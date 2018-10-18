@@ -2,28 +2,32 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
+
 import { saveLocalization, saveAddress } from '../../../actions/cities';
+import Error from './../../Error';
 
 export class Search extends Component {
-    static propTypes = {
-        city: PropTypes.shape({
-            name: PropTypes.string.isRequired,
-        }).isRequired,
-    };
+    static validate = ({ city }) => city && city.address && city.localization;
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            touched: false,
+        };
     }
 
     handleSelect = (selected) => {
         geocodeByAddress(selected)
             .then(results => getLatLng(results[0]))
             .then(({ lat, lng }) => {
+                if (!this.state.touched) this.setState({ touched: true });
                 this.props.saveLocalization({
                     lat,
                     lng,
                 });
                 this.props.saveAddress(selected);
+                this.props.activateNext();
             });
     };
 
@@ -54,6 +58,7 @@ export class Search extends Component {
                                 </div>
                             );
                         }
+                        return null;
                     })}
                 </div>
             )}
@@ -66,15 +71,31 @@ export class Search extends Component {
             <div>
                 <PlacesAutocomplete
                     value={address}
-                    onChange={address => this.props.saveAddress(address)}
+                    onChange={addr => this.props.saveAddress(addr)}
                     onSelect={this.handleSelect}
                 >
                     {this.drawInputField}
                 </PlacesAutocomplete>
+                {(this.props.validated || this.state.touched) && !Search.validate(this.props) && <Error msg="You have to choose correct address..." />}
             </div>
         );
     }
 }
+
+Search.propTypes = {
+    city: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        address: PropTypes.string.isRequired,
+    }).isRequired,
+    validated: PropTypes.bool,
+    saveLocalization: PropTypes.func.isRequired,
+    saveAddress: PropTypes.func.isRequired,
+    activateNext: PropTypes.func.isRequired,
+};
+
+Search.defaultProps = {
+    validated: false,
+};
 
 const mapStateToProps = state => ({
     city: state.city,
