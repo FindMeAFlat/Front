@@ -36,8 +36,7 @@ body {
 .criteria .expand,
 .criteria .distance,
 .criteria .custom,
-.criteria .form-line,
-.criteria .form-line > :first-child {
+.criteria .line {
   display: flex;
 }
 .flex-column,
@@ -53,7 +52,7 @@ body {
 .criteria .collapsible-list > .collapsible,
 .criteria .distance,
 .criteria .custom,
-.criteria .form-line {
+.criteria .line {
   flex-direction: column;
 }
 .clickable,
@@ -77,8 +76,7 @@ body {
 .criteria .collapsible-list,
 .criteria .collapsible-list > .collapsible,
 .criteria .expand,
-.criteria .distance,
-.criteria .form-line {
+.criteria .distance {
   align-items: center;
 }
 .justified,
@@ -92,8 +90,7 @@ body {
 }
 .stretched,
 .header,
-.criteria .expand,
-.criteria .form-line > :first-child {
+.criteria .expand {
   justify-content: space-between;
 }
 .full-size,
@@ -106,11 +103,6 @@ body {
 .text-centered,
 .step-header {
   text-align: center;
-}
-.error {
-  color: #d14836;
-  font-size: 0.9em;
-  padding: 6px;
 }
 @keyframes scroll {
   0% {
@@ -355,24 +347,15 @@ svg #wheel {
   .criteria > :not(:first-child) {
     font-size: 0.8em;
   }
-  .criteria > :not(:first-child) .error {
-    font-size: 0.7em;
-  }
 }
 @media (min-width: 400px) and (max-width: 700px) {
   .criteria > :not(:first-child) {
     font-size: 0.9em;
   }
-  .criteria > :not(:first-child) .error {
-    font-size: 0.8em;
-  }
 }
 @media (min-width: 700px) {
   .criteria > :not(:first-child) {
     font-size: 1em;
-  }
-  .criteria > :not(:first-child) .error {
-    font-size: 0.9em;
   }
 }
 @media (max-width: 600px) {
@@ -415,11 +398,11 @@ svg #wheel {
 .criteria .expanded {
   border-top: dashed 1px #759feb;
 }
+.criteria .expanded label {
+  text-align: left;
+}
 .criteria .distance > .select {
   margin: 10px;
-}
-.criteria .distance > label {
-  text-align: left;
 }
 .criteria .distance > .input-range {
   margin: 20px 0 30px 0;
@@ -430,26 +413,25 @@ svg #wheel {
 .criteria .custom {
   padding: 10px;
 }
- > .criteria .form-line > :first-child {
-  width: 100%;
+.criteria .line > label {
+  margin: 10px 0 5px 0;
 }
- > .criteria .form-line > :first-child > .name {
-  width: 50%;
+.criteria .line > .input-range {
+  margin: 20px 0;
 }
- > .criteria .form-line > :first-child > .input {
-  width: 50%;
-  height: 20px;
-  border: 1.2px ridge lightgray;
+.criteria .line > .input {
+  margin-bottom: 5px;
+  border-style: solid;
+  padding: 5px;
 }
- > .criteria .form-line > :first-child > .input:focus {
-  border-color: #759FEB !important;
+.criteria .line > .input.error {
+  border-color: #d14836;
 }
- > .criteria .form-line > .error {
-  color: #d14836;
+.criteria .line > .input:focus {
+  border-color: #759FEB;
 }
- > .criteria .form-line > div,
- > .criteria .form-line > label {
-  margin: 5px 0;
+button:disabled {
+  background-color: #cccccc;
 }
 .generate-map {
   background-color: #759FEB;

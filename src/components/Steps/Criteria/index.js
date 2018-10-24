@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ReactTooltip from 'react-tooltip';
 
 import CollapsibleList from './collapsible';
 import Custom from './custom';
 import Distance from './distance';
 import { CreatableSelect } from './../../Select';
-import Error from './../../Error';
 import saveCriteria from './../../../actions/criteria';
 
 const criteriaTypes = ['distance', 'custom'];
@@ -60,6 +60,19 @@ export class Criteria extends Component {
         };
     }
 
+    getGenerateMapButtonDataTip = () => {
+        if (Criteria.validate(this.props)) return '';
+        return this.props.criteria.length === 0
+            ? 'You have to select at least one criteria...'
+            : 'Some criteria are incorrectly filled...';
+    }
+
+    updateCriteria = (i, data) => {
+        const { criteria, saveCriteria: saveCriteriaProp } = this.props;
+        criteria[i].data = { ...criteria[i].data, ...data };
+        saveCriteriaProp(criteria);
+    }
+
     handleNewCriteria = (type) => {
         const { criteria, saveCriteria: saveCriteriaProp } = this.props;
         criteria.push({ type: type.value, data: Criteria.getDefaultData(type.value) });
@@ -68,12 +81,6 @@ export class Criteria extends Component {
             this.setState({ touched: true });
         }
     };
-
-    updateCriteria = (i, data) => {
-        const { criteria, saveCriteria: saveCriteriaProp } = this.props;
-        criteria[i].data = { ...criteria[i].data, ...data };
-        saveCriteriaProp(criteria);
-    }
 
     handleRemoveCriteria = (index) => {
         const { criteria, saveCriteria: saveCriteriaProp } = this.props;
@@ -114,13 +121,16 @@ export class Criteria extends Component {
                         handleRemove={this.handleRemoveCriteria}
                         elements={selectedCriteria}
                     />
-                    {(this.props.validated || this.state.touched)
-                        && !Criteria.validate(this.props) && (
-                        (this.props.criteria.length === 0 && <Error msg="You have to select at least one criteria..." />)
-                        || <Error msg="Some criteria are incorrectly filled..." />
-                    ) }
                 </div>
-                <button className="button generate-map" onClick={this.renderMap}>Generate map</button>
+                <button
+                    data-tip={this.getGenerateMapButtonDataTip()}
+                    className="button generate-map"
+                    onClick={this.renderMap}
+                    disabled={!Criteria.validate(this.props)}
+                >
+                    Generate map
+                </button>
+                <ReactTooltip type="error" />
             </React.Fragment>
         );
     }

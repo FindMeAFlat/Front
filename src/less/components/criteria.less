@@ -4,26 +4,14 @@
     > :not(:first-child) {
         @media (max-width: 400px) {
             font-size: @font-size-very-small;
-
-            .error {
-                font-size: @font-size-tiny;
-            }
         }
 
         @media (min-width: 400px) and (max-width: 700px) {
             font-size: @font-size-small;
-
-            .error {
-                font-size: @font-size-very-small;
-            }
         }
 
         @media (min-width: 700px) {
             font-size: @font-size-regular;
-
-            .error {
-                font-size: @font-size-small;
-            }
         }
     }
 
@@ -83,6 +71,9 @@
     }
 
     .expanded {
+        & label {
+            text-align: left;
+        }
         border-top: dashed 1px rgb(117, 159, 235);
     }
 
@@ -91,10 +82,6 @@
 
         & > .select {
             margin: 10px;
-        }
-
-        & > label {
-            text-align: left;
         }
 
         & > .input-range {
@@ -112,38 +99,36 @@
         padding: 10px;
     }
 
-    .form {
-        > &-line {
-            &:extend(.flex-column, .centered);
+    .line {
+        &:extend(.flex-column);
 
-            > :first-child {
-                &:extend(.flex-row, .stretched);
+        > label {
+            margin: 10px 0 5px 0;
+        }
 
-                width: 100%;
+        & > .input-range {
+            margin: 20px 0;
+        }
 
-                > .name {
-                    width: 50%;
-                }
+        & > .input {
+            margin-bottom: 5px;
+            border-style: solid;
+            padding: 5px;
 
-                > .input {
-                    &:focus {
-                        border-color: @blue !important;
-                    }
-
-                    width: 50%;
-                    height: 20px;
-                    border: 1.2px ridge lightgray;
-                }
+            &.error {
+                border-color: @red;
             }
 
-            > .error {
-                color: @red;
-            }
-
-            > div, > label {
-                margin: 5px 0;
+            &:focus {
+                border-color: @blue;
             }
         }
+    }
+}
+
+button {
+    &:disabled {
+        background-color: #cccccc;
     }
 }
 
