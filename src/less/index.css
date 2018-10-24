@@ -35,7 +35,6 @@ body {
 .criteria .collapsible-list > .collapsible,
 .criteria .expand,
 .criteria .distance,
-.criteria .distance .distance-picker,
 .criteria .custom,
 .criteria .form-line,
 .criteria .form-line > :first-child {
@@ -79,7 +78,6 @@ body {
 .criteria .collapsible-list > .collapsible,
 .criteria .expand,
 .criteria .distance,
-.criteria .distance .distance-picker,
 .criteria .form-line {
   align-items: center;
 }
@@ -384,9 +382,6 @@ svg #wheel {
   .criteria .collapsible-list {
     width: 100%;
   }
-  .criteria .distance-picker {
-    flex-direction: column;
-  }
   .criteria .form > :first-child {
     flex-direction: column;
   }
@@ -420,17 +415,17 @@ svg #wheel {
 .criteria .expanded {
   border-top: dashed 1px #759feb;
 }
-.criteria .distance > div {
+.criteria .distance > .select {
   margin: 10px;
+}
+.criteria .distance > label {
+  text-align: left;
+}
+.criteria .distance > .input-range {
+  margin: 20px 0 30px 0;
+}
+.criteria .distance > * {
   width: 98%;
-}
-.criteria .distance .distance-picker > :nth-child(1) {
-  margin: 0 20px 10px 0;
-  width: calc(100% - 100px);
-}
-.criteria .distance .distance-picker > :nth-child(2) {
-  margin: 10px 0;
-  width: 100px;
 }
 .criteria .custom {
   padding: 10px;

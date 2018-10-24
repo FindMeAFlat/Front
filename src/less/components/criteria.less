@@ -36,10 +36,6 @@
             width: 100%;
         }
 
-        .distance-picker {
-            flex-direction: column;
-        }
-
         .form {
             > :first-child {
                 &:extend(.centered);
@@ -93,23 +89,20 @@
     .distance {
         &:extend(.flex-column, .centered);
 
-        > div {
+        & > .select {
             margin: 10px;
-            width: 98%;
         }
 
-        .distance-picker {
-            &:extend(.flex-row, .centered);
+        & > label {
+            text-align: left;
+        }
 
-            > :nth-child(1) {
-                margin: 0 20px 10px 0;
-                width: calc(~"100% - 100px");
-            }
+        & > .input-range {
+            margin: 20px 0 30px 0;
+        }
 
-            > :nth-child(2) {
-                margin: 10px 0;
-                width: 100px;
-            }
+        & > * {
+            width: 98%;
         }
     }
 

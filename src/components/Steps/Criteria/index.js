@@ -15,18 +15,15 @@ export class Criteria extends Component {
     static getDefaultData(type) {
         switch (type) {
         case 'distance': return {
-            distance: {
-                distance: 0,
-                unit: 'm',
-            },
+            distance: 0,
             selectedPlaceType: null,
-            importance: null,
+            importance: 1,
         };
         case 'custom': return {
             url: '',
             propertyAccess: '',
             maxRatingValue: null,
-            importance: null,
+            importance: 0,
             ascending: true,
         };
         default: return {};
@@ -40,8 +37,8 @@ export class Criteria extends Component {
     static validate = ({ criteria }) => criteria && criteria.length > 0
         && criteria.every(({ type, data }) => {
             if (type === 'distance') {
-                const { distance: { distance, unit }, selectedPlaceType, importance } = data;
-                return distance > 0 && unit && selectedPlaceType
+                const { distance, selectedPlaceType, importance } = data;
+                return distance > 0 && selectedPlaceType
                     && importance > 0 && importance <= 100;
             }
             if (type === 'custom') {
@@ -95,7 +92,7 @@ export class Criteria extends Component {
             switch (criteria.type) {
             case 'distance': return { id: i, title: 'Distance', content: <Distance data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
             case 'custom': return { id: i, title: 'Custom', content: <Custom data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
-            default: return <div>cos poszlo nie tak</div>;
+            default: return null;
             }
         });
 
@@ -117,7 +114,8 @@ export class Criteria extends Component {
                         handleRemove={this.handleRemoveCriteria}
                         elements={selectedCriteria}
                     />
-                    {(this.props.validated || this.state.touched) && !Criteria.validate(this.props) && (
+                    {(this.props.validated || this.state.touched)
+                        && !Criteria.validate(this.props) && (
                         (this.props.criteria.length === 0 && <Error msg="You have to select at least one criteria..." />)
                         || <Error msg="Some criteria are incorrectly filled..." />
                     ) }
