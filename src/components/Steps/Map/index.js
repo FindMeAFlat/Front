@@ -15,6 +15,7 @@ class MapStep extends Component {
         super(props);
         this.state = {
             stations: [],
+            streetsInAreas: [],
         };
     }
 
@@ -40,9 +41,25 @@ class MapStep extends Component {
             });
     }
 
+    getNearestStreet = (stations) => {
+        const promises = stations.map(station =>
+            axios.post(`${process.env.REACT_APP_API_URL}/api/roads`, {
+                station: [station.coordinates.lat, station.coordinates.lon],
+                radius: RADIUS,
+            }));
+        Promise.all(promises).then((response) => {
+            this.setState({
+                streetsInAreas: response.map(area => area.data),
+            });
+        });
+    };
+
     prepareStationsIcons = () => this.state.stations.map(station => (
-        <Station lat={station.coordinates.lon} lng={station.coordinates.lat} />
+        <Station lat={station.coordinates.lat} lng={station.coordinates.lon} />
     ));
+
+
+    displaySearchLinks = areas => areas.map(area => area.map(street => <span>https://www.olx.pl/nieruchomosci/mieszkania/wroclaw/q-{street.split(' ').join('-')}</span>));
 
     render() {
         const { stations } = this.state;
@@ -62,7 +79,7 @@ class MapStep extends Component {
                         lng={lng}
                         importance={0}
                     />
-                    { stations.length && this.prepareStationsIcons()}
+                    {stations.length && this.prepareStationsIcons()}
                 </GoogleMapReact>
             </div>
         );
