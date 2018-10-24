@@ -93,12 +93,19 @@ body {
 .criteria .expand {
   justify-content: space-between;
 }
+.full-width,
+.full-size,
+.app,
+.step-container .step,
+.header {
+  width: 100%;
+}
+.full-height,
 .full-size,
 .app,
 .step-container .step,
 .header {
   height: 100%;
-  width: 100%;
 }
 .text-centered,
 .step-header {
@@ -221,6 +228,16 @@ svg #wheel {
 .search-bar-container {
   margin: 0 auto 0 auto;
   width: 100%;
+}
+.search-bar-container.error .location-search-input {
+  border-color: #d14836;
+}
+.search-bar-container .location-search-input:focus {
+  border-color: #759FEB;
+}
+.search-bar-container .autocomplete-container .suggestion-item:hover,
+.search-bar-container .autocomplete-container .suggestion-item--active:hover {
+  cursor: pointer;
 }
 .search-input-container {
   width: 35%;
@@ -432,8 +449,9 @@ svg #wheel {
 }
 button:disabled {
   background-color: #cccccc;
+  cursor: not-allowed;
 }
-.generate-map {
+.map-button {
   background-color: #759FEB;
   width: 300px;
   color: #ffffff;

@@ -6,4 +6,5 @@ export default {
         importance: 'Importance must be a number from range 1-100',
         mustBeFilled: 'Field must be filled',
     },
+    search: 'You have to choose correct address...',
 };

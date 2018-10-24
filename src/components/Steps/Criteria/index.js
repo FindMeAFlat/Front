@@ -34,8 +34,11 @@ export class Criteria extends Component {
         return type.split('_').map(s => `${s.charAt(0).toUpperCase()}${s.substring(1)}`).join(' ');
     }
 
-    static validate = ({ criteria }) => criteria && criteria.length > 0
-        && criteria.every(({ type, data }) => {
+    static validate = ({ criteria }) => {
+        if (!criteria || criteria.length === 0) {
+            return 'You have to select at least one criteria...';
+        }
+        if (!criteria.every(({ type, data }) => {
             if (type === 'distance') {
                 const { distance, selectedPlaceType, importance } = data;
                 return distance > 0 && selectedPlaceType
@@ -50,7 +53,12 @@ export class Criteria extends Component {
             }
 
             return true;
-        });
+        })) {
+            return 'Some criteria are incorrectly filled...';
+        }
+
+        return '';
+    }
 
     constructor(props) {
         super(props);
@@ -61,10 +69,8 @@ export class Criteria extends Component {
     }
 
     getGenerateMapButtonDataTip = () => {
-        if (Criteria.validate(this.props)) return '';
-        return this.props.criteria.length === 0
-            ? 'You have to select at least one criteria...'
-            : 'Some criteria are incorrectly filled...';
+        const validateInfo = this.props.validate();
+        return validateInfo ? validateInfo.filter(info => !!info).map(info => `${info}<br>`) : '';
     }
 
     updateCriteria = (i, data) => {
@@ -124,13 +130,13 @@ export class Criteria extends Component {
                 </div>
                 <button
                     data-tip={this.getGenerateMapButtonDataTip()}
-                    className="button generate-map"
+                    className="button map-button"
                     onClick={this.renderMap}
-                    disabled={!Criteria.validate(this.props)}
+                    disabled={this.props.validate().length > 0}
                 >
                     Generate map
                 </button>
-                <ReactTooltip type="error" />
+                <ReactTooltip html type="error" />
             </React.Fragment>
         );
     }
@@ -141,14 +147,9 @@ Criteria.propTypes = {
         type: PropTypes.string.isRequired,
         data: PropTypes.object.isRequired,
     }).isRequired,
-    validated: PropTypes.bool,
     saveCriteria: PropTypes.func.isRequired,
     activateNext: PropTypes.func.isRequired,
     validate: PropTypes.func.isRequired,
-};
-
-Criteria.defaultProps = {
-    validated: false,
 };
 
 const mapStateToProps = state => ({

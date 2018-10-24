@@ -65,23 +65,31 @@ class MapStep extends Component {
         const { stations } = this.state;
         const { lat, lng } = this.props.city.localization;
         return (
-            <div className="map">
-                <GoogleMapReact
-                    bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_PLACES_KEY }}
-                    defaultCenter={{
-                        lat,
-                        lng,
-                    }}
-                    defaultZoom={DEFAULT_ZOOM}
+            <React.Fragment>
+                <div className="map">
+                    <GoogleMapReact
+                        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_PLACES_KEY }}
+                        defaultCenter={{
+                            lat,
+                            lng,
+                        }}
+                        defaultZoom={DEFAULT_ZOOM}
+                    >
+                        <Area
+                            lat={lat}
+                            lng={lng}
+                            importance={0}
+                        />
+                        {stations.length && this.prepareStationsIcons()}
+                    </GoogleMapReact>
+                </div>
+                <button
+                    className="button map-button"
+                    onClick={this.props.activateNext}
                 >
-                    <Area
-                        lat={lat}
-                        lng={lng}
-                        importance={0}
-                    />
-                    {stations.length && this.prepareStationsIcons()}
-                </GoogleMapReact>
-            </div>
+                    Start again
+                </button>
+            </React.Fragment>
         );
     }
 }
@@ -97,6 +105,7 @@ MapStep.propTypes = {
             lng: PropTypes.number.isRequired,
         }).isRequired,
     }).isRequired,
+    activateNext: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -104,6 +113,6 @@ const mapStateToProps = state => ({
     city: state.city,
 });
 
-MapStep.validate = () => true;
+MapStep.validate = () => '';
 
 export default connect(mapStateToProps, null)(MapStep);

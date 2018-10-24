@@ -1,5 +1,22 @@
 .search-bar-container {
   &:extend(.flex-column, .centered, .justified);
+
+  &.error {
+    & .location-search-input {
+      border-color: @red;
+    }
+  }
+
+  & .location-search-input:focus {
+    border-color: @blue;
+  }
+
+  & .autocomplete-container {
+      & .suggestion-item:hover, .suggestion-item--active:hover {
+        cursor: pointer;
+      }
+  }
+
   margin: 0 auto 0 auto;
   width: 100%;
 }
