@@ -40,17 +40,18 @@ body {
   justify-content: space-between;
 }
 
+.full-width {
+    width: 100%;
+}
+
+.full-height {
+    height: 100%;
+}
+
 .full-size {
-  height: 100%;
-  width: 100%;
+    &:extend(.full-width, .full-height);
 }
 
 .text-centered {
   text-align: center;
-}
-
-.error {
-    color: @red;
-    font-size: @font-size-small;
-    padding: 6px;
 }

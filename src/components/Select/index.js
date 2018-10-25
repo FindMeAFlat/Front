@@ -17,6 +17,10 @@ const style = {
         ...styles,
         maxHeight: '100px',
     }),
+    singleValue: styles => ({
+        ...styles,
+        paddingBottom: '2px',
+    }),
 };
 
 function CreatableSelectComponent(props) {

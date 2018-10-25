@@ -2,12 +2,14 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
+import ReactTooltip from 'react-tooltip';
+import classnames from 'classnames';
 
+import Errors from './../../../const/errors';
 import { saveLocalization, saveAddress } from '../../../actions/cities';
-import Error from './../../Error';
 
 export class Search extends Component {
-    static validate = ({ city }) => city && city.address && city.localization;
+    static validate = ({ city }) => (!city.localization || !city.localization.lat || !city.localization.lng ? Errors.search : '');
 
     constructor(props) {
         super(props);
@@ -19,7 +21,14 @@ export class Search extends Component {
 
     handleSelect = (selected) => {
         geocodeByAddress(selected)
-            .then(results => getLatLng(results[0]))
+            .then((results) => {
+                if (!results.some(res =>
+                    res.address_components.filter(({ long_name: longName }) =>
+                        longName.includes(this.props.city.name)).length > 0)) {
+                    return { lat: null, lng: null };
+                }
+                return getLatLng(results[0]);
+            })
             .then(({ lat, lng }) => {
                 if (!this.state.touched) this.setState({ touched: true });
                 this.props.saveLocalization({
@@ -31,8 +40,14 @@ export class Search extends Component {
             });
     };
 
+    handleError = (error) => {
+        if (error === 'INVALID_REQUEST' || error === 'ZERO_RESULTS') {
+            this.props.saveLocalization(null);
+        }
+    }
+
     drawInputField = ({ getInputProps, suggestions, getSuggestionItemProps }) => (
-        <div className="search-bar-container">
+        <div className={classnames('search-bar-container', { error: Search.validate(this.props) })}>
             <div className="search-input-container">
                 <input
                     {...getInputProps({
@@ -69,14 +84,17 @@ export class Search extends Component {
         const { address } = this.props.city;
         return (
             <Fragment>
-                <PlacesAutocomplete
-                    value={address}
-                    onChange={addr => this.props.saveAddress(addr)}
-                    onSelect={this.handleSelect}
-                >
-                    {this.drawInputField}
-                </PlacesAutocomplete>
-                {(this.props.validated || this.state.touched) && !Search.validate(this.props) && <Error msg="You have to choose correct address..." />}
+                <div className="full-width" data-tip={Search.validate(this.props) ? Errors.search : ''}>
+                    <PlacesAutocomplete
+                        value={address}
+                        onChange={addr => this.props.saveAddress(addr)}
+                        onSelect={this.handleSelect}
+                        onError={this.handleError}
+                    >
+                        {this.drawInputField}
+                    </PlacesAutocomplete>
+                </div>
+                <ReactTooltip type="error" />
             </Fragment>
         );
     }
@@ -87,15 +105,11 @@ Search.propTypes = {
         name: PropTypes.string.isRequired,
         address: PropTypes.string.isRequired,
     }).isRequired,
-    validated: PropTypes.bool,
     saveLocalization: PropTypes.func.isRequired,
     saveAddress: PropTypes.func.isRequired,
     activateNext: PropTypes.func.isRequired,
 };
 
-Search.defaultProps = {
-    validated: false,
-};
 
 const mapStateToProps = state => ({
     city: state.city,

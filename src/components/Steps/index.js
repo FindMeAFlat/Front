@@ -40,16 +40,18 @@ class Steps extends React.Component {
                 active: false,
                 errors: [],
             })),
-            validated: false,
         };
 
-        this.activateStep(0);
+        this.state.steps[0].active = true;
     }
 
-    componentDidUpdate() {
-        const { steps } = this.state;
-        const lastActivatedStepIndex = steps.filter(step => step.active).length - 1;
-        this.scrollTo(steps[lastActivatedStepIndex]);
+    componentDidUpdate(prevProps, prevState) {
+        const oldActiveSteps = prevState.steps.filter(step => step.active);
+        const newActiveSteps = this.state.steps.filter(step => step.active);
+
+        if (oldActiveSteps.length !== newActiveSteps.length) {
+            this.scrollTo(this.state.steps[newActiveSteps.length - 1]);
+        }
     }
 
     setErrors = (index, errors) => {
@@ -58,9 +60,20 @@ class Steps extends React.Component {
         this.setState({ steps });
     }
 
+    validate = () => this.state.steps.map(step => step.component.validate(this.props))
+        .filter(stepError => stepError);
+
     activateStep = (index) => {
-        const { steps } = this.state;
-        steps[index].active = true;
+        const steps = this.state.steps.map(step => ({ ...step }));
+        if (index === 3) {
+            for (let i = 0; i < 3; i += 1) {
+                steps[i].active = false;
+            }
+            steps[3].active = true;
+        } else {
+            if (index === 0) steps[3].active = false;
+            steps[index].active = true;
+        }
         this.setState({ steps });
     }
 
@@ -72,24 +85,13 @@ class Steps extends React.Component {
         })
         : {});
 
-    validate = () => {
-        this.setState({ validated: true });
-        const firstErrorStep = this.state.steps
-            .filter(step => !step.component.validate(this.props))[0];
-        if (firstErrorStep) {
-            this.scrollTo(firstErrorStep);
-            return false;
-        }
-        return true;
-    };
-
     render() {
-        const { steps, validated } = this.state;
+        const { steps } = this.state;
         return (
             <div className="step-container">
                 <ReactTooltip />
-                {steps.filter(step => step.active)
-                    .map(({ name, component: StepComponent }, index) => {
+                {steps.map((step, index) => ({ step, index })).filter(({ step }) => step.active)
+                    .map(({ step: { name, component: StepComponent }, index }) => {
                         const prevStep = this.state.steps[index - 1];
                         const nextStep = this.state.steps[index + 1];
 
@@ -111,10 +113,9 @@ class Steps extends React.Component {
                                 </div>
                                 <div className="step-content">
                                     <StepComponent
-                                        activateNext={() => this.activateStep(index + 1)}
+                                        activateNext={() => this.activateStep((index + 1) % 4)}
                                         setErrors={errors => this.setErrors(index, errors)}
                                         validate={this.validate}
-                                        validated={validated}
                                     />
                                 </div>
                                 {nextStep && nextStep.active && (

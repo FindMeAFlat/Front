@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { selectCity } from './../../../actions/cities';
+import Errors from '../../../const/errors';
 
 class SelectCity extends Component {
-    static validate = ({ city }) => city && city.name;
+    static validate = ({ city }) => (!city || !city.name ? Errors.selectCity : null);
 
     constructor(props) {
         super(props);
@@ -21,9 +22,6 @@ class SelectCity extends Component {
                 this.setState({
                     cities: data,
                 });
-            })
-            .catch((error) => {
-                console.error(error);
             });
     }
 
