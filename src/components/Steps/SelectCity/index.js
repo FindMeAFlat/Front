@@ -22,9 +22,6 @@ class SelectCity extends Component {
                 this.setState({
                     cities: data,
                 });
-            })
-            .catch((error) => {
-                console.error(error);
             });
     }
 

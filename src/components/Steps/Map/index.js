@@ -35,9 +35,6 @@ class MapStep extends Component {
                 this.setState({
                     stations: response.data,
                 });
-            })
-            .catch((error) => {
-                console.error(error);
             });
     }
 

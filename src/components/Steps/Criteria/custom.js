@@ -56,15 +56,16 @@ class CustomCriteria extends React.Component {
         const {
             url, propertyAccess, maxRatingValue, importance, ascending,
         } = this.props.data;
+        const { urlError, propertyAccessError } = this.state;
 
         return (
             <div className="custom">
                 <div className="line">
                     <label>Url</label>
                     <input
-                        className={classnames('input', { error: this.state.urlError })}
+                        className={classnames('input', { error: urlError })}
                         value={url}
-                        data-tip={this.state.urlError || ''}
+                        data-tip={urlError || ''}
                         onBlur={({ target: { value } }) => {
                             this.setState({ urlError: this.validateUrl(value) });
                         }}
@@ -77,9 +78,9 @@ class CustomCriteria extends React.Component {
                 <div className="line">
                     <label>Property access</label>
                     <input
-                        className={classnames('input', { error: this.state.propertyAccessError })}
+                        className={classnames('input', { error: propertyAccessError })}
                         value={propertyAccess}
-                        data-tip={this.state.propertyAccessError || ''}
+                        data-tip={propertyAccessError || ''}
                         onBlur={({ target: { value } }) => {
                             this.setState({
                                 propertyAccessError: this.validatePropertyAccess(value),
