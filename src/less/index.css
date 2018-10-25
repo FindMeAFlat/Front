@@ -229,11 +229,11 @@ svg #wheel {
   min-width: 1em;
 }
 .search-bar-container {
-  max-width: 35%;
   margin: 0 auto 0 auto;
+  width: 100%;
 }
 .search-input-container {
-  width: 100%;
+  width: 35%;
 }
 .search-input-container input,
 .search-input-container input:focus {
@@ -247,7 +247,7 @@ svg #wheel {
 }
 .autocomplete-container,
 .autocomplete-container:hover {
-  width: 100%;
+  width: 35%;
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
@@ -470,6 +470,7 @@ svg #wheel {
 }
 .map {
   height: 50vh;
+  width: 100%;
 }
 .map-area {
   border: 3px solid;

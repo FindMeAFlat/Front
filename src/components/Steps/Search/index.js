@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
@@ -68,7 +68,7 @@ export class Search extends Component {
     render() {
         const { address } = this.props.city;
         return (
-            <div>
+            <Fragment>
                 <PlacesAutocomplete
                     value={address}
                     onChange={addr => this.props.saveAddress(addr)}
@@ -77,7 +77,7 @@ export class Search extends Component {
                     {this.drawInputField}
                 </PlacesAutocomplete>
                 {(this.props.validated || this.state.touched) && !Search.validate(this.props) && <Error msg="You have to choose correct address..." />}
-            </div>
+            </Fragment>
         );
     }
 }
