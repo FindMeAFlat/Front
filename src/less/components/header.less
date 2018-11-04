@@ -24,7 +24,18 @@
   border: 1px solid transparent;
 }
 
+.google-login {
+  &:extend(.clickable);
+  font-size: @font-size-big;
+  background-color: @red;
+}
+
+.google-login:hover {
+  background-color: @red-hover;
+}
+
 .google-logout {
+  &:extend(.clickable);
   background-color: @blue;
   color: @white;
   font-size: @font-size-big;

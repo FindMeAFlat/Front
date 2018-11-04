@@ -23,7 +23,7 @@ export class Criteria extends Component {
             url: '',
             propertyAccess: '',
             maxRatingValue: null,
-            importance: 0,
+            importance: 1,
             ascending: true,
         };
         default: return {};
