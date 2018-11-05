@@ -21,6 +21,7 @@
     "react-scripts": "^2.0.5",
     "react-scroll-to-component": "^1.0.2",
     "react-select": "^2.0.0",
+    "react-slidedown": "^2.0.5",
     "react-tooltip": "^3.9.0",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.2",

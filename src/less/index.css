@@ -230,7 +230,7 @@ svg #wheel {
   width: 100%;
 }
 .search-bar-container.error .location-search-input {
-  border-color: #d14836;
+  border-color: #D14836;
 }
 .search-bar-container .location-search-input:focus {
   border-color: #759FEB;
@@ -279,13 +279,13 @@ svg #wheel {
 .google-login {
   font-family: moon-bold, Arial, sans-serif;
   font-size: 1.2em;
-  background-color: #d14836;
+  background-color: #D14836;
   border-radius: 20px;
   padding: 30px;
   border: 1px solid transparent;
 }
 .google-login:hover {
-  background-color: #c63724;
+  background-color: #C63724;
 }
 .step-navigator {
   width: 100%;
@@ -442,7 +442,7 @@ svg #wheel {
   padding: 5px;
 }
 .criteria .line > .input.error {
-  border-color: #d14836;
+  border-color: #D14836;
 }
 .criteria .line > .input:focus {
   border-color: #759FEB;
@@ -477,13 +477,6 @@ button:disabled {
   left: -30px;
   top: -30px;
 }
-.map-area-green {
-  background-color: #0AB51F;
-  border-color: #055F05;
-}
-.map-area-green:hover {
-  background-color: #0E8D1E;
-}
 .map-area-bus {
   background-color: #fff;
   border: 2px solid #0149B0;
@@ -491,4 +484,88 @@ button:disabled {
   height: 15px;
   padding: 0 1px;
   width: 10px;
+}
+.map-area-0 {
+  background-color: #0AB51F;
+  border-color: #055F05;
+}
+.map-area-0:hover {
+  background-color: #0E8D1E;
+}
+.map-area-1 {
+  background-color: #FFD800;
+  border-color: #C77700;
+}
+.map-area-1:hover {
+  background-color: #FFA200;
+}
+.map-area-2 {
+  background-color: #D14836;
+  border-color: #A23424;
+}
+.map-area-2:hover {
+  background-color: #C63724;
+}
+.map-area-3 {
+  background-color: #759FEB;
+  border-color: #5873af;
+}
+.map-area-3:hover {
+  background-color: #759FEB;
+}
+.map-area-4 {
+  background-color: #cb00ff;
+  border-color: #880072;
+}
+.map-area-4:hover {
+  background-color: #a80091;
+}
+.map-area-5 {
+  background-color: #00c7ff;
+  border-color: #00739c;
+}
+.map-area-5:hover {
+  background-color: #009bd0;
+}
+.map-area-6 {
+  background-color: #c0c0c0;
+  border-color: #7e7e7e;
+}
+.map-area-6:hover {
+  background-color: #9d9d9d;
+}
+.map-area-7 {
+  background-color: #cd7f32;
+  border-color: #9c5400;
+}
+.map-area-7:hover {
+  background-color: #cd7700;
+}
+.map-area-8 {
+  background-color: #da70d6;
+  border-color: #854381;
+}
+.map-area-8:hover {
+  background-color: #b259ae;
+}
+.map-area-9 {
+  background-color: #d1e231;
+  border-color: #8b9c2c;
+}
+.map-area-9:hover {
+  background-color: #afc030;
+}
+.my-dropdown-slidedown {
+  display: grid;
+}
+.slidedown-container {
+  margin-bottom: 10px;
+}
+.slidedown-container span {
+  cursor: pointer;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.slidedown-container a {
+  margin-top: 10px;
 }

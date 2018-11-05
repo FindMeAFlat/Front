@@ -58,7 +58,7 @@ class Steps extends React.Component {
         const { steps } = this.state;
         steps[index].errors = errors;
         this.setState({ steps });
-    }
+    };
 
     validate = () => this.state.steps.map(step => step.component.validate(this.props))
         .filter(stepError => stepError);
@@ -75,7 +75,7 @@ class Steps extends React.Component {
             steps[index].active = true;
         }
         this.setState({ steps });
-    }
+    };
 
     scrollTo = ({ ref }) => (ref.current
         ? scrollToComponent(ref.current, {
