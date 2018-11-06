@@ -1,23 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
+import { connect } from 'react-redux';
 import classnames from 'classnames';
 import InputRange from 'react-input-range';
+import axios from 'axios';
 
+import { CreatableSelect } from './../../Select';
 import Errors from './../../../const/errors';
 
 class CustomCriteria extends React.Component {
-    static propTypes = {
-        data: PropTypes.shape({
-            url: PropTypes.string.isRequired,
-            propertyAccess: PropTypes.string.isRequired,
-            maxRatingValue: PropTypes.number.isRequired,
-            importance: PropTypes.number.isRequired,
-            ascending: PropTypes.number.isRequired,
-        }).isRequired,
-        updateCriteriaData: PropTypes.func.isRequired,
-    };
-
     constructor(props) {
         super(props);
 
@@ -25,7 +17,21 @@ class CustomCriteria extends React.Component {
             urlError: null,
             propertyAccessError: null,
             maxRatingValueError: null,
+            customApis: [],
         };
+    }
+
+    componentDidMount() {
+        axios.get(`${process.env.REACT_APP_API_URL}/api/criteria`, {
+            params: {
+                userId: this.props.userId,
+            }
+        })
+        .then(({ data: { customApis } }) => {
+            this.setState({
+                customApis,
+            });
+        });
     }
 
     validateUrl = (value) => {
@@ -52,14 +58,50 @@ class CustomCriteria extends React.Component {
             : null;
     }
 
+    handleCustomApiChoose = ({ label, __isNew__ }) => {
+        const { url, propertyAccess, maxRatingValue, } = this.props.data;
+        if(__isNew__) {
+            const errors = {
+                urlError: this.validateUrl(url),
+                propertyAccessError: this.validatePropertyAccess(propertyAccess),
+                maxRatingValueError: this.validateMaxRatingValue(maxRatingValue),
+            };
+            this.setState(errors);
+            if(!errors.urlError && !errors.propertyAccessError && !errors.maxRatingValueError) {
+                axios.post(`${process.env.REACT_APP_API_URL}/api/criteria`, {
+                    userId: this.props.userId,
+                    name: label,
+                    customApi: this.props.data,
+                })
+                .then((res) => {
+                    this.setState({ customApis: [ ...this.state.customApis, { name: label, customApi: this.props.data } ] });
+                })
+                .catch((e) => { console.error(e); })
+            }
+        }
+        else {
+            this.props.updateCriteriaData(this.state.customApis.filter(({ name }) => name === label)[0].customApi);
+        }
+    };
+
     render() {
         const {
-            url, propertyAccess, maxRatingValue, importance, ascending,
+            url, propertyAccess, maxRatingValue, importance, ascending
         } = this.props.data;
-        const { urlError, propertyAccessError } = this.state;
+        const { customApis, urlError, propertyAccessError } = this.state;
 
         return (
             <div className="custom">
+                {this.props.userId && (<CreatableSelect
+                    placeholder="Select from previous criteria or add a new one..."
+                    isSearchable
+                    value={null}
+                    options={customApis.map(({ name }) => ({
+                        value: name,
+                        label: name,
+                    }))}
+                    onChange={this.handleCustomApiChoose}
+                />)}
                 <div className="line">
                     <label>Url</label>
                     <input
@@ -133,4 +175,20 @@ class CustomCriteria extends React.Component {
     }
 }
 
-export default CustomCriteria;
+const mapStateToProps = state => ({
+    userId: state.userId,
+});
+
+CustomCriteria.propTypes = {
+    data: PropTypes.shape({
+        url: PropTypes.string.isRequired,
+        propertyAccess: PropTypes.string.isRequired,
+        maxRatingValue: PropTypes.number.isRequired,
+        importance: PropTypes.number.isRequired,
+        ascending: PropTypes.number.isRequired,
+    }).isRequired,
+    updateCriteriaData: PropTypes.func.isRequired,
+    userId: PropTypes.string.isRequired,
+};
+
+export default connect(mapStateToProps)(CustomCriteria);
