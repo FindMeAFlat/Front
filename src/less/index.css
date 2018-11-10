@@ -27,7 +27,6 @@ body {
 .city,
 .header,
 .search-bar-container,
-.sign-in,
 .step-navigator,
 .step-header,
 .criteria,
@@ -59,6 +58,7 @@ body {
 .city *,
 .header *,
 .google-login,
+.google-logout,
 .criteria .expand {
   cursor: pointer;
 }
@@ -69,7 +69,6 @@ body {
 .city,
 .header,
 .search-bar-container,
-.sign-in,
 .step-navigator,
 .step-header,
 .criteria,
@@ -82,7 +81,6 @@ body {
 .justified,
 .step-container .step,
 .search-bar-container,
-.sign-in,
 .step-navigator,
 .welcome,
 .criteria .collapsible-list > .collapsible {
@@ -188,6 +186,13 @@ svg #wheel {
   border-radius: 10px;
   border: 1px solid transparent;
 }
+.google-login {
+  font-size: 1.1em;
+  background-color: #d14836;
+}
+.google-login:hover {
+  background-color: #c63724;
+}
 .google-logout {
   background-color: #759FEB;
   color: #ffffff;
@@ -272,20 +277,6 @@ svg #wheel {
 }
 .suggestion-item--active {
   background-color: #efefef;
-}
-.sign-in {
-  flex: auto;
-}
-.google-login {
-  font-family: moon-bold, Arial, sans-serif;
-  font-size: 1.2em;
-  background-color: #D14836;
-  border-radius: 20px;
-  padding: 30px;
-  border: 1px solid transparent;
-}
-.google-login:hover {
-  background-color: #C63724;
 }
 .step-navigator {
   width: 100%;
