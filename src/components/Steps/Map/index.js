@@ -6,8 +6,10 @@ import PropTypes from 'prop-types';
 
 import Area from './Area';
 import Station from './Station';
+import Slidedown from './Slidedown';
+import CITIES from './../../../const/cities';
 
-const RADIUS = 4;
+const RADIUS = 200;
 const DEFAULT_ZOOM = 11;
 
 class MapStep extends Component {
@@ -16,6 +18,7 @@ class MapStep extends Component {
         this.state = {
             stations: [],
             streetsInAreas: [],
+            active: 0,
         };
     }
 
@@ -35,6 +38,7 @@ class MapStep extends Component {
                 this.setState({
                     stations: response.data,
                 });
+                this.getNearestStreet(response.data);
             });
     }
 
@@ -55,11 +59,43 @@ class MapStep extends Component {
         <Station lat={station.coordinates.lat} lng={station.coordinates.lon} />
     ));
 
+    displaySearchLinks = areas => areas.map((area, index) => {
+        const { name } = this.props.city;
+        const { active } = this.state;
+        const url = `https://www.olx.pl/nieruchomosci/mieszkania/${CITIES[name]}/q-`;
+        const data = area.map(street =>
+            (<a
+                href={url + street.split(' ').join('-')}
+                className="offer-url"
+                target="_blank"
+            >
+                ${url}${street.split(' ').join('-')}
+            </a>));
+        return (<Slidedown
+            key={`area_${Math.random()}`}
+            title={`Area  ${index}`}
+            data={data}
+            active={active === index}
+            onClick={() => this.handleSlideDown(index)}
+        />);
+    });
 
-    displaySearchLinks = areas => areas.map(area => area.map(street => <span>https://www.olx.pl/nieruchomosci/mieszkania/wroclaw/q-{street.split(' ').join('-')}</span>));
+    displayAreas = stations => stations.map((station, index) =>
+        (<Area
+            lat={station.coordinates.lat}
+            lng={station.coordinates.lon}
+            importance={index}
+            onClick={() => this.handleSlideDown(index)}
+        />));
+
+    handleSlideDown = (id) => {
+        this.setState({
+            active: id,
+        });
+    };
 
     render() {
-        const { stations } = this.state;
+        const { streetsInAreas, stations } = this.state;
         const { lat, lng } = this.props.city.localization;
         return (
             <React.Fragment>
@@ -72,14 +108,12 @@ class MapStep extends Component {
                         }}
                         defaultZoom={DEFAULT_ZOOM}
                     >
-                        <Area
-                            lat={lat}
-                            lng={lng}
-                            importance={0}
-                        />
+                        {this.displayAreas(stations)}
                         {stations.length && this.prepareStationsIcons()}
                     </GoogleMapReact>
+
                 </div>
+                {this.displaySearchLinks(streetsInAreas)}
                 <button
                     className="button map-button"
                     onClick={this.props.activateNext}
@@ -101,6 +135,7 @@ MapStep.propTypes = {
             lat: PropTypes.number.isRequired,
             lng: PropTypes.number.isRequired,
         }).isRequired,
+        name: PropTypes.string.isRequired,
     }).isRequired,
     activateNext: PropTypes.func.isRequired,
 };

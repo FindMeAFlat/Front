@@ -44,7 +44,7 @@ export class Search extends Component {
         if (error === 'INVALID_REQUEST' || error === 'ZERO_RESULTS') {
             this.props.saveLocalization(null);
         }
-    }
+    };
 
     drawInputField = ({ getInputProps, suggestions, getSuggestionItemProps }) => (
         <div className={classnames('search-bar-container', { error: Search.validate(this.props) })}>
