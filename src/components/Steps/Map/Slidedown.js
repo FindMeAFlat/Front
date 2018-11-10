@@ -5,7 +5,7 @@ import 'react-slidedown/lib/slidedown.css';
 
 const Slidedown = (props) => {
     const {
-        title, data, closed, onClick,
+        title, data, active, onClick,
     } = props;
     return (
         <div className="slidedown-container">
@@ -14,7 +14,7 @@ const Slidedown = (props) => {
             >
                 {title}
             </span>
-            <SlideDown closed={closed} className="my-dropdown-slidedown">
+            <SlideDown closed={!active} className="my-dropdown-slidedown">
                 {data}
             </SlideDown>
         </div>
@@ -23,8 +23,8 @@ const Slidedown = (props) => {
 
 Slidedown.propTypes = {
     title: PropTypes.string.isRequired,
-    data: PropTypes.array.isRequired,
-    closed: PropTypes.bool.isRequired,
+    data: PropTypes.arrayOf(PropTypes.element).isRequired,
+    active: PropTypes.bool.isRequired,
     onClick: PropTypes.func.isRequired,
 };
 

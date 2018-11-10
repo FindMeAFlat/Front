@@ -18,18 +18,18 @@ class Steps extends React.Component {
         super(props);
         this.state = {
             steps: [
-                {
-                    name: 'Choose city',
-                    component: SelectCityStep,
-                },
-                {
-                    name: 'Choose your job/school address',
-                    component: SearchStep,
-                },
-                {
-                    name: 'Choose additional criteria',
-                    component: CriteriaStep,
-                },
+                // {
+                //     name: 'Choose city',
+                //     component: SelectCityStep,
+                // },
+                // {
+                //     name: 'Choose your job/school address',
+                //     component: SearchStep,
+                // },
+                // {
+                //     name: 'Choose additional criteria',
+                //     component: CriteriaStep,
+                // },
                 {
                     name: 'Map',
                     component: MapStep,
@@ -92,13 +92,14 @@ class Steps extends React.Component {
                 <ReactTooltip />
                 {steps.map((step, index) => ({ step, index })).filter(({ step }) => step.active)
                     .map(({ step: { name, component: StepComponent }, index }) => {
-                        const prevStep = this.state.steps[index - 1];
-                        const nextStep = this.state.steps[index + 1];
+                        const prevStep = steps[index - 1];
+                        const nextStep = steps[index + 1];
 
                         return (
                             <div
                                 className="step"
-                                ref={this.state.steps[index].ref}
+                                ref={steps[index].ref}
+                                key={`step_${Math.random()}`}
                             >
                                 {prevStep && (
                                     <div
