@@ -18,18 +18,18 @@ class Steps extends React.Component {
         super(props);
         this.state = {
             steps: [
-                // {
-                //     name: 'Choose city',
-                //     component: SelectCityStep,
-                // },
-                // {
-                //     name: 'Choose your job/school address',
-                //     component: SearchStep,
-                // },
-                // {
-                //     name: 'Choose additional criteria',
-                //     component: CriteriaStep,
-                // },
+                {
+                    name: 'Choose city',
+                    component: SelectCityStep,
+                },
+                {
+                    name: 'Choose your job/school address',
+                    component: SearchStep,
+                },
+                {
+                    name: 'Choose additional criteria',
+                    component: CriteriaStep,
+                },
                 {
                     name: 'Map',
                     component: MapStep,
