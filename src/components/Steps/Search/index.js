@@ -16,6 +16,7 @@ export class Search extends Component {
 
         this.state = {
             touched: false,
+            address: props.city.address,
         };
     }
 
@@ -25,7 +26,7 @@ export class Search extends Component {
                 if (!results.some(res =>
                     res.address_components.filter(({ long_name: longName }) =>
                         longName.includes(this.props.city.name)).length > 0)) {
-                    return { lat: null, lng: null };
+                    throw new Error('ZERO_RESULTS_WITHIN_CITY');
                 }
                 return getLatLng(results[0]);
             })
@@ -37,12 +38,17 @@ export class Search extends Component {
                 });
                 this.props.saveAddress(selected);
                 this.props.activateNext();
-            });
+            })
+            .catch(this.handleError);
     };
 
+    handleWrongAutocompleteInput = () => {
+        this.setState({ address: this.props.city.address });
+    }
+
     handleError = (error) => {
-        if (error === 'INVALID_REQUEST' || error === 'ZERO_RESULTS') {
-            this.props.saveLocalization(null);
+        if (error && (error === 'INVALID_REQUEST' || error === 'ZERO_RESULTS' || error.message === 'ZERO_RESULTS_WITHIN_CITY')) {
+            this.handleWrongAutocompleteInput();
         }
     };
 
@@ -54,6 +60,7 @@ export class Search extends Component {
                         placeholder: 'Search Places ...',
                         className: 'location-search-input',
                     })}
+                    onBlur={this.handleWrongAutocompleteInput}
                 />
             </div>
             {suggestions.length > 0 && (
@@ -81,13 +88,12 @@ export class Search extends Component {
     );
 
     render() {
-        const { address } = this.props.city;
         return (
             <Fragment>
                 <div className="full-width" data-tip={Search.validate(this.props) ? Errors.search : ''}>
                     <PlacesAutocomplete
-                        value={address}
-                        onChange={addr => this.props.saveAddress(addr)}
+                        value={this.state.address}
+                        onChange={address => this.setState({ address })}
                         onSelect={this.handleSelect}
                         onError={this.handleError}
                     >

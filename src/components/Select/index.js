@@ -15,7 +15,7 @@ const style = {
     }),
     menuList: styles => ({
         ...styles,
-        maxHeight: '100px',
+        maxHeight: '200px',
     }),
     singleValue: styles => ({
         ...styles,

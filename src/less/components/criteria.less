@@ -1,5 +1,7 @@
 .criteria {
     &:extend(.flex-column, .centered);
+    width: 100%;
+    height: calc(~"100% - 50px - 20px"); 
 
     > :not(:first-child) {
         @media (max-width: 400px) {
@@ -17,11 +19,11 @@
 
     @media (max-width: 600px) {
         .select-criteria {
-            width: 100%;
+            width: 90%;
         }
 
         .collapsible-list {
-            width: 100%;
+            width: 90%;
         }
 
         .form {
@@ -36,13 +38,13 @@
         }
     }
 
-    @media (min-width: 600px) {
+    @media (min-width: 500px) {
         .select-criteria {
-            width: 600px;
+            width: 450px;
         }
 
         .collapsible-list {
-            width: 600px;
+            width: 450px;
         }
     }
 
@@ -50,7 +52,9 @@
 
     .collapsible-list {
         &:extend(.flex-column, .centered);
-        margin-bottom: 5%;
+        height: calc(~"100% - 38px");
+        overflow-y: auto;
+        padding-right: 3px;
 
         > .collapsible {
             &:extend(.flex-column, .centered, .justified);
@@ -85,6 +89,7 @@
         }
 
         & > .input-range {
+            width: 90%;
             margin: 20px 0 30px 0;
         }
 
@@ -142,6 +147,11 @@ button {
     border-radius: 10px;
     border: 1px solid transparent;
     cursor: pointer;
-    margin-top: auto;
-    margin-bottom: 20px;
+    height: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+    @media (max-width: 320px) {
+        width: 90%;
+    }
 }

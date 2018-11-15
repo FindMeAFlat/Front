@@ -3,11 +3,11 @@ import GoogleMapReact from 'google-map-react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import Loader from 'react-loader-spinner';
 
 import Area from './Area';
 import Station from './Station';
 import Slidedown from './Slidedown';
-import CITIES from './../../../const/cities';
 
 const RADIUS = 200;
 const DEFAULT_ZOOM = 11;
@@ -43,9 +43,9 @@ class MapStep extends Component {
     }
 
     getNearestStreet = (stations) => {
-        const promises = stations.map(station =>
+        const promises = stations.map(({ stop }) =>
             axios.post(`${process.env.REACT_APP_API_URL}/api/roads`, {
-                station: [station.coordinates.lat, station.coordinates.lon],
+                station: [stop.coordinates.lat, stop.coordinates.lon],
                 radius: RADIUS,
             }));
         Promise.all(promises).then((response) => {
@@ -55,22 +55,25 @@ class MapStep extends Component {
         });
     };
 
-    prepareStationsIcons = () => this.state.stations.map(station => (
-        <Station lat={station.coordinates.lat} lng={station.coordinates.lon} />
+    prepareStationsIcons = () => this.state.stations.map(({ stop }) => (
+        <Station lat={stop.coordinates.lat} lng={stop.coordinates.lon} />
     ));
 
     displaySearchLinks = areas => areas.map((area, index) => {
         const { name } = this.props.city;
+        const normalizedCityName = name.replace('ł', 'l').replace('Ł', 'L').normalize('NFKD').replace(/[^\w]/g, '');
         const { active } = this.state;
-        const url = `https://www.olx.pl/nieruchomosci/mieszkania/${CITIES[name]}/q-`;
-        const data = area.map(street =>
-            (<a
+        const url = `https://www.olx.pl/nieruchomosci/mieszkania/${normalizedCityName}/q-`;
+        const data = area.map(street => (
+            <a
                 href={url + street.split(' ').join('-')}
                 className="offer-url"
                 target="_blank"
+                rel="noopener noreferrer"
             >
                 ${url}${street.split(' ').join('-')}
-            </a>));
+            </a>
+        ));
         return (<Slidedown
             key={`area_${Math.random()}`}
             title={`Area  ${index}`}
@@ -82,8 +85,8 @@ class MapStep extends Component {
 
     displayAreas = stations => stations.map((station, index) =>
         (<Area
-            lat={station.coordinates.lat}
-            lng={station.coordinates.lon}
+            lat={station.stop.coordinates.lat}
+            lng={station.stop.coordinates.lon}
             importance={index}
             onClick={() => this.handleSlideDown(index)}
         />));
@@ -97,6 +100,20 @@ class MapStep extends Component {
     render() {
         const { streetsInAreas, stations } = this.state;
         const { lat, lng } = this.props.city.localization;
+
+        if (!stations.length) {
+            return (
+                <div className="loader">
+                    <Loader
+                        type="ThreeDots"
+                        color="#759FEB"
+                        height="100"
+                        width="100"
+                    />
+                </div>
+            );
+        }
+
         return (
             <React.Fragment>
                 <div className="map">
@@ -109,27 +126,19 @@ class MapStep extends Component {
                         defaultZoom={DEFAULT_ZOOM}
                     >
                         {this.displayAreas(stations)}
-                        {stations.length && this.prepareStationsIcons()}
+                        {this.prepareStationsIcons()}
                     </GoogleMapReact>
-
                 </div>
-                {this.displaySearchLinks(streetsInAreas)}
-                <button
-                    className="button map-button"
-                    onClick={this.props.activateNext}
-                >
-                    Start again
-                </button>
+                <div className="search-links">
+                    {this.displaySearchLinks(streetsInAreas)}
+                </div>
             </React.Fragment>
         );
     }
 }
 
 MapStep.propTypes = {
-    criteria: PropTypes.arrayOf({
-        type: PropTypes.string.isRequired,
-        data: PropTypes.object.isRequired,
-    }).isRequired,
+    criteria: PropTypes.arrayOf(PropTypes.object).isRequired,
     city: PropTypes.shape({
         localization: PropTypes.shape({
             lat: PropTypes.number.isRequired,
@@ -137,7 +146,6 @@ MapStep.propTypes = {
         }).isRequired,
         name: PropTypes.string.isRequired,
     }).isRequired,
-    activateNext: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

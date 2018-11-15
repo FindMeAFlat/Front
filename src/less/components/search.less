@@ -22,13 +22,17 @@
 }
 
 .search-input-container {
-  width: 35%;
+  width: 450px;
+
+  @media (max-width: 500px) {
+    width: 90%;
+  }
 }
 
 .search-input-container input, .search-input-container input:focus {
-  width: 100%;
+  width: calc(~"100% - 20px");
   height: 30px;
-  padding-left: 10px;
+  padding: 0 10px;
   box-shadow: 0 2px 7px -3px rgba(0, 0, 0, 1);
   border: #b0b0b0 solid 1px;
   border-radius: 3px;
@@ -36,12 +40,16 @@
 }
 
 .autocomplete-container, .autocomplete-container:hover {
-  width: 35%;
+  width: 450px;
+  padding-top: 2px;
+
+  @media (max-width: 500px) {
+    width: 90%;
+  }
+
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
-  padding: 3px 0 3px 10px;
-  margin-left: 11px;
   border: #b0b0b0 solid 1px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -50,7 +58,6 @@
 .suggestion-item span, .suggestion-item--active span {
   font-family: @font-family-regular;
   font-size: @font-size-small;
-  cursor: default;
 }
 
 .suggestion-item--active {

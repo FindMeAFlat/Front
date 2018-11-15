@@ -4,10 +4,7 @@ import { FaPlusCircle, FaMinusCircle, FaTrash } from 'react-icons/fa';
 
 class CollapsibleList extends React.Component {
     static propTypes = {
-        elements: PropTypes.arrayOf({
-            title: PropTypes.string.isRequired,
-            content: PropTypes.any.isRequired,
-        }).isRequired,
+        elements: PropTypes.arrayOf(PropTypes.object).isRequired,
         handleRemove: PropTypes.func.isRequired,
     };
 
@@ -28,7 +25,7 @@ class CollapsibleList extends React.Component {
             <div className="collapsible-list">
                 {this.props.elements.map((elem, i) => (
                     <div className="collapsible">
-                        <div className="expand" onClick={() => this.setState({ expanded: expanded !== i ? i : -1 })}>
+                        <div className="expand" key={`collapsible-${i}`} onClick={() => this.setState({ expanded: expanded !== i ? i : -1 })}>
                             <span>{elem.title}</span>
                             <span>{this.getExpandIcon(expanded === i)} <FaTrash onClick={() => this.props.handleRemove(i)} className="icon" color="rgb(232, 34, 34)" size="1em" /></span>
                         </div>

@@ -25,13 +25,13 @@ class CustomCriteria extends React.Component {
         axios.get(`${process.env.REACT_APP_API_URL}/api/criteria`, {
             params: {
                 userId: this.props.userId,
-            }
+            },
         })
-        .then(({ data: { customApis } }) => {
-            this.setState({
-                customApis,
+            .then(({ data: { customApis } }) => {
+                this.setState({
+                    customApis,
+                });
             });
-        });
     }
 
     validateUrl = (value) => {
@@ -59,34 +59,39 @@ class CustomCriteria extends React.Component {
     }
 
     handleCustomApiChoose = ({ label, __isNew__ }) => {
-        const { url, propertyAccess, maxRatingValue, } = this.props.data;
-        if(__isNew__) {
+        const { url, propertyAccess, maxRatingValue } = this.props.data;
+        if (__isNew__) {
             const errors = {
                 urlError: this.validateUrl(url),
                 propertyAccessError: this.validatePropertyAccess(propertyAccess),
                 maxRatingValueError: this.validateMaxRatingValue(maxRatingValue),
             };
             this.setState(errors);
-            if(!errors.urlError && !errors.propertyAccessError && !errors.maxRatingValueError) {
+            if (!errors.urlError && !errors.propertyAccessError && !errors.maxRatingValueError) {
                 axios.post(`${process.env.REACT_APP_API_URL}/api/criteria`, {
                     userId: this.props.userId,
                     name: label,
                     customApi: this.props.data,
                 })
-                .then((res) => {
-                    this.setState({ customApis: [ ...this.state.customApis, { name: label, customApi: this.props.data } ] });
-                })
-                .catch((e) => { console.error(e); })
+                    .then(() => {
+                        this.setState({
+                            customApis: [...this.state.customApis, {
+                                name: label, customApi: this.props.data,
+                            },
+                            ],
+                        });
+                    })
+                    .catch(() => { });
             }
-        }
-        else {
-            this.props.updateCriteriaData(this.state.customApis.filter(({ name }) => name === label)[0].customApi);
+        } else {
+            this.props.updateCriteriaData(this.state.customApis
+                .filter(({ name }) => name === label)[0].customApi);
         }
     };
 
     render() {
         const {
-            url, propertyAccess, maxRatingValue, importance, ascending
+            url, propertyAccess, maxRatingValue, importance, ascending,
         } = this.props.data;
         const { customApis, urlError, propertyAccessError } = this.state;
 
@@ -185,7 +190,7 @@ CustomCriteria.propTypes = {
         propertyAccess: PropTypes.string.isRequired,
         maxRatingValue: PropTypes.number.isRequired,
         importance: PropTypes.number.isRequired,
-        ascending: PropTypes.number.isRequired,
+        ascending: PropTypes.bool.isRequired,
     }).isRequired,
     updateCriteriaData: PropTypes.func.isRequired,
     userId: PropTypes.string.isRequired,

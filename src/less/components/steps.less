@@ -1,6 +1,9 @@
 .step-container {
-  height: calc(~"100vh - 50px");
   margin-top: 50px;
+
+  @media (min-width: 400px) {
+    height: calc(~"100vh - 50px");
+  }
 
   .step {
     &:extend(.flex-column, .centered, .justified, .full-size);
@@ -8,6 +11,10 @@
     .navigator {
       cursor: pointer;
       opacity: 0.2;
+
+      @media (max-width: 400px) {
+        display: none;
+      }
     }
 
     .navigator:hover {
@@ -16,9 +23,13 @@
 
     .step-content {
         &:extend(.flex-column, .centered);
-        height: 100%;
+        height: calc(~"100% - 135px");
         text-align: center;
         width: 90%;
+
+        @media (max-width: 400px) {
+          width: 100%;
+        }
     }
 
     .step-header {
