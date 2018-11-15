@@ -10,7 +10,6 @@ import Station from './Station';
 import Slidedown from './Slidedown';
 
 const RADIUS = 200;
-const DEFAULT_ZOOM = 11;
 
 class MapStep extends Component {
     constructor(props) {
@@ -19,6 +18,7 @@ class MapStep extends Component {
             stations: [],
             streetsInAreas: [],
             active: 0,
+            zoom: 11,
         };
     }
 
@@ -55,9 +55,24 @@ class MapStep extends Component {
         });
     };
 
-    prepareStationsIcons = () => this.state.stations.map(({ stop }) => (
-        <Station lat={stop.coordinates.lat} lng={stop.coordinates.lon} />
-    ));
+    prepareStationsIcons = () => this.state.stations.map(({ stop }, index) => {
+        const verticalRadius = 0.003 * (2 ** Math.min(this.state.zoom, 12));
+        const horizontalRadius = 0.002 * (2 ** (Math.min(this.state.zoom, 12)));
+
+        return (
+            <Station
+                lat={stop.coordinates.lat}
+                lng={stop.coordinates.lon}
+                style={{
+                    left: `-${horizontalRadius}px`,
+                    top: `-${verticalRadius}px`,
+                    height: `${2 * verticalRadius}px`,
+                    width: `${2 * horizontalRadius}px`,
+                }}
+                onClick={() => this.handleSlideDown(index)}
+            />
+        );
+    });
 
     displaySearchLinks = areas => areas.map((area, index) => {
         const { name } = this.props.city;
@@ -74,8 +89,9 @@ class MapStep extends Component {
                 ${url}${street.split(' ').join('-')}
             </a>
         ));
+
         return (<Slidedown
-            key={`area_${Math.random()}`}
+            key={`area_${index}`}
             title={`Area  ${index}`}
             data={data}
             active={active === index}
@@ -83,18 +99,28 @@ class MapStep extends Component {
         />);
     });
 
-    displayAreas = stations => stations.map((station, index) =>
-        (<Area
+    displayAreas = stations => stations.map((station, index) => {
+        const radius = (2 ** this.state.zoom) / 250;
+        return (<Area
+            style={{
+                height: `${radius * 6}px`,
+                width: `${radius * 6}px`,
+                left: `-${radius * 3}px`,
+                top: `-${radius * 3}px`,
+            }}
             lat={station.stop.coordinates.lat}
             lng={station.stop.coordinates.lon}
             importance={index}
             onClick={() => this.handleSlideDown(index)}
-        />));
+        />);
+    });
 
     handleSlideDown = (id) => {
-        this.setState({
-            active: id,
-        });
+        if (this.state.active !== id) {
+            this.setState({
+                active: id,
+            });
+        }
     };
 
     render() {
@@ -123,14 +149,21 @@ class MapStep extends Component {
                             lat,
                             lng,
                         }}
-                        defaultZoom={DEFAULT_ZOOM}
+                        defaultZoom={this.state.zoom}
+                        onBoundsChange={(_center, zoom) => {
+                            this.setState({ zoom });
+                        }}
                     >
                         {this.displayAreas(stations)}
-                        {this.prepareStationsIcons()}
+                        {this.state.zoom <= 15 && this.state.zoom >= 10
+                            && this.prepareStationsIcons()}
                     </GoogleMapReact>
                 </div>
                 <div className="search-links">
-                    {this.displaySearchLinks(streetsInAreas)}
+                    {!this.state.streetsInAreas.length && (
+                        <div className="loader"><Loader type="ThreeDots" color="#759FEB" height="100" width="100" /></div>
+                    )}
+                    {!!this.state.streetsInAreas.length && this.displaySearchLinks(streetsInAreas)}
                 </div>
             </React.Fragment>
         );
