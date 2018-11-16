@@ -6,3 +6,5 @@ export const SIGN_IN = 'SIGN_IN';
 export const LOG_OUT = 'LOG_OUT';
 
 export const SAVE_CRITERIA = 'SAVE_CRITERIA';
+
+export const RESET_ALL = 'RESET_ALL';

@@ -17,7 +17,7 @@ class Header extends Component {
         this.props.signIn(userId);
     };
 
-    handleLoginFailure = () => {};
+    handleLoginFailure = () => { };
 
     renderNotifications = () => (this.props.userId
         ? (
@@ -35,8 +35,8 @@ class Header extends Component {
                     <Link className="header-title" href="/" to="/">FindMeAFlat</Link>
 
                     {this.renderNotifications()}
-                    <div data-tip='Signed in users can save custom criteria for future use'>
-                        {this.props.userId 
+                    <div data-tip="Signed in users can save custom criteria for future use">
+                        {this.props.userId
                             ? (
                                 <GoogleLogout
                                     className="google-logout"
@@ -71,7 +71,6 @@ const mapStateToProps = state => ({
 Header.propTypes = {
     logOut: PropTypes.func.isRequired,
     signIn: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
     userId: PropTypes.string.isRequired,
 };
 

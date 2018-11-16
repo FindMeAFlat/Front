@@ -14,19 +14,19 @@ const criteriaTypes = ['distance', 'custom'];
 export class Criteria extends Component {
     static getDefaultData(type) {
         switch (type) {
-        case 'distance': return {
-            distance: 0,
-            selectedPlaceType: null,
-            importance: 1,
-        };
-        case 'custom': return {
-            url: '',
-            propertyAccess: '',
-            maxRatingValue: null,
-            importance: 1,
-            ascending: true,
-        };
-        default: return {};
+            case 'distance': return {
+                distance: 0,
+                selectedPlaceType: '',
+                importance: 1,
+            };
+            case 'custom': return {
+                url: '',
+                propertyAccess: '',
+                maxRatingValue: 100,
+                importance: 1,
+                ascending: true,
+            };
+            default: return {};
         }
     }
 
@@ -103,9 +103,9 @@ export class Criteria extends Component {
     render() {
         const selectedCriteria = this.props.criteria.map((criteria, i) => {
             switch (criteria.type) {
-            case 'distance': return { id: i, title: 'Distance', content: <Distance data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
-            case 'custom': return { id: i, title: 'Custom', content: <Custom data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
-            default: return null;
+                case 'distance': return { id: i, title: 'Distance', content: <Distance data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
+                case 'custom': return { id: i, title: 'Custom', content: <Custom data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
+                default: return null;
             }
         });
 
@@ -143,10 +143,7 @@ export class Criteria extends Component {
 }
 
 Criteria.propTypes = {
-    criteria: PropTypes.arrayOf({
-        type: PropTypes.string.isRequired,
-        data: PropTypes.object.isRequired,
-    }).isRequired,
+    criteria: PropTypes.arrayOf(PropTypes.object).isRequired,
     saveCriteria: PropTypes.func.isRequired,
     activateNext: PropTypes.func.isRequired,
     validate: PropTypes.func.isRequired,

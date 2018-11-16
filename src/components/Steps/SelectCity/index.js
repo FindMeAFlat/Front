@@ -13,6 +13,7 @@ class SelectCity extends Component {
         super(props);
         this.state = {
             cities: [],
+            selectedCity: this.props.city.name,
         };
     }
 
@@ -25,16 +26,16 @@ class SelectCity extends Component {
             });
     }
 
-    createLinkForArm = (city, selected) => `${window.location.origin}/arms/${city.toLowerCase()}_${this.props.city === city || selected ? 'c' : 'g'}.png`;
+    createLinkForArm = (city, selected) => `${window.location.origin}/arms/${city.toLowerCase()}_${this.state.selectedCity === city || selected ? 'c' : 'g'}.png`;
 
     handleChooseCity = (selectedCity) => {
+        this.setState({ selectedCity });
         this.props.selectCity(selectedCity);
         this.props.activateNext();
     };
 
     render() {
         const { cities } = this.state;
-        const chosenCityName = this.props.city.name;
 
         let arms = null;
         if (cities.length > 0) {
@@ -48,16 +49,17 @@ class SelectCity extends Component {
                         >
                             <img
                                 id={city}
-                                className={`city-arm ${chosenCityName === city ? 'selected' : 'not-selected'}`}
-                                src={this.createLinkForArm(city, chosenCityName === city)}
+                                className={`city-arm ${this.state.selectedCity === city ? 'selected' : 'not-selected'}`}
+                                src={this.createLinkForArm(city, this.state.selectedCity === city)}
                                 alt={city}
                                 onMouseOver={(e) => {
-                                    e.target.src =
-                                    this.createLinkForArm(city, true);
+                                    e.target.src = this.createLinkForArm(city, true);
                                 }}
                                 onMouseOut={(e) => {
-                                    e.target.src =
-                                        this.createLinkForArm(city, chosenCityName === city);
+                                    e.target.src = this.createLinkForArm(
+                                        city,
+                                        this.state.selectedCity === city,
+                                    );
                                 }}
                             />
                             <label className="city-name">{city.toUpperCase()}</label>
@@ -75,7 +77,11 @@ class SelectCity extends Component {
 }
 
 SelectCity.propTypes = {
-    city: PropTypes.string.isRequired,
+    city: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        address: PropTypes.string.isRequired,
+        localization: PropTypes.object.isRequired,
+    }).isRequired,
     selectCity: PropTypes.func.isRequired,
     activateNext: PropTypes.func.isRequired,
 };

@@ -5,12 +5,15 @@
 
 .cities {
   &:extend(.flex-row);
-  padding: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 3vw;
 }
 
 .city {
   &:extend(.flex-column, .centered);
-  margin: 0 5vw;
+  margin: 0 3vw;
+  width: 100px;
 }
 
 .city * {

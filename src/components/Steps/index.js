@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import scrollToComponent from 'react-scroll-to-component';
 
 import ScrollMouseIcon from './../ScrollMouseIcon';
@@ -9,6 +10,8 @@ import SelectCityStep from './SelectCity';
 import SearchStep from './Search';
 import CriteriaStep from './Criteria';
 import MapStep from './Map';
+
+import resetAll from './../../actions/reset';
 
 const headerOffset = -50;
 const scrollingDuration = 1000;
@@ -31,7 +34,6 @@ class Steps extends React.Component {
                     component: CriteriaStep,
                 },
                 {
-                    name: 'Map',
                     component: MapStep,
                 },
             ].map(step => ({
@@ -45,7 +47,7 @@ class Steps extends React.Component {
         this.state.steps[0].active = true;
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(_prevProps, prevState) {
         const oldActiveSteps = prevState.steps.filter(step => step.active);
         const newActiveSteps = this.state.steps.filter(step => step.active);
 
@@ -64,6 +66,8 @@ class Steps extends React.Component {
         .filter(stepError => stepError);
 
     activateStep = (index) => {
+        if (this.state.steps[index].active) return;
+
         const steps = this.state.steps.map(step => ({ ...step }));
         if (index === 3) {
             for (let i = 0; i < 3; i += 1) {
@@ -71,7 +75,10 @@ class Steps extends React.Component {
             }
             steps[3].active = true;
         } else {
-            if (index === 0) steps[3].active = false;
+            if (index === 0) {
+                steps[3].active = false;
+                this.props.resetAll();
+            }
             steps[index].active = true;
         }
         this.setState({ steps });
@@ -99,9 +106,9 @@ class Steps extends React.Component {
                             <div
                                 className="step"
                                 ref={steps[index].ref}
-                                key={`step_${Math.random()}`}
+                                key={`step_${index}`}
                             >
-                                {prevStep && (
+                                {prevStep && prevStep.active && (
                                     <div
                                         className="navigator"
                                         onClick={() => this.scrollTo(prevStep)}
@@ -109,9 +116,17 @@ class Steps extends React.Component {
                                         <ScrollMouseIcon />
                                     </div>
                                 )}
-                                <div className="step-header">
-                                    {name}
-                                </div>
+                                {index === 3 && (
+                                    <button
+                                        className="button map-button"
+                                        onClick={() => this.activateStep(0)}
+                                    >
+                                        Start again
+                                    </button>
+                                )}
+                                {name && (
+                                    <div className="step-header">{name}</div>
+                                )}
                                 <div className="step-content">
                                     <StepComponent
                                         activateNext={() => this.activateStep((index + 1) % 4)}
@@ -135,10 +150,17 @@ class Steps extends React.Component {
     }
 }
 
+Steps.propTypes = {
+    resetAll: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = state => ({
     city: state.city,
     criteria: state.criteria,
 });
 
+const mapDispatchToProps = dispatch => ({
+    resetAll: () => dispatch(resetAll()),
+});
 
-export default connect(mapStateToProps, null)(Steps);
+export default connect(mapStateToProps, mapDispatchToProps)(Steps);

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const Area = props => (
     <div
+        style={props.style}
         className={`map-area map-area-${props.importance}`}
         onClick={props.onClick}
     />

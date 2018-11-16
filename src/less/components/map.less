@@ -1,22 +1,17 @@
 .map {
-  height: 50vh;
-  width: 100%;
+  height: 65%;
+  width: 90%;
   &-area {
     border: 3px solid;
     border-radius: 50%;
-    height: 60px;
-    opacity: 0.7;
+    opacity: .7;
     position: absolute;
-    width: 60px;
-    left: -30px;
-    top: -30px;
     &-bus {
       background-color: #fff;
       border: 2px solid #0149B0;
       border-bottom: 5px solid #0149B0;
-      height: 15px;
       padding: 0 1px;
-      width: 10px;
+      position: absolute;
     }
     &-0 {
       background-color: @green;
@@ -93,6 +88,17 @@
 
 .my-dropdown-slidedown {
   display: grid;
+}
+
+.loader {
+  &:extend(.flex-row, .full-size, .justified, .centered);
+}
+
+.search-links {
+  height: 45%;
+  width: 90%;
+  margin-top: 10px;
+  overflow: auto;
 }
 
 .slidedown-container {
