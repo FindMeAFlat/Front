@@ -21,6 +21,7 @@ export class Criteria extends Component {
             };
             case 'custom': return {
                 url: '',
+                requestsLimit: null,
                 propertyAccess: '',
                 maxRatingValue: 100,
                 importance: 1,
@@ -46,9 +47,10 @@ export class Criteria extends Component {
             }
             if (type === 'custom') {
                 const {
-                    url, propertyAccess, maxRatingValue, importance, ascending,
+                    url, requestsLimit, propertyAccess, maxRatingValue, importance, ascending,
                 } = data;
-                return url && propertyAccess && maxRatingValue > 0
+                return url && (!requestsLimit || requestsLimit > 50)
+                    && propertyAccess && maxRatingValue > 0
                     && importance > 0 && importance <= 100 && ascending !== undefined;
             }
 

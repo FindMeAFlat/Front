@@ -15,6 +15,7 @@ class CustomCriteria extends React.Component {
 
         this.state = {
             urlError: null,
+            requestsLimitError: null,
             propertyAccessError: null,
             maxRatingValueError: null,
             customApis: [],
@@ -44,6 +45,14 @@ class CustomCriteria extends React.Component {
 
         return !checkUrl(value) ? Errors.criteria.url : null;
     };
+
+    validateRequestsLimit = (value) => {
+        if (!value) return null;
+
+        return Number.isNaN(Number.parseInt(value, 10)) || Number.parseInt(value, 10) < 1
+            ? Errors.criteria.requestsLimit
+            : null;
+    }
 
     validatePropertyAccess = (value) => {
         if (!value) return Errors.criteria.mustBeFilled;
@@ -91,7 +100,7 @@ class CustomCriteria extends React.Component {
 
     render() {
         const {
-            url, propertyAccess, maxRatingValue, importance, ascending,
+            url, requestsLimit, propertyAccess, maxRatingValue, importance, ascending,
         } = this.props.data;
         const { customApis, urlError, propertyAccessError } = this.state;
 
@@ -119,6 +128,25 @@ class CustomCriteria extends React.Component {
                         onChange={({ target: { value } }) => {
                             this.setState({ urlError: this.validateUrl(value) });
                             this.props.updateCriteriaData({ url: value });
+                        }}
+                    />
+                </div>
+                <div className="line">
+                    <label>Limit of requests per second</label>
+                    <input
+                        className={classnames('input', { error: this.state.requestsLimitError })}
+                        value={requestsLimit}
+                        data-tip={this.state.requestsLimitError || ''}
+                        onBlur={({ target: { value } }) => {
+                            this.setState({
+                                requestsLimitError: this.validateRequestsLimit(value),
+                            });
+                        }}
+                        onChange={({ target: { value } }) => {
+                            this.setState({
+                                requestsLimitError: this.validateRequestsLimit(value),
+                            });
+                            this.props.updateCriteriaData({ requestsLimit: value });
                         }}
                     />
                 </div>
@@ -187,6 +215,7 @@ const mapStateToProps = state => ({
 CustomCriteria.propTypes = {
     data: PropTypes.shape({
         url: PropTypes.string.isRequired,
+        requestsLimit: PropTypes.number.isRequired,
         propertyAccess: PropTypes.string.isRequired,
         maxRatingValue: PropTypes.number.isRequired,
         importance: PropTypes.number.isRequired,
