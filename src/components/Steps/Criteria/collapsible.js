@@ -24,8 +24,8 @@ class CollapsibleList extends React.Component {
         return (
             <div className="collapsible-list">
                 {this.props.elements.map((elem, i) => (
-                    <div className="collapsible">
-                        <div className="expand" key={`collapsible-${i}`} onClick={() => this.setState({ expanded: expanded !== i ? i : -1 })}>
+                    <div className="collapsible" key={`collapsible-${i}`}>
+                        <div className="expand" onClick={() => this.setState({ expanded: expanded !== i ? i : -1 })}>
                             <span>{elem.title}</span>
                             <span>{this.getExpandIcon(expanded === i)} <FaTrash onClick={() => this.props.handleRemove(i)} className="icon" color="rgb(232, 34, 34)" size="1em" /></span>
                         </div>

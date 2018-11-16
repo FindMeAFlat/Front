@@ -134,7 +134,7 @@ svg #wheel {
 }
 .step-container .step .navigator {
   cursor: pointer;
-  opacity: 0.2;
+  opacity: .2;
 }
 @media (max-width: 400px) {
   .step-container .step .navigator {
@@ -167,8 +167,8 @@ svg #wheel {
   padding: 3vw;
 }
 .city {
-  width: 100px;
   margin: 0 3vw;
+  width: 100px;
 }
 .city * {
   padding: 5px 0;
@@ -502,7 +502,7 @@ button:disabled {
 .map-area {
   border: 3px solid;
   border-radius: 50%;
-  opacity: 0.7;
+  opacity: .7;
   position: absolute;
 }
 .map-area-bus {
