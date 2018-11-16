@@ -56,7 +56,7 @@
         ],
         "jsx-a11y/mouse-events-have-key-events": [
             0
-        ]
+        ],
     },
     "env": {
         "browser": true
