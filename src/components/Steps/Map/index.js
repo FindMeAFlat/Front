@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Loader from 'react-loader-spinner';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 import Area from './Area';
 import Station from './Station';
-import Slidedown from './Slidedown';
 
 const RADIUS = 200;
 const DEFAULT_ZOOM = 11;
@@ -18,6 +18,7 @@ class MapStep extends Component {
         this.state = {
             stations: [],
             streetsInAreas: [],
+            roadsLoaded: false,
             active: 0,
             zoom: DEFAULT_ZOOM,
         };
@@ -50,9 +51,25 @@ class MapStep extends Component {
                 radius: RADIUS,
             }));
         Promise.all(promises).then((response) => {
-            this.setState({
-                streetsInAreas: response.map(area => area.data),
-            });
+            const { name } = this.props.city;
+            const normalizedCityName = name
+                .replace('ł', 'l').replace('Ł', 'L').normalize('NFKD').replace(/[^\w]/g, '');
+            const url = `https://www.olx.pl/nieruchomosci/mieszkania/${normalizedCityName}/q-`;
+            
+            const areaInfos = response.map(resp => resp.data.map((street, streetIndex) => (
+                <a
+                    key={`link_${streetIndex}`}
+                    href={url + street.split(' ').join('-')}
+                    className="offer-url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    {`olx.pl/${name}/${street.split(' ').join('-')}`}
+                </a>
+            )));
+
+            this.createAreaLinks = () => areaInfos[this.state.active];
+            this.setState({ roadsLoaded: true });
         });
     };
 
@@ -71,35 +88,9 @@ class MapStep extends Component {
                     height: `${2 * verticalRadius}px`,
                     width: `${2 * horizontalRadius}px`,
                 }}
-                onClick={() => this.handleSlideDown(index)}
+                onClick={() => this.showAreaInfo(index)}
             />
         );
-    });
-
-    displaySearchLinks = areas => areas.map((area, areaIndex) => {
-        const { name } = this.props.city;
-        const normalizedCityName = name.replace('ł', 'l').replace('Ł', 'L').normalize('NFKD').replace(/[^\w]/g, '');
-        const { active } = this.state;
-        const url = `https://www.olx.pl/nieruchomosci/mieszkania/${normalizedCityName}/q-`;
-        const data = area.map((street, streetIndex) => (
-            <a
-                key={`area_${areaIndex}_link_${streetIndex}`}
-                href={url + street.split(' ').join('-')}
-                className="offer-url"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                ${url}${street.split(' ').join('-')}
-            </a>
-        ));
-
-        return (<Slidedown
-            key={`area_${areaIndex}`}
-            title={`Area  ${areaIndex}`}
-            data={data}
-            active={active === areaIndex}
-            onClick={() => this.handleSlideDown(areaIndex)}
-        />);
     });
 
     displayAreas = stations => stations.map((station, index) => {
@@ -115,11 +106,11 @@ class MapStep extends Component {
             lat={station.stop.coordinates.lat}
             lng={station.stop.coordinates.lon}
             importance={index}
-            onClick={() => this.handleSlideDown(index)}
+            onClick={() => this.showAreaInfo(index)}
         />);
     });
 
-    handleSlideDown = (id) => {
+    showAreaInfo = (id) => {
         if (this.state.active !== id) {
             this.setState({
                 active: id,
@@ -128,7 +119,7 @@ class MapStep extends Component {
     };
 
     render() {
-        const { streetsInAreas, stations } = this.state;
+        const { stations, active } = this.state;
         const { lat, lng } = this.props.city.localization;
 
         if (!stations.length) {
@@ -146,28 +137,50 @@ class MapStep extends Component {
 
         return (
             <React.Fragment>
-                <div className="map">
-                    <GoogleMapReact
-                        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_PLACES_KEY }}
-                        defaultCenter={{
-                            lat,
-                            lng,
-                        }}
-                        defaultZoom={DEFAULT_ZOOM}
-                        onBoundsChange={(_center, zoom) => {
-                            this.setState({ zoom });
-                        }}
-                    >
-                        {this.displayAreas(stations)}
-                        {this.state.zoom <= 15 && this.state.zoom >= 10
-                            && this.prepareStationsIcons()}
-                    </GoogleMapReact>
-                </div>
-                <div className="search-links">
-                    {!this.state.streetsInAreas.length && (
-                        <div className="loader"><Loader type="ThreeDots" color="#759FEB" height="100" width="100" /></div>
-                    )}
-                    {!!this.state.streetsInAreas.length && this.displaySearchLinks(streetsInAreas)}
+                <button
+                    className="button back-button"
+                    onClick={this.props.activateNext}
+                >
+                    <FaArrowLeft className="icon" color="#fff" size="1em"/> Start again
+                </button>
+                <div className="map-container">
+                    <div className="map">
+                        <GoogleMapReact
+                            bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_PLACES_KEY }}
+                            defaultCenter={{
+                                lat,
+                                lng,
+                            }}
+                            defaultZoom={this.state.zoom}
+                            onBoundsChange={(_center, zoom) => {
+                                this.setState({ zoom });
+                            }}
+                        >
+                            {this.displayAreas(stations)}
+                            {this.state.zoom <= 15 && this.state.zoom >= 10
+                                && this.prepareStationsIcons()}
+                        </GoogleMapReact>
+                    </div>
+                    <div className="area-info">
+                        <div className={`area-navigator a${active}`}>
+                            <span onClick={() => this.setState({ active: (9 + active) % 10 })}>
+                                <FaArrowLeft className="icon" color="#759FEB" size="1em" />
+                            </span> Area {active+1} <span onClick={() => this.setState({ active: (active + 1) % 10 })}>
+                                <FaArrowRight className="icon" color="#759FEB" size="1em"/>
+                            </span>
+                        </div>
+                        <div className="area-details">
+                            {!this.state.roadsLoaded && (
+                                <div className="loader"><Loader type="ThreeDots" color="#759FEB" height="100" width="100" /></div>
+                            )}
+                            {this.state.roadsLoaded && (
+                                <React.Fragment>
+                                    <div>Links:</div> 
+                                    { this.createAreaLinks() }
+                                </React.Fragment>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </React.Fragment>
         );
@@ -189,7 +202,5 @@ const mapStateToProps = state => ({
     criteria: state.criteria,
     city: state.city,
 });
-
-MapStep.validate = () => '';
 
 export default connect(mapStateToProps, null)(MapStep);
