@@ -21,9 +21,9 @@ export class Criteria extends Component {
             };
             case 'custom': return {
                 url: '',
-                requestsLimit: null,
+                requestsLimit: '',
                 propertyAccess: '',
-                maxRatingValue: 100,
+                maxRatingValue: '100',
                 importance: 1,
                 ascending: true,
             };

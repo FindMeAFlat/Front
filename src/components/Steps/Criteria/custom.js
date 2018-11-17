@@ -49,7 +49,7 @@ class CustomCriteria extends React.Component {
     validateRequestsLimit = (value) => {
         if (!value) return null;
 
-        return Number.isNaN(Number.parseInt(value, 10)) || Number.parseInt(value, 10) < 1
+        return Number.isNaN(Number.parseInt(value, 10)) || Number.parseInt(value, 10) < 51
             ? Errors.criteria.requestsLimit
             : null;
     }
@@ -215,9 +215,9 @@ const mapStateToProps = state => ({
 CustomCriteria.propTypes = {
     data: PropTypes.shape({
         url: PropTypes.string.isRequired,
-        requestsLimit: PropTypes.number.isRequired,
+        requestsLimit: PropTypes.string.isRequired,
         propertyAccess: PropTypes.string.isRequired,
-        maxRatingValue: PropTypes.number.isRequired,
+        maxRatingValue: PropTypes.string.isRequired,
         importance: PropTypes.number.isRequired,
         ascending: PropTypes.bool.isRequired,
     }).isRequired,

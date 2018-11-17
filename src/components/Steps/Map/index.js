@@ -10,6 +10,7 @@ import Station from './Station';
 import Slidedown from './Slidedown';
 
 const RADIUS = 200;
+const DEFAULT_ZOOM = 11;
 
 class MapStep extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class MapStep extends Component {
             stations: [],
             streetsInAreas: [],
             active: 0,
-            zoom: 11,
+            zoom: DEFAULT_ZOOM,
         };
     }
 
@@ -61,6 +62,7 @@ class MapStep extends Component {
 
         return (
             <Station
+                key={`station_${index}`}
                 lat={stop.coordinates.lat}
                 lng={stop.coordinates.lon}
                 style={{
@@ -74,13 +76,14 @@ class MapStep extends Component {
         );
     });
 
-    displaySearchLinks = areas => areas.map((area, index) => {
+    displaySearchLinks = areas => areas.map((area, areaIndex) => {
         const { name } = this.props.city;
         const normalizedCityName = name.replace('ł', 'l').replace('Ł', 'L').normalize('NFKD').replace(/[^\w]/g, '');
         const { active } = this.state;
         const url = `https://www.olx.pl/nieruchomosci/mieszkania/${normalizedCityName}/q-`;
-        const data = area.map(street => (
+        const data = area.map((street, streetIndex) => (
             <a
+                key={`area_${areaIndex}_link_${streetIndex}`}
                 href={url + street.split(' ').join('-')}
                 className="offer-url"
                 target="_blank"
@@ -91,17 +94,18 @@ class MapStep extends Component {
         ));
 
         return (<Slidedown
-            key={`area_${index}`}
-            title={`Area  ${index}`}
+            key={`area_${areaIndex}`}
+            title={`Area  ${areaIndex}`}
             data={data}
-            active={active === index}
-            onClick={() => this.handleSlideDown(index)}
+            active={active === areaIndex}
+            onClick={() => this.handleSlideDown(areaIndex)}
         />);
     });
 
     displayAreas = stations => stations.map((station, index) => {
         const radius = (2 ** this.state.zoom) / 250;
         return (<Area
+            key={`area_${index}`}
             style={{
                 height: `${radius * 6}px`,
                 width: `${radius * 6}px`,
@@ -149,7 +153,7 @@ class MapStep extends Component {
                             lat,
                             lng,
                         }}
-                        defaultZoom={this.state.zoom}
+                        defaultZoom={DEFAULT_ZOOM}
                         onBoundsChange={(_center, zoom) => {
                             this.setState({ zoom });
                         }}
