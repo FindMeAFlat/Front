@@ -44,6 +44,22 @@ class MapStep extends Component {
             });
     }
 
+    createResults = () => {
+        const stationData = this.state.stations[this.state.active].data;
+        return stationData.map(sd => {
+            if (sd.distance) {
+                const { selectedPlaceType, distance, calculatedDistance } = sd;
+                return calculatedDistance 
+                    ? `Closest ${selectedPlaceType}: ${parseInt(1000 * calculatedDistance, 10)}m (expected: ${distance}m)`
+                    : `No ${selectedPlaceType} closer than ${distance}m`;
+            }
+            else {
+                const { finalRating, maxRatingValue, url } = sd;
+                return `"...${url.split('/')[2]}...": ${finalRating} / ${maxRatingValue}`;
+            }
+        });
+    }
+
     getNearestStreet = (stations) => {
         const promises = stations.map(({ stop }) =>
             axios.post(`${process.env.REACT_APP_API_URL}/api/roads`, {
@@ -141,7 +157,7 @@ class MapStep extends Component {
                     className="button back-button"
                     onClick={this.props.activateNext}
                 >
-                    <FaArrowLeft className="icon" color="#fff" size="1em"/> Start again
+                    Start again
                 </button>
                 <div className="map-container">
                     <div className="map">
@@ -170,15 +186,29 @@ class MapStep extends Component {
                             </span>
                         </div>
                         <div className="area-details">
-                            {!this.state.roadsLoaded && (
-                                <div className="loader"><Loader type="ThreeDots" color="#759FEB" height="100" width="100" /></div>
-                            )}
-                            {this.state.roadsLoaded && (
-                                <React.Fragment>
-                                    <div>Links:</div> 
-                                    { this.createAreaLinks() }
-                                </React.Fragment>
-                            )}
+                            <React.Fragment>
+                                <div className="results">
+                                    <p>Results</p>
+                                    <ul>
+                                       { this.state.stations && this.createResults().map(res => <li>{res}</li>) }
+                                    </ul>
+                                </div>
+                     
+                                <div className="links">
+                                    {!this.state.roadsLoaded && (
+                                        <div className="loader"><Loader type="ThreeDots" color="#759FEB" height="100" width="100" /></div>
+                                    )}
+                                    { this.state.roadsLoaded && ((
+                                        this.createAreaLinks().length && (
+                                            <React.Fragment>
+                                                <p>Links</p>
+                                                { this.createAreaLinks() }
+                                            </React.Fragment>
+                                        ))
+                                        || (!this.createAreaLinks().length && <p>No links for this area</p>)
+                                    )}
+                                </div> 
+                            </React.Fragment>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 .back-button {
-  background-color: @blue;
+  background-color: @gray;
   width: 120px;
   color: @white;
   font-size: @font-size-big;
@@ -7,7 +7,7 @@
   border: 1px solid transparent;
   cursor: pointer;
   height: 30px;
-  margin: 5px;
+  margin: 5px auto;
   padding: 0;
 
   text-align: center;
@@ -22,7 +22,7 @@
 }
 
 .back-button:hover {
-  background-color: @blue-hover;
+  background-color: @gray-hover;
 }
 
 .map-container {
@@ -126,7 +126,6 @@
     height: 100%;
     width: 30%;
     margin-top: 10px;
-    overflow: auto;
     flex-grow: 1;
 
     & > .area-navigator {
@@ -183,6 +182,26 @@
     & > .area-details {
       display: flex;
       flex-direction: column;
+      overflow: auto;
+      
+      & > .results {
+        p {
+          margin: 10px 0;
+        }
+
+        ul {
+          padding-left: 15px;
+          margin: 0;
+        }
+      }
+
+      & > .links {
+        &:extend(.flex-column);
+
+        p {
+          margin: 10px 0;
+        }
+      }
     }
   }
 
@@ -195,10 +214,9 @@
       width: 90%;
     }
 
-    .search-links {
+    .area-info {
       height: 45%;
       width: 90%;
-
     }
   }
 }
