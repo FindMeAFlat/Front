@@ -103,9 +103,10 @@ export class Criteria extends Component {
     }
 
     render() {
+        const alreadySelectedPlaceTypes = this.props.criteria.map(({ data: { selectedPlaceType } }) => selectedPlaceType);
         const selectedCriteria = this.props.criteria.map((criteria, i) => {
             switch (criteria.type) {
-                case 'distance': return { id: i, title: 'Distance', content: <Distance data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
+                case 'distance': return { id: i, title: 'Distance', content: <Distance alreadySelectedPlaceTypes={alreadySelectedPlaceTypes} data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
                 case 'custom': return { id: i, title: 'Custom', content: <Custom data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };
                 default: return null;
             }

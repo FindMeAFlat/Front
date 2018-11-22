@@ -9,15 +9,6 @@ import Errors from './../../../const/errors';
 import PlaceTypes from './../../../const/placeTypes';
 
 class Distance extends React.Component {
-    static propTypes = {
-        data: PropTypes.shape({
-            distance: PropTypes.number.isRequired,
-            selectedPlaceType: PropTypes.string.isRequired,
-            importance: PropTypes.number.isRequired,
-        }).isRequired,
-        updateCriteriaData: PropTypes.func.isRequired,
-    };
-
     createLabel = type => type.split('_').map(s => `${s.charAt(0).toUpperCase()}${s.substring(1)}`).join(' ');
 
     handleChooseType = ({ value }) => {
@@ -60,7 +51,7 @@ class Distance extends React.Component {
                     className="select"
                     placeholder="Select type of place..."
                     onChange={this.handleChooseType}
-                    options={PlaceTypes.map(type => ({
+                    options={PlaceTypes.filter((placeType) => this.props.alreadySelectedPlaceTypes.indexOf(placeType) < 0).map(type => ({
                         value: type,
                         label: this.createLabel(type),
                     }))}
@@ -90,5 +81,15 @@ class Distance extends React.Component {
         );
     }
 }
+
+Distance.propTypes = {
+    data: PropTypes.shape({
+        distance: PropTypes.number.isRequired,
+        selectedPlaceType: PropTypes.string.isRequired,
+        importance: PropTypes.number.isRequired,
+    }).isRequired,
+    alreadySelectedPlaceTypes: PropTypes.arrayOf(PropTypes.string),
+    updateCriteriaData: PropTypes.func.isRequired,
+};
 
 export default Distance;
