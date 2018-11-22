@@ -1,11 +1,11 @@
 import * as types from './../actions/types';
 
-export default function cityReducer(state = { name: '', address: '', localization: {} }, action) {
+export default function cityReducer(state = { englishName: '', name: '', address: '', localization: {} }, action) {
     switch (action.type) {
         case types.SELECT_CITY:
             return {
                 ...state,
-                name: action.city,
+                ...action.city,
             };
         case types.SAVE_LOCALIZATION:
             return {
@@ -19,7 +19,7 @@ export default function cityReducer(state = { name: '', address: '', localizatio
             };
         case types.RESET_ALL:
             return {
-                name: '', address: '', localization: {},
+                englishName: '', name: '', address: '', localization: {},
             };
         default:
             return state;

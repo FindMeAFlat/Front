@@ -74,3 +74,4 @@ fabric.properties
 .idea/httpRequests
 
 .env
+src/less/index.css

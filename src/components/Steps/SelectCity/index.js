@@ -13,7 +13,10 @@ class SelectCity extends Component {
         super(props);
         this.state = {
             cities: [],
-            selectedCity: this.props.city.name,
+            selectedCity: {
+                name: this.props.city.name,
+                englishName: this.props.city.englishName,
+            }
         };
     }
 
@@ -26,7 +29,7 @@ class SelectCity extends Component {
             });
     }
 
-    createLinkForArm = (city, selected) => `${window.location.origin}/arms/${city.toLowerCase()}_${this.state.selectedCity === city || selected ? 'c' : 'g'}.png`;
+    createLinkForArm = (city, selected) => `${window.location.origin}/arms/${city.name.toLowerCase()}_${this.state.selectedCity.englishName === city.englishName || selected ? 'c' : 'g'}.png`;
 
     handleChooseCity = (selectedCity) => {
         this.setState({ selectedCity });
@@ -41,16 +44,16 @@ class SelectCity extends Component {
         if (cities.length > 0) {
             arms = (
                 <div className="cities">
-                    {cities.map(city => (
+                    {cities.map((city) => (
                         <span
                             className="city"
                             onClick={() => this.handleChooseCity(city)}
-                            key={city}
+                            key={city.englishName}
                         >
                             <img
                                 id={city}
-                                className={`city-arm ${this.state.selectedCity === city ? 'selected' : 'not-selected'}`}
-                                src={this.createLinkForArm(city, this.state.selectedCity === city)}
+                                className={`city-arm ${this.state.selectedCity.englishName === city.englishName ? 'selected' : 'not-selected'}`}
+                                src={this.createLinkForArm(city, this.state.selectedCity.englishName === city.englishName)}
                                 alt={city}
                                 onMouseOver={(e) => {
                                     e.target.src = this.createLinkForArm(city, true);
@@ -58,11 +61,11 @@ class SelectCity extends Component {
                                 onMouseOut={(e) => {
                                     e.target.src = this.createLinkForArm(
                                         city,
-                                        this.state.selectedCity === city,
+                                        this.state.selectedCity.englishName === city.englishName,
                                     );
                                 }}
                             />
-                            <label className="city-name">{city.toUpperCase()}</label>
+                            <label className="city-name">{city.englishName.toUpperCase()}</label>
                         </span>))
                     }
                 </div>

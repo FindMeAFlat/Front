@@ -1,116 +1,228 @@
-.map {
-  height: 65%;
-  width: 90%;
-  &-area {
-    border: 3px solid;
-    border-radius: 50%;
-    opacity: .7;
-    position: absolute;
-    &-bus {
-      background-color: #fff;
-      border: 2px solid #0149B0;
-      border-bottom: 5px solid #0149B0;
-      padding: 0 1px;
-      position: absolute;
-    }
-    &-0 {
-      background-color: @green;
-      border-color: @green-dark;
-      &:hover {
-        background-color: @green-hover;
-      }
-    }
-    &-1 {
-      background-color: @orange;
-      border-color: @orange-dark;
-      &:hover {
-        background-color: @orange-hover;
-      }
-    }
-    &-2 {
-      background-color: @red;
-      border-color: @red-dark;
-      &:hover {
-        background-color: @red-hover;
-      }
-    }
-    &-3 {
-      background-color: @blue;
-      border-color: @blue-dark;
-      &:hover {
-        background-color: @blue-hover;
-      }
-    }
-    &-4 {
-      background-color: @purple;
-      border-color: @purple-dark;
-      &:hover {
-        background-color: @purple-hover;
-      }
-    }
-    &-5 {
-      background-color: @cyan;
-      border-color: @cyan-dark;
-      &:hover {
-        background-color: @cyan-hover;
-      }
-    }
-    &-6 {
-      background-color: @silver;
-      border-color: @silver-dark;
-      &:hover {
-        background-color: @silver-hover;
-      }
-    }
-    &-7 {
-      background-color: @bronze;
-      border-color: @bronze-dark;
-      &:hover {
-        background-color: @bronze-hover;
-      }
-    }
-    &-8 {
-      background-color: @orchid;
-      border-color: @orchid-dark;
-      &:hover {
-        background-color: @orchid-hover;
-      }
-    }
-    &-9 {
-      background-color: @pear;
-      border-color: @pear-dark;
-      &:hover {
-        background-color: @pear-hover;
-      }
-    }
+.back-button {
+  background-color: @gray;
+  width: 120px;
+  color: @white;
+  font-size: @font-size-big;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  height: 30px;
+  margin: 5px auto;
+  padding: 0;
+
+  text-align: center;
+  justify-content: space-evenly;
+  align-content: center;
+  align-items: center;
+  display: flex;
+
+  @media (max-width: 320px) {
+      width: 90%;
   }
 }
 
-.my-dropdown-slidedown {
-  display: grid;
+.back-button:hover {
+  background-color: @gray-hover;
+}
+
+.map-container {
+  &:extend(.flex-row, .centered, .justified);
+
+  width: 100%;
+  height: calc(~"100% - 45px");
+
+  .map {
+    height: 100%;
+    width: 67%;
+    margin: 0 2% 0 1%;
+
+    &-area {
+      border: 3px solid;
+      border-radius: 50%;
+      opacity: .7;
+      position: absolute;
+      &-bus {
+        background-color: #fff;
+        border: 2px solid #0149B0;
+        border-bottom: 5px solid #0149B0;
+        padding: 0 1px;
+        position: absolute;
+      }
+      &-0 {
+        background-color: @green;
+        border-color: @green-dark;
+        &:hover {
+          background-color: @green-hover;
+        }
+      }
+      &-1 {
+        background-color: @orange;
+        border-color: @orange-dark;
+        &:hover {
+          background-color: @orange-hover;
+        }
+      }
+      &-2 {
+        background-color: @red;
+        border-color: @red-dark;
+        &:hover {
+          background-color: @red-hover;
+        }
+      }
+      &-3 {
+        background-color: @blue;
+        border-color: @blue-dark;
+        &:hover {
+          background-color: @blue-hover;
+        }
+      }
+      &-4 {
+        background-color: @purple;
+        border-color: @purple-dark;
+        &:hover {
+          background-color: @purple-hover;
+        }
+      }
+      &-5 {
+        background-color: @cyan;
+        border-color: @cyan-dark;
+        &:hover {
+          background-color: @cyan-hover;
+        }
+      }
+      &-6 {
+        background-color: @silver;
+        border-color: @silver-dark;
+        &:hover {
+          background-color: @silver-hover;
+        }
+      }
+      &-7 {
+        background-color: @bronze;
+        border-color: @bronze-dark;
+        &:hover {
+          background-color: @bronze-hover;
+        }
+      }
+      &-8 {
+        background-color: @orchid;
+        border-color: @orchid-dark;
+        &:hover {
+          background-color: @orchid-hover;
+        }
+      }
+      &-9 {
+        background-color: @pear;
+        border-color: @pear-dark;
+        &:hover {
+          background-color: @pear-hover;
+        }
+      }
+    }
+  }
+
+  .area-info {
+    &:extend(.flex-column);
+    height: 100%;
+    width: 30%;
+    margin-top: 10px;
+    flex-grow: 1;
+
+    & > .area-navigator {
+      margin: 5px 0;
+      font-size: @font-size-very-big;
+      display: flex;
+      justify-content: space-evenly;
+
+      &.a0 {
+        color: @green;
+      }
+
+      &.a1 {
+        color: @orange;
+      }
+
+      &.a2 {
+        color: @red;
+      }
+
+      &.a3 {
+        color: @blue;
+      }
+
+      &.a4 {
+        color: @purple;
+      }
+
+      &.a5 {
+        color: @cyan;
+      }
+
+      &.a6 {
+        color: @silver;
+      }
+
+      &.a7 {
+        color: @bronze;
+      }
+
+      &.a8 {
+        color: @orchid;
+      }
+
+      &.a9 {
+        color: @pear;
+      }
+  
+      & > span {
+        cursor: pointer;
+      }
+    }
+
+    & > .area-details {
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+      
+      & > .results {
+        p {
+          margin: 10px 0;
+        }
+
+        ul {
+          padding-left: 15px;
+          margin: 0;
+        }
+      }
+
+      & > .links {
+        &:extend(.flex-column);
+
+        p {
+          margin: 10px 0;
+        }
+      }
+    }
+  }
+
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+
+    .map {
+      height: 65%;
+      width: 90%;
+    }
+
+    .area-info {
+      height: 45%;
+      width: 90%;
+    }
+  }
 }
 
 .loader {
   &:extend(.flex-row, .full-size, .justified, .centered);
-}
-
-.search-links {
-  height: 45%;
-  width: 90%;
-  margin-top: 10px;
-  overflow: auto;
-}
-
-.slidedown-container {
-  margin-bottom: 10px;
-  span {
-    cursor: pointer;
-    font-size: 1.2em;
-    font-weight: bold;
-  }
-  a {
-    margin-top: 10px;
-  }
 }
 
 .offer-url {

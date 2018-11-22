@@ -33,15 +33,13 @@ class Steps extends React.Component {
                     name: 'Choose additional criteria',
                     component: CriteriaStep,
                 },
-                {
-                    component: MapStep,
-                },
             ].map(step => ({
                 ...step,
                 ref: React.createRef(),
                 active: false,
                 errors: [],
             })),
+            map: false,
         };
 
         this.state.steps[0].active = true;
@@ -51,7 +49,7 @@ class Steps extends React.Component {
         const oldActiveSteps = prevState.steps.filter(step => step.active);
         const newActiveSteps = this.state.steps.filter(step => step.active);
 
-        if (oldActiveSteps.length !== newActiveSteps.length) {
+        if (newActiveSteps.length && oldActiveSteps.length !== newActiveSteps.length) {
             this.scrollTo(this.state.steps[newActiveSteps.length - 1]);
         }
     }
@@ -66,22 +64,19 @@ class Steps extends React.Component {
         .filter(stepError => stepError);
 
     activateStep = (index) => {
-        if (this.state.steps[index].active) return;
-
-        const steps = this.state.steps.map(step => ({ ...step }));
         if (index === 3) {
-            for (let i = 0; i < 3; i += 1) {
-                steps[i].active = false;
-            }
-            steps[3].active = true;
-        } else {
+            const steps = this.state.steps.map(step => ({ ...step, active: false }));
+            this.setState({ steps, map: true });
+        }
+        else if(!this.state.steps[index].active){
+            const steps = this.state.steps.map(step => ({ ...step }));
+            steps[index].active = true;
+            this.setState({ steps, map: false });
+
             if (index === 0) {
-                steps[3].active = false;
                 this.props.resetAll();
             }
-            steps[index].active = true;
         }
-        this.setState({ steps });
     };
 
     scrollTo = ({ ref }) => (ref.current
@@ -93,7 +88,7 @@ class Steps extends React.Component {
         : {});
 
     render() {
-        const { steps } = this.state;
+        const { steps, map } = this.state;
         return (
             <div className="step-container">
                 <ReactTooltip />
@@ -116,20 +111,10 @@ class Steps extends React.Component {
                                         <ScrollMouseIcon />
                                     </div>
                                 )}
-                                {index === 3 && (
-                                    <button
-                                        className="button map-button"
-                                        onClick={() => this.activateStep(0)}
-                                    >
-                                        Start again
-                                    </button>
-                                )}
-                                {name && (
-                                    <div className="step-header">{name}</div>
-                                )}
+                                <div className="step-header">{name}</div>
                                 <div className="step-content">
                                     <StepComponent
-                                        activateNext={() => this.activateStep((index + 1) % 4)}
+                                        activateNext={() => this.activateStep(index + 1)}
                                         setErrors={errors => this.setErrors(index, errors)}
                                         validate={this.validate}
                                     />
@@ -145,6 +130,11 @@ class Steps extends React.Component {
                             </div>
                         );
                     })}
+                    {map && (
+                        <MapStep
+                            activateNext={() => this.activateStep(0)}
+                        />
+                    )}
             </div>
         );
     }
