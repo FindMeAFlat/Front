@@ -23,7 +23,8 @@ export class Criteria extends Component {
                 url: '',
                 requestsLimit: '',
                 propertyAccess: '',
-                maxRatingValue: '100',
+                minRatingValue: '',
+                maxRatingValue: '',
                 importance: 1,
                 ascending: true,
             };
@@ -47,10 +48,19 @@ export class Criteria extends Component {
             }
             if (type === 'custom') {
                 const {
-                    url, requestsLimit, propertyAccess, maxRatingValue, importance, ascending,
+                    url,
+                    requestsLimit,
+                    propertyAccess,
+                    minRatingValue,
+                    maxRatingValue,
+                    importance,
+                    ascending,
                 } = data;
+
+                console.log('lala', minRatingValue, maxRatingValue);
                 return url && (!requestsLimit || requestsLimit > 50)
-                    && propertyAccess && maxRatingValue > 0
+                    && propertyAccess && maxRatingValue !== ''
+                    && minRatingValue !== '' && maxRatingValue > minRatingValue
                     && importance > 0 && importance <= 100 && ascending !== undefined;
             }
 

@@ -17,7 +17,7 @@
         }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
         .select-criteria {
             width: 90%;
         }
@@ -38,13 +38,13 @@
         }
     }
 
-    @media (min-width: 500px) {
+    @media (min-width: 700px) {
         .select-criteria {
-            width: 450px;
+            width: 630px;
         }
 
         .collapsible-list {
-            width: 450px;
+            width: 630px;
         }
     }
 
@@ -115,7 +115,7 @@
             margin: 20px 0;
         }
 
-        & > .input {
+        & .input {
             margin-bottom: 5px;
             border-style: solid;
             padding: 5px;
@@ -126,6 +126,25 @@
 
             &:focus {
                 border-color: @blue;
+            }
+        }
+
+        
+        & > .rating {
+            display: flex;
+            justify-content: space-around;
+            
+            & > span {
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+                flex-basis: 33.33%;
+                flex-grow: 0;
+
+                & > .input {
+                    width: 40%;    
+                }
+    
             }
         }
     }

@@ -129,8 +129,14 @@ class MapStep extends Component {
                     ? `Closest ${selectedPlaceType}: ${closestPlaceDistance}m (expected: ${distance}m)`
                     : `No ${selectedPlaceType} closer than ${distance}m`;
             }
-            const { finalRating, maxRatingValue, url } = sd;
-            return `'...${url.split('/')[2]}...': ${finalRating} (max: ${maxRatingValue})`;
+
+            const {
+                finalRating,
+                minRatingValue,
+                maxRatingValue,
+                url,
+            } = sd;
+            return `'...${url.split('/')[2]}...': ${finalRating} / 10000 (range: ${minRatingValue} - ${maxRatingValue})`;
         });
     }
 
