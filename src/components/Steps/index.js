@@ -67,8 +67,7 @@ class Steps extends React.Component {
         if (index === 3) {
             const steps = this.state.steps.map(step => ({ ...step, active: false }));
             this.setState({ steps, map: true });
-        }
-        else if(!this.state.steps[index].active){
+        } else if (!this.state.steps[index].active) {
             const steps = this.state.steps.map(step => ({ ...step }));
             steps[index].active = true;
             this.setState({ steps, map: false });
@@ -130,11 +129,11 @@ class Steps extends React.Component {
                             </div>
                         );
                     })}
-                    {map && (
-                        <MapStep
-                            activateNext={() => this.activateStep(0)}
-                        />
-                    )}
+                {map && (
+                    <MapStep
+                        activateNext={() => this.activateStep(0)}
+                    />
+                )}
             </div>
         );
     }

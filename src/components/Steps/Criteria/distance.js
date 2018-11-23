@@ -51,10 +51,14 @@ class Distance extends React.Component {
                     className="select"
                     placeholder="Select type of place..."
                     onChange={this.handleChooseType}
-                    options={PlaceTypes.filter((placeType) => this.props.alreadySelectedPlaceTypes.indexOf(placeType) < 0).map(type => ({
-                        value: type,
-                        label: this.createLabel(type),
-                    }))}
+                    options={PlaceTypes
+                        .filter(placeType => this.props.alreadySelectedPlaceTypes
+                            .indexOf(placeType) < 0)
+                        .map(type => ({
+                            value: type,
+                            label: this.createLabel(type),
+                        }))
+                    }
                     value={selectValue}
                 />
                 {selectedPlaceType && (
@@ -88,7 +92,7 @@ Distance.propTypes = {
         selectedPlaceType: PropTypes.string.isRequired,
         importance: PropTypes.number.isRequired,
     }).isRequired,
-    alreadySelectedPlaceTypes: PropTypes.arrayOf(PropTypes.string),
+    alreadySelectedPlaceTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
     updateCriteriaData: PropTypes.func.isRequired,
 };
 
