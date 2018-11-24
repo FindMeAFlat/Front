@@ -23,7 +23,8 @@ export class Criteria extends Component {
                 url: '',
                 requestsLimit: '',
                 propertyAccess: '',
-                maxRatingValue: '100',
+                minRatingValue: '',
+                maxRatingValue: '',
                 importance: 1,
                 ascending: true,
             };
@@ -47,10 +48,18 @@ export class Criteria extends Component {
             }
             if (type === 'custom') {
                 const {
-                    url, requestsLimit, propertyAccess, maxRatingValue, importance, ascending,
+                    url,
+                    requestsLimit,
+                    propertyAccess,
+                    minRatingValue,
+                    maxRatingValue,
+                    importance,
+                    ascending,
                 } = data;
+
                 return url && (!requestsLimit || requestsLimit > 50)
-                    && propertyAccess && maxRatingValue > 0
+                    && propertyAccess && maxRatingValue !== ''
+                    && minRatingValue !== '' && maxRatingValue > minRatingValue
                     && importance > 0 && importance <= 100 && ascending !== undefined;
             }
 
@@ -103,7 +112,8 @@ export class Criteria extends Component {
     }
 
     render() {
-        const alreadySelectedPlaceTypes = this.props.criteria.map(({ data: { selectedPlaceType } }) => selectedPlaceType);
+        const alreadySelectedPlaceTypes = this.props.criteria
+            .map(({ data: { selectedPlaceType } }) => selectedPlaceType);
         const selectedCriteria = this.props.criteria.map((criteria, i) => {
             switch (criteria.type) {
                 case 'distance': return { id: i, title: 'Distance', content: <Distance alreadySelectedPlaceTypes={alreadySelectedPlaceTypes} data={criteria.data} updateCriteriaData={data => this.updateCriteria(i, data)} /> };

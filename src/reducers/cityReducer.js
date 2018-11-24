@@ -1,6 +1,8 @@
 import * as types from './../actions/types';
 
-export default function cityReducer(state = { englishName: '', name: '', address: '', localization: {} }, action) {
+export default function cityReducer(state = {
+    englishName: '', name: '', address: '', localization: {},
+}, action) {
     switch (action.type) {
         case types.SELECT_CITY:
             return {

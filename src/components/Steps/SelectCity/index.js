@@ -16,7 +16,7 @@ class SelectCity extends Component {
             selectedCity: {
                 name: this.props.city.name,
                 englishName: this.props.city.englishName,
-            }
+            },
         };
     }
 
@@ -44,7 +44,7 @@ class SelectCity extends Component {
         if (cities.length > 0) {
             arms = (
                 <div className="cities">
-                    {cities.map((city) => (
+                    {cities.map(city => (
                         <span
                             className="city"
                             onClick={() => this.handleChooseCity(city)}
@@ -53,7 +53,10 @@ class SelectCity extends Component {
                             <img
                                 id={city}
                                 className={`city-arm ${this.state.selectedCity.englishName === city.englishName ? 'selected' : 'not-selected'}`}
-                                src={this.createLinkForArm(city, this.state.selectedCity.englishName === city.englishName)}
+                                src={this.createLinkForArm(
+                                    city,
+                                    this.state.selectedCity.englishName === city.englishName,
+                                )}
                                 alt={city}
                                 onMouseOver={(e) => {
                                     e.target.src = this.createLinkForArm(city, true);
@@ -82,6 +85,7 @@ class SelectCity extends Component {
 SelectCity.propTypes = {
     city: PropTypes.shape({
         name: PropTypes.string.isRequired,
+        englishName: PropTypes.string.isRequired,
         address: PropTypes.string.isRequired,
         localization: PropTypes.object.isRequired,
     }).isRequired,

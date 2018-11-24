@@ -17,6 +17,7 @@ class CustomCriteria extends React.Component {
             urlError: null,
             requestsLimitError: null,
             propertyAccessError: null,
+            minRatingValueError: null,
             maxRatingValueError: null,
             customApis: [],
         };
@@ -59,10 +60,20 @@ class CustomCriteria extends React.Component {
         return new RegExp(/^\s*\S+\s*$/g).test(value) === false ? Errors.criteria.propertyAccess : null;
     }
 
+    validateMinRatingValue = (value) => {
+        if (!value) return Errors.criteria.mustBeFilled;
+
+        return Number.isNaN(Number.parseInt(value, 10)) ||
+            Number.parseInt(value, 10) >= this.props.data.maxRatingValue
+            ? Errors.criteria.minRatingValue
+            : null;
+    }
+
     validateMaxRatingValue = (value) => {
         if (!value) return Errors.criteria.mustBeFilled;
 
-        return Number.isNaN(Number.parseInt(value, 10)) || Number.parseInt(value, 10) < 1
+        return Number.isNaN(Number.parseInt(value, 10)) ||
+            Number.parseInt(value, 10) <= this.props.data.minRatingValue
             ? Errors.criteria.maxRatingValue
             : null;
     }
@@ -100,7 +111,13 @@ class CustomCriteria extends React.Component {
 
     render() {
         const {
-            url, requestsLimit, propertyAccess, maxRatingValue, importance, ascending,
+            url,
+            propertyAccess,
+            minRatingValue,
+            maxRatingValue,
+            ascending,
+            importance,
+            requestsLimit,
         } = this.props.data;
         const { customApis, urlError, propertyAccessError } = this.state;
 
@@ -132,25 +149,6 @@ class CustomCriteria extends React.Component {
                     />
                 </div>
                 <div className="line">
-                    <label>Limit of requests per second</label>
-                    <input
-                        className={classnames('input', { error: this.state.requestsLimitError })}
-                        value={requestsLimit}
-                        data-tip={this.state.requestsLimitError || ''}
-                        onBlur={({ target: { value } }) => {
-                            this.setState({
-                                requestsLimitError: this.validateRequestsLimit(value),
-                            });
-                        }}
-                        onChange={({ target: { value } }) => {
-                            this.setState({
-                                requestsLimitError: this.validateRequestsLimit(value),
-                            });
-                            this.props.updateCriteriaData({ requestsLimit: value });
-                        }}
-                    />
-                </div>
-                <div className="line">
                     <label>Property access</label>
                     <input
                         className={classnames('input', { error: propertyAccessError })}
@@ -170,23 +168,46 @@ class CustomCriteria extends React.Component {
                     />
                 </div>
                 <div className="line">
-                    <label>Max rating value</label>
-                    <input
-                        className={classnames('input', { error: this.state.maxRatingValueError })}
-                        value={maxRatingValue}
-                        data-tip={this.state.maxRatingValueError || ''}
-                        onBlur={({ target: { value } }) => {
-                            this.setState({
-                                maxRatingValueError: this.validateMaxRatingValue(value),
-                            });
-                        }}
-                        onChange={({ target: { value } }) => {
-                            this.setState({
-                                maxRatingValueError: this.validateMaxRatingValue(value),
-                            });
-                            this.props.updateCriteriaData({ maxRatingValue: value });
-                        }}
-                    />
+                    <label>Rating value</label>
+                    <div className="rating">
+                        <span>Min <input
+                            type="number"
+                            className={classnames('input', { error: this.state.minRatingValueError })}
+                            value={minRatingValue}
+                            data-tip={this.state.minRatingValueError || ''}
+                            onBlur={({ target: { value } }) => {
+                                this.setState({
+                                    minRatingValueError: this.validateMinRatingValue(value),
+                                });
+                            }}
+                            onChange={({ target: { value } }) => {
+                                this.setState({
+                                    minRatingValueError: this.validateMinRatingValue(value),
+                                });
+                                this.props.updateCriteriaData({ minRatingValue: value });
+                            }}
+                        />
+                        </span>
+                        <span>Max <input
+                            type="number"
+                            className={classnames('input', { error: this.state.maxRatingValueError })}
+                            value={maxRatingValue}
+                            data-tip={this.state.maxRatingValueError || ''}
+                            onBlur={({ target: { value } }) => {
+                                this.setState({
+                                    maxRatingValueError: this.validateMaxRatingValue(value),
+                                });
+                            }}
+                            onChange={({ target: { value } }) => {
+                                this.setState({
+                                    maxRatingValueError: this.validateMaxRatingValue(value),
+                                });
+                                this.props.updateCriteriaData({ maxRatingValue: value });
+                            }}
+                        />
+                        </span>
+                        <span>Ascending <input className="input" value={ascending} onChange={({ target: { value } }) => this.props.updateCriteriaData({ ascending: value })} type="checkbox" /></span>
+                    </div>
                 </div>
                 <div className="line">
                     <label>Importance</label>
@@ -200,7 +221,24 @@ class CustomCriteria extends React.Component {
                     />
                 </div>
                 <div className="line">
-                    <label>Ascending <input className="input" value={ascending} onChange={({ target: { value } }) => this.props.updateCriteriaData({ ascending: value })} type="checkbox" /></label>
+                    <label>Limit of requests per second (Optional)</label>
+                    <input
+                        type="number"
+                        className={classnames('input', { error: this.state.requestsLimitError })}
+                        value={requestsLimit}
+                        data-tip={this.state.requestsLimitError || ''}
+                        onBlur={({ target: { value } }) => {
+                            this.setState({
+                                requestsLimitError: this.validateRequestsLimit(value),
+                            });
+                        }}
+                        onChange={({ target: { value } }) => {
+                            this.setState({
+                                requestsLimitError: this.validateRequestsLimit(value),
+                            });
+                            this.props.updateCriteriaData({ requestsLimit: value });
+                        }}
+                    />
                 </div>
                 <ReactTooltip type="error" />
             </div>
@@ -215,11 +253,12 @@ const mapStateToProps = state => ({
 CustomCriteria.propTypes = {
     data: PropTypes.shape({
         url: PropTypes.string.isRequired,
-        requestsLimit: PropTypes.string.isRequired,
         propertyAccess: PropTypes.string.isRequired,
+        minRatingValue: PropTypes.string.isRequired,
         maxRatingValue: PropTypes.string.isRequired,
-        importance: PropTypes.number.isRequired,
         ascending: PropTypes.bool.isRequired,
+        importance: PropTypes.number.isRequired,
+        requestsLimit: PropTypes.string.isRequired,
     }).isRequired,
     updateCriteriaData: PropTypes.func.isRequired,
     userId: PropTypes.string.isRequired,

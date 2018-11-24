@@ -7,7 +7,6 @@ import Loader from 'react-loader-spinner';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 import Area from './Area';
-import Station from './Station';
 
 const RADIUS = 200;
 const DEFAULT_ZOOM = 11;
@@ -17,7 +16,6 @@ class MapStep extends Component {
         super(props);
         this.state = {
             stations: [],
-            streetsInAreas: [],
             roadsLoaded: false,
             active: 0,
             zoom: DEFAULT_ZOOM,
@@ -44,22 +42,6 @@ class MapStep extends Component {
             });
     }
 
-    createResults = () => {
-        const stationData = this.state.stations[this.state.active].data;
-        return stationData.map(sd => {
-            if (sd.distance) {
-                const { selectedPlaceType, distance, calculatedDistance } = sd;
-                return calculatedDistance 
-                    ? `Closest ${selectedPlaceType}: ${parseInt(1000 * calculatedDistance, 10)}m (expected: ${distance}m)`
-                    : `No ${selectedPlaceType} closer than ${distance}m`;
-            }
-            else {
-                const { finalRating, maxRatingValue, url } = sd;
-                return `"...${url.split('/')[2]}...": ${finalRating} / ${maxRatingValue}`;
-            }
-        });
-    }
-
     getNearestStreet = (stations) => {
         const promises = stations.map(({ stop }) =>
             axios.post(`${process.env.REACT_APP_API_URL}/api/roads`, {
@@ -71,7 +53,7 @@ class MapStep extends Component {
             const normalizedCityName = name
                 .replace('ł', 'l').replace('Ł', 'L').normalize('NFKD').replace(/[^\w]/g, '');
             const url = `https://www.olx.pl/nieruchomosci/mieszkania/${normalizedCityName}/q-`;
-            
+
             const areaInfos = response.map(resp => resp.data.map((street, streetIndex) => (
                 <a
                     key={`link_${streetIndex}`}
@@ -89,42 +71,74 @@ class MapStep extends Component {
         });
     };
 
-    prepareStationsIcons = () => this.state.stations.map(({ stop }, index) => {
-        const verticalRadius = 0.003 * (2 ** Math.min(this.state.zoom, 12));
-        const horizontalRadius = 0.002 * (2 ** (Math.min(this.state.zoom, 12)));
+    displayStops = () => {
+        const { active, stations, zoom } = this.state;
+        const radius = (2 ** (zoom < 17 ? Math.max(14, zoom) : 17)) / 1500;
 
-        return (
-            <Station
-                key={`station_${index}`}
+        return stations.map(({ stop, name }, index) => {
+            const finalRadius = index === active ? 2 * radius : radius;
+            return (<Area
+                key={`area_${index}`}
+                style={{
+                    height: `${finalRadius}px`,
+                    width: `${finalRadius}px`,
+                    left: `-${finalRadius / 2}px`,
+                    top: `-${finalRadius / 2}px`,
+                }}
                 lat={stop.coordinates.lat}
                 lng={stop.coordinates.lon}
-                style={{
-                    left: `-${horizontalRadius}px`,
-                    top: `-${verticalRadius}px`,
-                    height: `${2 * verticalRadius}px`,
-                    width: `${2 * horizontalRadius}px`,
-                }}
+                importance={index}
                 onClick={() => this.showAreaInfo(index)}
-            />
-        );
-    });
+                title={`stop: '${name}'`}
+            />);
+        });
+    }
 
-    displayAreas = stations => stations.map((station, index) => {
-        const radius = (2 ** this.state.zoom) / 250;
-        return (<Area
-            key={`area_${index}`}
-            style={{
-                height: `${radius * 6}px`,
-                width: `${radius * 6}px`,
-                left: `-${radius * 3}px`,
-                top: `-${radius * 3}px`,
-            }}
-            lat={station.stop.coordinates.lat}
-            lng={station.stop.coordinates.lon}
-            importance={index}
-            onClick={() => this.showAreaInfo(index)}
-        />);
-    });
+    displayActiveStopPlaces = () => {
+        const { stations, active, zoom } = this.state;
+        const radius = (2 ** (zoom < 16 ? Math.max(13, zoom) : 16)) / 1500;
+
+        return stations[active].data
+            .filter(d => d.distance !== undefined)
+            .flatMap(({ places }) => places.map(({
+                icon, name, distance, location: { lat, lng },
+            }) => (
+                <img
+                    src={icon}
+                    lat={lat}
+                    lng={lng}
+                    style={{
+                        height: `${radius}px`,
+                        left: `-${radius / 4}px`,
+                        top: `-${radius / 2}px`,
+                    }}
+                    title={`name: '${name}' distance: ${parseInt(1000 * distance, 10)}m`}
+                    alt={`name: '${name}' distance: ${parseInt(1000 * distance, 10)}m`}
+                />
+            )));
+    }
+
+    createResults = () => {
+        const stationData = this.state.stations[this.state.active].data;
+        return stationData.map((sd) => {
+            if (sd.distance) {
+                const { selectedPlaceType, distance, places } = sd;
+                const closestPlaceDistance = places
+                    .map(p => parseInt(1000 * p.distance, 10)).sort()[0];
+                return closestPlaceDistance
+                    ? `Closest ${selectedPlaceType}: ${closestPlaceDistance}m (expected: ${distance}m)`
+                    : `No ${selectedPlaceType} closer than ${distance}m`;
+            }
+
+            const {
+                finalRating,
+                minRatingValue,
+                maxRatingValue,
+                url,
+            } = sd;
+            return `'...${url.split('/')[2]}...': ${finalRating} / 10000 (range: ${minRatingValue} - ${maxRatingValue})`;
+        });
+    }
 
     showAreaInfo = (id) => {
         if (this.state.active !== id) {
@@ -172,17 +186,18 @@ class MapStep extends Component {
                                 this.setState({ zoom });
                             }}
                         >
-                            {this.displayAreas(stations)}
-                            {this.state.zoom <= 15 && this.state.zoom >= 10
-                                && this.prepareStationsIcons()}
+                            {this.displayStops()}
+                            {this.displayActiveStopPlaces()}
                         </GoogleMapReact>
                     </div>
                     <div className="area-info">
                         <div className={`area-navigator a${active}`}>
                             <span onClick={() => this.setState({ active: (9 + active) % 10 })}>
                                 <FaArrowLeft className="icon" color="#759FEB" size="1em" />
-                            </span> Area {active+1} <span onClick={() => this.setState({ active: (active + 1) % 10 })}>
-                                <FaArrowRight className="icon" color="#759FEB" size="1em"/>
+                            </span>
+                            Area {active + 1}
+                            <span onClick={() => this.setState({ active: (active + 1) % 10 })}>
+                                <FaArrowRight className="icon" color="#759FEB" size="1em" />
                             </span>
                         </div>
                         <div className="area-details">
@@ -190,24 +205,28 @@ class MapStep extends Component {
                                 <div className="results">
                                     <p>Results</p>
                                     <ul>
-                                       { this.state.stations && this.createResults().map(res => <li>{res}</li>) }
+                                        {this.state.stations &&
+                                            this.createResults().map(res => <li>{res}</li>)
+                                        }
                                     </ul>
                                 </div>
-                     
+
                                 <div className="links">
                                     {!this.state.roadsLoaded && (
                                         <div className="loader"><Loader type="ThreeDots" color="#759FEB" height="100" width="100" /></div>
                                     )}
-                                    { this.state.roadsLoaded && ((
+                                    {this.state.roadsLoaded && ((
                                         this.createAreaLinks().length && (
                                             <React.Fragment>
                                                 <p>Links</p>
-                                                { this.createAreaLinks() }
+                                                {this.createAreaLinks()}
                                             </React.Fragment>
                                         ))
-                                        || (!this.createAreaLinks().length && <p>No links for this area</p>)
+                                        || (!this.createAreaLinks().length &&
+                                            <p>No links for this area</p>
+                                        )
                                     )}
-                                </div> 
+                                </div>
                             </React.Fragment>
                         </div>
                     </div>
@@ -226,6 +245,7 @@ MapStep.propTypes = {
         }).isRequired,
         name: PropTypes.string.isRequired,
     }).isRequired,
+    activateNext: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

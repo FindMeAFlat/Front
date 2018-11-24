@@ -11,6 +11,7 @@ const Area = props => (
 
 Area.propTypes = {
     importance: PropTypes.number.isRequired,
+    style: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired,
 };
 
