@@ -57,7 +57,6 @@ export class Criteria extends Component {
                     ascending,
                 } = data;
 
-                console.log('lala', minRatingValue, maxRatingValue);
                 return url && (!requestsLimit || requestsLimit > 50)
                     && propertyAccess && maxRatingValue !== ''
                     && minRatingValue !== '' && maxRatingValue > minRatingValue
